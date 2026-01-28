@@ -5,6 +5,7 @@ using SAOResoForm.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SAOResoForm.Dati;
 
 namespace SAOResoForm.Service.Repository
 {
@@ -51,24 +52,30 @@ namespace SAOResoForm.Service.Repository
 
         public string Update(Personale item)
         {
+            string coduff = string.Join(" - ", new[] { item.CodReparto, item.CodSezione, item.CodNucleo }
+     .Where(s => !string.IsNullOrWhiteSpace(s)));
+
+            Cod_UUOO cod_UUOO = new Cod_UUOO();
+            string valore = cod_UUOO.reparti[coduff].ToString();
+
             try
             {
                 using (var context = new tblContext())
                 {
-                    var esistente = context.Personale.Find(item.Id);
-                    if (esistente != null)
+                    var esistente = context.Personale.Find(item.Matricola);
+
+                    if (esistente != null)  // ← AGGIUNTO CONTROLLO
                     {
                         // Aggiorna i campi
                         esistente.Nome = item.Nome;
                         esistente.Cognome = item.Cognome;
-                        esistente.Matricola = item.Matricola;
                         esistente.GradoQualifica = item.GradoQualifica;
                         esistente.CategoriaProfilo = item.CategoriaProfilo;
                         esistente.MilCiv = item.MilCiv;
                         esistente.CodReparto = item.CodReparto;
                         esistente.CodSezione = item.CodSezione;
                         esistente.CodNucleo = item.CodNucleo;
-                        esistente.CodUfficio = item.CodUfficio;
+                        esistente.CodUfficio = int.Parse(valore);
                         esistente.Incarico = item.Incarico;
                         esistente.StatoServizio = item.StatoServizio;
                         esistente.Annotazioni = item.Annotazioni;
@@ -76,7 +83,8 @@ namespace SAOResoForm.Service.Repository
                         context.SaveChanges();
                         return $"Personale {item.Cognome} {item.Nome} aggiornato con successo!";
                     }
-                    return $"Personale con ID {item.Id} non trovato.";
+
+                    return $"Personale con Matricola {item.Matricola} non trovato."; // ← CORRETTO
                 }
             }
             catch (Exception ex)

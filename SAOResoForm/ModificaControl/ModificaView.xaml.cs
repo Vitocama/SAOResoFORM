@@ -6,11 +6,19 @@ namespace SAOResoForm.ModificaControl
 {
     public partial class ModificaView : Window
     {
-        // Costruttore corretto con corpo
         public ModificaView(Personale itemToEdit, IRepositoryService repository)
         {
-            InitializeComponent(); // carica il XAML
-            DataContext = new ModificaViewModel(itemToEdit, repository);
+            InitializeComponent();
+
+            var viewModel = new ModificaViewModel(itemToEdit, repository);
+
+            viewModel.DatiAggiornati += (s, e) =>
+            {
+                this.DialogResult = true;
+                this.Close();
+            };
+
+            DataContext = viewModel;
         }
     }
 }

@@ -25,20 +25,23 @@
                     VerticalAlignment="Top" 
                     Grid.ColumnSpan="3">
             <TextBlock Style="{StaticResource HeadText}" 
-                       Text="MODIFICA DATI PERSONALE"/>
+                       Text="MODIFICA DATI PERSONALE" FontWeight="ExtraBlack" FontSize="25"/>
         </StackPanel>
 
         <!-- ============ CHECKBOX MODIFICA REPARTO/SEZIONE/NUCLEO ============ -->
         <StackPanel HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Grid.ColumnSpan="3"
-                    Margin="0,50,0,0">
+                    Margin="0,50,0,0" Orientation="Horizontal">
+            <TextBlock Text="MOSTRA REPARTO SEZIONE NUCLEO" FontWeight="Bold"  FontSize="14"></TextBlock>
             <CheckBox Content="MODIFICA REPARTO/SEZIONE/NUCLEO" 
                       IsChecked="{Binding ModificaRepartoSezioneNucleo}"
-                      FontSize="14"
-                      FontWeight="Bold"
                       Foreground="White"
-                      HorizontalAlignment="Center"/>
+                      HorizontalAlignment="Center"
+                      Width="25"
+                      Height="25"
+                      Margin="10,0,0,0"
+                      />
         </StackPanel>
 
         <!-- ========== PRIMA COLONNA: REPARTO + DATI ANAGRAFICI ========== -->
@@ -218,7 +221,7 @@
                     Grid.ColumnSpan="3" 
                     Margin="0,0,0,20">
             <Button Content="AGGIORNA DATI" 
-                    Command="{Binding SalvaCommand}"
+                    Command="{Binding UpdateCommand}"
                     Width="150"
                     Height="40"
                     FontSize="16"

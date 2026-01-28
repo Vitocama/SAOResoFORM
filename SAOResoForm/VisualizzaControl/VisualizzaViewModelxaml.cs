@@ -71,32 +71,44 @@ namespace SAOResoForm.VisualizzaControl
             _mainVM = mainVM;
             _services = services;
 
+            // ============ INIZIALIZZA LE OBSERVABLECOLLECTION PRIMA ============
+            PersonaleList = new ObservableCollection<Personale>();
+            FilteredPersonaleList = new ObservableCollection<Personale>();
+
             AggiornaCommand = new RelayCommand(CaricaPersonale);
             ChiudiCommand = new RelayCommand(Chiudi);
-
-            // Iscriviti all'evento se esiste nel tuo sistema
-            // _services.RepositoryService.PersonaleModificato += OnPersonaleModificato;
 
             CaricaPersonale();
         }
 
-        // Metodo chiamato quando i dati cambiano
         private void OnPersonaleModificato(object sender, EventArgs e)
         {
             CaricaPersonale();
         }
 
-        private void CaricaPersonale()
+        // ============ METODO PUBBLICO PER RICARICARE I DATI ============
+        public void CaricaPersonale()
         {
             try
             {
                 var dati = _services.RepositoryService.GetAll();
-                PersonaleList = new ObservableCollection<Personale>(dati);
 
-                // Applica il filtro se presente
+                // ============ SVUOTA E RICARICA SENZA CREARE NUOVA ISTANZA ============
+                PersonaleList.Clear();
+                foreach (var persona in dati)
+                {
+                    PersonaleList.Add(persona);
+                }
+
+                // Svuota e ricarica anche FilteredPersonaleList
+                FilteredPersonaleList.Clear();
+
                 if (string.IsNullOrWhiteSpace(FiltroRicerca))
                 {
-                    FilteredPersonaleList = new ObservableCollection<Personale>(dati);
+                    foreach (var persona in dati)
+                    {
+                        FilteredPersonaleList.Add(persona);
+                    }
                 }
                 else
                 {
@@ -120,7 +132,11 @@ namespace SAOResoForm.VisualizzaControl
 
             if (string.IsNullOrWhiteSpace(FiltroRicerca))
             {
-                FilteredPersonaleList = new ObservableCollection<Personale>(PersonaleList);
+                FilteredPersonaleList.Clear();
+                foreach (var persona in PersonaleList)
+                {
+                    FilteredPersonaleList.Add(persona);
+                }
                 return;
             }
 
@@ -137,13 +153,17 @@ namespace SAOResoForm.VisualizzaControl
                 (p.CodReparto?.ToLower().Contains(filtroLower) ?? false) ||
                 (p.CodSezione?.ToLower().Contains(filtroLower) ?? false) ||
                 (p.CodNucleo?.ToLower().Contains(filtroLower) ?? false) ||
-                 (p.CodUfficio.ToString().Contains(filtroLower)) ||
+                (p.CodUfficio.ToString().Contains(filtroLower)) ||
                 (p.Incarico?.ToLower().Contains(filtroLower) ?? false) ||
                 (p.StatoServizio?.ToLower().Contains(filtroLower) ?? false) ||
                 (p.Annotazioni?.ToLower().Contains(filtroLower) ?? false)
             ).ToList();
 
-            FilteredPersonaleList = new ObservableCollection<Personale>(filtrati);
+            FilteredPersonaleList.Clear();
+            foreach (var persona in filtrati)
+            {
+                FilteredPersonaleList.Add(persona);
+            }
         }
 
         private void Chiudi()

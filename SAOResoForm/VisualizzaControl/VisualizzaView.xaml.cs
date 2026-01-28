@@ -10,38 +10,39 @@ namespace SAOResoForm.VisualizzaControl
     public partial class VisualizzaView : Window
     {
         private readonly AppServices _services;
+        private readonly VisualizzaViewModel _viewModel;
 
         public VisualizzaView(MainViewModel mainVM, AppServices services)
         {
             InitializeComponent();
             _services = services;
-            DataContext = new VisualizzaViewModel(mainVM, services);
+
+            _viewModel = new VisualizzaViewModel(mainVM, services);
+            DataContext = _viewModel;
         }
 
         private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            // Verifica che il sender sia un DataGrid
             var dataGrid = sender as DataGrid;
             if (dataGrid == null)
                 return;
 
-
-            // Recupera l'elemento selezionato
             if (dataGrid.SelectedItem == null)
                 return;
 
-            // Cast al tuo modello (sostituisci Personale se il nome è diverso)
             var personaleSelezionato = dataGrid.SelectedItem as Personale;
             if (personaleSelezionato == null)
                 return;
 
-            // Apertura finestra di modifica
             var modificaView = new ModificaView(
                 personaleSelezionato,
-                _services.RepositoryService   // o quello corretto
+                _services.RepositoryService
             );
 
-            modificaView.ShowDialog();
+            if (modificaView.ShowDialog() == true)
+            {
+                _viewModel.CaricaPersonale();
+            }
         }
     }
 }

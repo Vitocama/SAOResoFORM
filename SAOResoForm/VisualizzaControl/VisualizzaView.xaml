@@ -151,7 +151,21 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <!-- ========================= -->
+        <!-- PULSANTE AGGIORNA -->
+        <!-- ========================= -->
+        <StackPanel Grid.Row="3" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="10">
+            <Button Content="AGGIORNA DATAGRID"
+                    Command="{Binding AggiornaCommand}"
+                    Width="180"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Margin="5"/>
+        </StackPanel>
+
     </Grid>
 </Window>
-
-    
