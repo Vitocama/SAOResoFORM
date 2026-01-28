@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SAOResoForm</RootNamespace>
+    <AssemblyName>SAOResoForm</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AttestatiControl\AttestatiView.xaml.cs">
+      <DependentUpon>AttestatiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttestatiControl\AttestatiViewModel.cs" />
+    <Compile Include="Converter\CodUfficioToRepartoConverter.cs" />
+    <Compile Include="Models\MappingCodici.cs" />
+    <Compile Include="ModificaControl\ModificaView.xaml.cs">
+      <DependentUpon>ModificaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModificaControl\ModificaViewModel.cs" />
+    <Compile Include="ResourcesDictionary\Dati\AttivitaFormativa.cs" />
+    <Compile Include="ResourcesDictionary\Dati\AttivitaFormativaComboBox.cs" />
+    <Compile Include="ResourcesDictionary\Dati\Cod_UUOO.cs" />
+    <Compile Include="Common\CommonBase.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="ResourcesDictionary\Dati\DatiComboxInsert.cs" />
+    <Compile Include="HomeControl\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HomeControl\HomeViewModel.cs" />
+    <Compile Include="InserimentoControl\InserimentoView.xaml.cs">
+      <DependentUpon>InserimentoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="ResourcesDictionary\Dati\Materia.cs" />
+    <Compile Include="MenuControl\MenuViewModel.cs" />
+    <Compile Include="MenuControl\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiddleControl\MiddleView.xaml.cs">
+      <DependentUpon>MiddleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderControl\HeaderView.xaml.cs">
+      <DependentUpon>HeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ResourcesDictionary\Dati\NucleoCod.cs" />
+    <Compile Include="PersonaleControl\PersonaleView.xaml.cs">
+      <DependentUpon>PersonaleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PersonaleControl\PersonaleViewModel.cs" />
+    <Compile Include="ResourcesDictionary\Dati\RepartiCodice.cs" />
+    <Compile Include="ResourcesDictionary\Dati\RepartiSezioniNucleoKeyValue.cs" />
+    <Compile Include="Service\Repository\IRepositoryService.cs" />
+    <Compile Include="Service\Repository\RepositoryService.cs" />
+    <Compile Include="InserimentoControl\InserimentoViewModel.cs" />
+    <Compile Include="ResourcesDictionary\Dati\SezioneCod.cs" />
+    <Compile Include="ResourcesDictionary\Dati\Tipologia.cs" />
+    <Compile Include="ResourcesDictionary\Dati\TipologiaDelCorso.cs" />
+    <Compile Include="Common\ViewSelector.cs" />
+    <Compile Include="Service\Repository\tool\ITool.cs" />
+    <Compile Include="Service\Repository\tool\Tool.cs" />
+    <Compile Include="VisualizzaControl\VisualizzaView.xaml.cs">
+      <DependentUpon>VisualizzaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VisualizzaControl\VisualizzaViewModelxaml.cs" />
+    <Page Include="AttestatiControl\AttestatiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HomeControl\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InserimentoControl\InserimentoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuControl\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiddleControl\MiddleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HeaderControl\HeaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ModificaControl\ModificaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PersonaleControl\PersonaleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\BorderDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\ButtonDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\ButtonMenuDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\ComboBoxDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\DatagridDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\GridDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\LabelDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\ListBoxDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\TextBlockDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\TextBoxDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VisualizzaControl\VisualizzaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\AccountUtenti.cs" />
+    <Compile Include="Models\Attestati.cs" />
+    <Compile Include="Models\AttestatiVuota.cs" />
+    <Compile Include="Models\CatalogoTrio.cs" />
+    <Compile Include="Models\CatMilitari.cs" />
+    <Compile Include="Models\Corsi.cs" />
+    <Compile Include="Models\Corso0001.cs" />
+    <Compile Include="Models\EntiFormatori.cs" />
+    <Compile Include="Models\GradoMilitari.cs" />
+    <Compile Include="Models\Incarico.cs" />
+    <Compile Include="Models\MateriaCorso.cs" />
+    <Compile Include="Models\Param.cs" />
+    <Compile Include="Models\Personale.cs" />
+    <Compile Include="Models\ProfiloCivili.cs" />
+    <Compile Include="Models\QualificaCivili.cs" />
+    <Compile Include="Models\StatoServizio.cs" />
+    <Compile Include="Models\Tables.cs" />
+    <Compile Include="Models\tblContext.cs" />
+    <Compile Include="Models\TipoFormazione.cs" />
+    <Compile Include="Models\TipologiaCorso.cs" />
+    <Compile Include="Models\To.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Service\App\AppServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>3.1.32</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+      <Version>3.1.32</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <Version>3.1.32</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3">
+      <Version>2.1.11</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="IMG\marina-logo.png" />
+    <Resource Include="IMG\ministero-difesa-logo.png" />
+    <Resource Include="IMG\stemma.png" />
+    <Resource Include="IMG\Stemma_Marina_ombra.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

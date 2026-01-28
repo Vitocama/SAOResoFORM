@@ -1,0 +1,25 @@
+﻿<Application x:Class="SAOResoForm.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SAOResoForm"
+             xmlns:converters="clr-namespace:SAOResoForm.Converter"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Dizionari di risorse -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/ButtonDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/LabelDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/BorderDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/GridDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/ButtonMenuDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/ListBoxDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/TextBlockDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/DatagridDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converter globali per CodUfficio -->
+           
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

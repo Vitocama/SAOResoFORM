@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SAOResoForm.MiddleControl.MiddleUserControl"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="900">
+    <Grid>
+        <Border BorderBrush="Black" BorderThickness="0,1.5,0,2" Height="80" >
+            <StackPanel>
+
+                <StackPanel.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#0A3568" Offset="0.0"/>
+
+                        <GradientStop Color="#0A3568" Offset="0.5"/>
+
+                        <GradientStop Color="#3A6BA4" Offset="0.1111"/>
+
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+                <Image Source="/img/marina-logo.png" Margin="10,0,0,0">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="0.19" ScaleY="0.16" />
+                    </Image.RenderTransform>
+
+
+                </Image>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

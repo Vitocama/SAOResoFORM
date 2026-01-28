@@ -1,0 +1,49 @@
+﻿<Window x:Class="SAOResoForm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Header="clr-namespace:SAOResoForm.HeaderControl"
+        xmlns:Middle="clr-namespace:SAOResoForm.MiddleControl"
+        xmlns:Menu="clr-namespace:SAOResoForm.MenuControl"
+        xmlns:common="clr-namespace:SAOResoForm.Common"
+        xmlns:local="clr-namespace:SAOResoForm"
+        Title="MainWindow" Height="808" Width="1300"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <!-- ViewSelector dinamico -->
+        <common:ViewSelector x:Key="DynamicViewSelector"/>
+    </Window.Resources>
+
+    <Grid Style="{ StaticResource TotaleSfondo }">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/> <!-- Header -->
+            <RowDefinition Height="85"/>  <!-- Middle -->
+            <RowDefinition Height="*"/>   <!-- Contenuto -->
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Header:HeaderUserControl Grid.Row="0"/>
+
+        <!-- MIDDLE -->
+        <Middle:MiddleUserControl Grid.Row="1"/>
+
+        <!-- CONTENUTO -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/> <!-- Menu -->
+                <ColumnDefinition Width="*"/>   <!-- Pagina Dinamica -->
+            </Grid.ColumnDefinitions>
+
+            <!-- MENU -->
+            <Menu:MenuView Grid.Column="0"
+                           DataContext="{Binding MenuVM}" />
+
+            <!-- PAGINA DINAMICA -->
+            <ContentControl Grid.Column="1"
+                            Content="{Binding CurrentViewModel}"
+                            ContentTemplateSelector="{StaticResource DynamicViewSelector}" />
+        </Grid>
+    </Grid>
+</Window>
