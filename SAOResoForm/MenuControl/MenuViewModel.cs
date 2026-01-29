@@ -1,7 +1,8 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
+using SAOResoForm.AttestatiControl;
+using SAOResoForm.AttestatiControl.AttestazioniInserimentoControl;
 using SAOResoForm.HomeControl;
 using SAOResoForm.PersonaleControl;
-using SAOResoForm.AttestatiControl;
 using SAOResoForm.Service.App;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
@@ -40,7 +41,7 @@ namespace SAOResoForm.MenuControl
 
             OpenAttestatiCommand = new RelayCommand(() =>
             {
-                _mainVM.CurrentViewModel = new AttestatiViewModel();
+                _mainVM.CurrentViewModel = new AttestatiViewModel(_mainVM, _services);
             });
         }
 

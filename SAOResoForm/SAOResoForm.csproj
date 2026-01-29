@@ -62,6 +62,13 @@
       <DependentUpon>AttestatiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AttestatiControl\AttestatiViewModel.cs" />
+    <Compile Include="AttestatiControl\AttestatoInserimento.xaml.cs">
+      <DependentUpon>AttestatoInserimento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttestazioniInserimentoControl\AttestatiInserimentoView.xaml.cs">
+      <DependentUpon>AttestatiInserimentoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttestazioniInserimentoControl\AttestatiInserimentoViewModel.cs" />
     <Compile Include="Converter\CodUfficioToRepartoConverter.cs" />
     <Compile Include="Models\MappingCodici.cs" />
     <Compile Include="ModificaControl\ModificaView.xaml.cs">
@@ -114,6 +121,14 @@
     </Compile>
     <Compile Include="VisualizzaControl\VisualizzaViewModelxaml.cs" />
     <Page Include="AttestatiControl\AttestatiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AttestatiControl\AttestatoInserimento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AttestazioniInserimentoControl\AttestatiInserimentoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

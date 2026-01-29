@@ -253,7 +253,6 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\Resour
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\ResourcesDictionary\Resources\ListBoxDictionary.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\ResourcesDictionary\Resources\TextBlockDictionary.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\ResourcesDictionary\Resources\TextBoxDictionary.baml
-C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiView.g.cs
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\HomeControl\HomeView.g.cs
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\InserimentoControl\InserimentoView.g.cs
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\MenuControl\MenuView.g.cs
@@ -268,7 +267,6 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\Genera
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm_MarkupCompile.cache
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm_MarkupCompile.lref
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\App.baml
-C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiView.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\HomeControl\HomeView.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\MainWindow.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\VisualizzaControl\VisualizzaView.baml
@@ -378,3 +376,9 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM-Backup\SAOResoForm\obj\Debug
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM-Backup\SAOResoForm\obj\Debug\SAOResoF.4E7412EE.Up2Date
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM-Backup\SAOResoForm\obj\Debug\SAOResoForm.exe
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM-Backup\SAOResoForm\obj\Debug\SAOResoForm.pdb
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiView.g.cs
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiView.baml
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatoInserimento.g.cs
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestazioniInserimentoControl\AttestatiInserimentoView.g.cs
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatoInserimento.baml
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestazioniInserimentoControl\AttestatiInserimentoView.baml

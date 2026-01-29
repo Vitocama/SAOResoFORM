@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button HorizontalAlignment="Left" Content="INSERIMENTO ATTESTATO"></Button>
+        <Button HorizontalAlignment="Left" Content="INSERIMENTO ATTESTATO" Command="{Binding AttestatiInseriesciCommand}"></Button>
         <Button HorizontalAlignment="Right" Content="INSERIMENTO INFORMAZIONE"></Button>
         
     </Grid>
