@@ -1,4 +1,5 @@
-﻿using SAOResoForm.Service.App;
+﻿using SAOResoForm.AttestratiCreaControl;
+using SAOResoForm.Service.App;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
     public partial class AttestatiInserimentoView : Window
     {
         private AttestatiInserimentoViewModel _viewModel;
+        private readonly AppServices _appServices;
 
         // ========================
         // COSTRUTTORE CON PARAMETRI
@@ -29,16 +31,16 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
         // ========================
         private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (_viewModel?.PersonaleSelezionato != null)
+            if (DataContext is AttestatiInserimentoViewModel viewModel)
             {
-                MessageBox.Show(
-                    $"Inserimento attestato per:\n{_viewModel.PersonaleSelezionato.Cognome} {_viewModel.PersonaleSelezionato.Nome}",
-                    "Inserimento Attestato",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
+                if (viewModel.PersonaleSelezionato != null)
+                {
+                    var creaView = new AttestatiCreaView();
+                    creaView.ShowDialog();
+                }
             }
         }
+        
 
         // ========================
         // CLEANUP

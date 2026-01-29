@@ -382,3 +382,5 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\Attest
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestazioniInserimentoControl\AttestatiInserimentoView.g.cs
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatoInserimento.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestazioniInserimentoControl\AttestatiInserimentoView.baml
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestratiCreaControl\AttestatiCreaView.g.cs
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestratiCreaControl\AttestatiCreaView.baml

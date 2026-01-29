@@ -1,0 +1,222 @@
+﻿<Window x:Class="SAOResoForm.AttestratiCreaControl.AttestatiCreaView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SAOResoForm.AttestratiCreaControl"
+        mc:Ignorable="d"
+        Title="INSERIMENTO ATTESTATO" 
+        Height="650" 
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Stile per le etichette -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
+        </Style>
+
+        <!-- Stile per i TextBox -->
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Stile per i ComboBox -->
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Stile per i DatePicker -->
+        <Style x:Key="DateStyle" TargetType="DatePicker">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Form -->
+            <RowDefinition Height="Auto"/>
+            <!-- Pulsanti -->
+        </Grid.RowDefinitions>
+
+        <!-- ========================= -->
+        <!-- HEADER -->
+        <!-- ========================= -->
+        <Border Grid.Row="0" 
+                Background="#3498db" 
+                Padding="15">
+            <StackPanel>
+                <TextBlock Text="NUOVO ATTESTATO"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="{Binding PersonaleInfo}"
+                           FontSize="14"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ========================= -->
+        <!-- FORM -->
+        <!-- ========================= -->
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      Padding="20">
+            <StackPanel>
+
+                <!-- Attività Formativa -->
+                <TextBlock Text="ATTIVITÀ FORMATIVA *"
+                           Style="{StaticResource LabelStyle}"/>
+                <ComboBox Style="{StaticResource ComboStyle}"
+                          ItemsSource="{Binding AttivitaFormativeList}"
+                          SelectedItem="{Binding AttivitaFormativaSelezionata}"
+                          DisplayMemberPath="Nome"/>
+
+                <!-- Materia -->
+                <TextBlock Text="MATERIA"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding Materia, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="200"/>
+
+                <!-- Ente Formatore -->
+                <TextBlock Text="ENTE FORMATORE *"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding EnteFormatore, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="200"/>
+
+                <!-- Ente Certificatore -->
+                <TextBlock Text="ENTE CERTIFICATORE"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding EnteCertificatore, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="200"/>
+
+                <!-- Titolo Corso -->
+                <TextBlock Text="TITOLO CORSO *"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding TitoloCorso, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="300"
+                         Height="50"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Date in Grid 2 colonne -->
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Inizio Corso -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="INIZIO CORSO *"
+                                   Style="{StaticResource LabelStyle}"/>
+                        <DatePicker Style="{StaticResource DateStyle}"
+                                    SelectedDate="{Binding DataInizioCorso}"/>
+                    </StackPanel>
+
+                    <!-- Fine Corso -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="FINE CORSO *"
+                                   Style="{StaticResource LabelStyle}"/>
+                        <DatePicker Style="{StaticResource DateStyle}"
+                                    SelectedDate="{Binding DataFineCorso}"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Validità Corso -->
+                <TextBlock Text="VALIDITÀ DEL CORSO (ANNI)"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding ValiditaAnni, UpdateSourceTrigger=PropertyChanged}"
+                         MaxLength="2"
+                         PreviewTextInput="NumericOnly_PreviewTextInput"/>
+
+                <!-- Note / Annotazioni -->
+                <TextBlock Text="NOTE / ANNOTAZIONI"
+                           Style="{StaticResource LabelStyle}"/>
+                <TextBox Style="{StaticResource InputStyle}"
+                         Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
+                         Height="80"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Info campi obbligatori -->
+                <TextBlock Text="* Campi obbligatori"
+                           FontSize="11"
+                           FontStyle="Italic"
+                           Foreground="#7f8c8d"
+                           Margin="0,15,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ========================= -->
+        <!-- PULSANTI -->
+        <!-- ========================= -->
+        <Border Grid.Row="2" 
+                Background="#ecf0f1" 
+                BorderBrush="#bdc3c7"
+                BorderThickness="0,1,0,0"
+                Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Messaggio validazione -->
+                <TextBlock Grid.Column="0"
+                           Text="{Binding MessaggioValidazione}"
+                           Foreground="#e74c3c"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <!-- Pulsante Annulla -->
+                <Button Grid.Column="1"
+                        Content="Annulla"
+                        Width="100"
+                        Height="35"
+                        Margin="0,0,10,0"
+                        Background="#95a5a6"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Click="Annulla_Click"/>
+
+                <!-- Pulsante Salva -->
+                <Button Grid.Column="2"
+                        Content="Salva"
+                        Width="100"
+                        Height="35"
+                        Background="#27ae60"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Command="{Binding SalvaCommand}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
