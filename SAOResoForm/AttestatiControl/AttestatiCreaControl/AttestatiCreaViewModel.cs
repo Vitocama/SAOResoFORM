@@ -1,6 +1,7 @@
 ﻿using RESOFORM.Dati;
 using SAOResoForm.Models;
 using SAOResoForm.Service.App;
+using SAOResoForm.Service.Repository.tool;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,99 +17,118 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
         private readonly AppServices _appServices;
         private readonly Personale _personaleSelezionato;
         private readonly Action _onSalvatoCallback;
+        private readonly ITool _tool;
 
         // ========================
         // PROPERTIES - FORM
         // ========================
+
+        private int _totalePersonale;
+        public int TotalePersonale
+        {
+            get => _totalePersonale;
+            set { _totalePersonale = value; OnPropertyChanged(); }
+        }
+
+
         private string _materia;
         public string Materia
         {
             get => _materia;
-            set
-            {
-                _materia = value;
-                OnPropertyChanged();
-            }
+            set { _materia = value; OnPropertyChanged(); }
         }
 
         private string _enteFormatore;
         public string EnteFormatore
         {
             get => _enteFormatore;
-            set
-            {
-                _enteFormatore = value;
-                OnPropertyChanged();
-            }
+            set { _enteFormatore = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<string> _attivitaFormativeList;
+        public ObservableCollection<string> AttivitaFormativeList
+        {
+            get => _attivitaFormativeList;
+            set { _attivitaFormativeList = value; OnPropertyChanged(); }
+        }
+
+        private string _attivitaFormativaSelezionata;
+        public string AttivitaFormativaSelezionata
+        {
+            get => _attivitaFormativaSelezionata;
+            set { _attivitaFormativaSelezionata = value; OnPropertyChanged(); }
         }
 
         private string _enteCertificatore;
         public string EnteCertificatore
         {
             get => _enteCertificatore;
-            set
-            {
-                _enteCertificatore = value;
-                OnPropertyChanged();
-            }
+            set { _enteCertificatore = value; OnPropertyChanged(); }
         }
 
         private string _titoloCorso;
         public string TitoloCorso
         {
             get => _titoloCorso;
+            set { _titoloCorso = value; OnPropertyChanged(); }
+        }
+
+        // MODIFICATO: Rinominato da DataInizioCorso a DataInizio
+        private DateTime? _dataInizio;
+        public DateTime? DataInizio
+        {
+            get => _dataInizio;
             set
             {
-                _titoloCorso = value;
+                _dataInizio = value;
                 OnPropertyChanged();
+
+                // Aggiorna DisplayDateStart per DataFine
+                DisplayDateStartDataFine = _dataInizio;
+
+                // Correggi DataFine se è prima di DataInizio
+                if (DataFine.HasValue && DataFine < _dataInizio)
+                {
+                    DataFine = _dataInizio;
+                }
+
+                CalcolaDataScadenza();
             }
         }
 
-        private DateTime? _dataInizioCorso;
-        public DateTime? DataInizioCorso
+        // MODIFICATO: Rinominato da DataFineCorso a DataFine
+        private DateTime? _dataFine;
+        public DateTime? DataFine
         {
-            get => _dataInizioCorso;
+            get => _dataFine;
             set
             {
-                _dataInizioCorso = value;
+                _dataFine = value;
                 OnPropertyChanged();
                 CalcolaDataScadenza();
             }
         }
 
-        private DateTime? _dataFineCorso;
-        public DateTime? DataFineCorso
+        // Proprietà per bloccare le date nel DatePicker
+        private DateTime? _displayDateStartDataFine;
+        public DateTime? DisplayDateStartDataFine
         {
-            get => _dataFineCorso;
-            set
-            {
-                _dataFineCorso = value;
-                OnPropertyChanged();
-                CalcolaDataScadenza();
-            }
+            get => _displayDateStartDataFine;
+            set { _displayDateStartDataFine = value; OnPropertyChanged(); }
         }
 
         private string _validitaAnni;
         public string ValiditaAnni
         {
             get => _validitaAnni;
-            set
-            {
-                _validitaAnni = value;
-                OnPropertyChanged();
-                CalcolaDataScadenza();
-            }
+            set { _validitaAnni = value; OnPropertyChanged(); CalcolaDataScadenza(); }
         }
 
         private DateTime? _dataScadenza;
         public DateTime? DataScadenza
         {
             get => _dataScadenza;
-            set
-            {
-                _dataScadenza = value;
-                OnPropertyChanged();
-            }
+            set { _dataScadenza = value; OnPropertyChanged(); }
         }
 
         // ========================
@@ -118,38 +138,23 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
         public string NomeFile
         {
             get => _nomeFile;
-            set
-            {
-                _nomeFile = value;
-                OnPropertyChanged();
-            }
+            set { _nomeFile = value; OnPropertyChanged(); }
         }
 
         private string _percorsoFile;
         public string PercorsoFile
         {
             get => _percorsoFile;
-            set
-            {
-                _percorsoFile = value;
-                OnPropertyChanged();
-            }
+            set { _percorsoFile = value; OnPropertyChanged(); }
         }
 
         // ========================
         // INFO PERSONALE
         // ========================
-        public string PersonaleInfo
-        {
-            get
-            {
-                if (_personaleSelezionato != null)
-                {
-                    return $"{_personaleSelezionato.GradoQualifica} {_personaleSelezionato.Cognome} {_personaleSelezionato.Nome}";
-                }
-                return string.Empty;
-            }
-        }
+        public string PersonaleInfo =>
+            _personaleSelezionato != null
+                ? $"{_personaleSelezionato.Cognome} {_personaleSelezionato.Nome} matr. {_personaleSelezionato.Matricola}"
+                : string.Empty;
 
         // ========================
         // VALIDAZIONE
@@ -158,11 +163,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
         public string MessaggioValidazione
         {
             get => _messaggioValidazione;
-            set
-            {
-                _messaggioValidazione = value;
-                OnPropertyChanged();
-            }
+            set { _messaggioValidazione = value; OnPropertyChanged(); }
         }
 
         // ========================
@@ -180,21 +181,19 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             _personaleSelezionato = personale ?? throw new ArgumentNullException(nameof(personale));
             _appServices = appServices ?? throw new ArgumentNullException(nameof(appServices));
             _onSalvatoCallback = onSalvatoCallback;
+            _tool = new Tool(); // AGGIUNTO: Istanzia Tool
 
-            // Inizializza comandi
             SalvaCommand = new RelayCommand(Salva, CanSalva);
             CaricaFileCommand = new RelayCommand(CaricaFile);
             RimuoviFileCommand = new RelayCommand(RimuoviFile, () => !string.IsNullOrEmpty(PercorsoFile));
-
+           
             CaricaAttivitaFormative();
         }
 
-        // ========================
-        // CARICAMENTO DATI
-        // ========================
         private void CaricaAttivitaFormative()
         {
-            // TODO: Carica attività formative dal database
+            var attivitaFormativa = new AttivitaFormativaComboBox();
+            AttivitaFormativeList = new ObservableCollection<string>(attivitaFormativa.formativa);
         }
 
         // ========================
@@ -219,12 +218,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"Errore nel caricamento del file:\n{ex.Message}",
-                    "Errore",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                MessageBox.Show($"Errore nel caricamento del file:\n{ex.Message}", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -234,72 +228,31 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             NomeFile = null;
         }
 
+        // RIMOSSO: Metodo CopiaERinominaFile (ora usa Tool.RinominaFile)
+
         // ========================
         // CALCOLO DATA SCADENZA
         // ========================
         private void CalcolaDataScadenza()
         {
-            if (DataFineCorso.HasValue && !string.IsNullOrWhiteSpace(ValiditaAnni))
-            {
-                if (int.TryParse(ValiditaAnni, out int anni) && anni > 0)
-                {
-                    DataScadenza = DataFineCorso.Value.AddYears(anni);
-                }
-                else
-                {
-                    DataScadenza = null;
-                }
-            }
+            if (DataFine.HasValue && int.TryParse(ValiditaAnni, out int anni) && anni > 0)
+                DataScadenza = DataFine.Value.AddYears(anni);
             else
-            {
                 DataScadenza = null;
-            }
         }
 
         // ========================
         // VALIDAZIONE
         // ========================
-        private bool CanSalva()
-        {
-            return true; // Sempre abilitato, validazione nel metodo Salva
-        }
+        private bool CanSalva() => true;
 
         private bool ValidaDati()
         {
-            // Ente Formatore obbligatorio
-            if (string.IsNullOrWhiteSpace(EnteFormatore))
-            {
-                MessaggioValidazione = "Inserire l'ente formatore";
-                return false;
-            }
-
-            // Titolo Corso obbligatorio
-            if (string.IsNullOrWhiteSpace(TitoloCorso))
-            {
-                MessaggioValidazione = "Inserire il titolo del corso";
-                return false;
-            }
-
-            // Data Inizio obbligatoria
-            if (!DataInizioCorso.HasValue)
-            {
-                MessaggioValidazione = "Inserire la data di inizio corso";
-                return false;
-            }
-
-            // Data Fine obbligatoria
-            if (!DataFineCorso.HasValue)
-            {
-                MessaggioValidazione = "Inserire la data di fine corso";
-                return false;
-            }
-
-            // Validazione date
-            if (DataFineCorso < DataInizioCorso)
-            {
-                MessaggioValidazione = "La data di fine deve essere successiva alla data di inizio";
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(EnteFormatore)) { MessaggioValidazione = "Inserire l'ente formatore"; return false; }
+            if (string.IsNullOrWhiteSpace(TitoloCorso)) { MessaggioValidazione = "Inserire il titolo del corso"; return false; }
+            if (!DataInizio.HasValue) { MessaggioValidazione = "Inserire la data di inizio"; return false; }
+            if (!DataFine.HasValue) { MessaggioValidazione = "Inserire la data di fine"; return false; }
+            if (DataFine < DataInizio) { MessaggioValidazione = "La data di fine deve essere successiva alla data di inizio"; return false; }
 
             MessaggioValidazione = string.Empty;
             return true;
@@ -312,47 +265,26 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
         {
             try
             {
-                // Validazione
-                if (!ValidaDati())
+                if (!ValidaDati()) return;
+
+                string percorsoFileFinale = null;
+                string nomeFileFinale = null;
+
+                // MODIFICATO: Usa Tool.RinominaFile con DataFine
+                if (!string.IsNullOrEmpty(PercorsoFile) && DataFine.HasValue)
                 {
-                    return;
+                    percorsoFileFinale = _tool.RinominaFile(_personaleSelezionato, DataFine.Value, PercorsoFile);
+                    nomeFileFinale = System.IO.Path.GetFileName(percorsoFileFinale);
                 }
 
-                // TODO: Crea nuovo attestato e salva nel database
-                /*
-                var nuovoAttestato = new Attestato
-                {
-                    Matricola = _personaleSelezionato.Matricola,
-                    Cognome = _personaleSelezionato.Cognome,
-                    Nome = _personaleSelezionato.Nome,
-                    Materia = Materia,
-                    EnteFormatore = EnteFormatore,
-                    EnteCertificatore = EnteCertificatore,
-                    TitoloCorso = TitoloCorso,
-                    DataInizioCorso = DataInizioCorso.Value,
-                    DataFineCorso = DataFineCorso.Value,
-                    ValiditaAnni = ValiditaAnni,
-                    DataScadenza = DataScadenza,
-                    NomeFile = NomeFile,
-                    PercorsoFile = PercorsoFile
-                };
-
-                _appServices.AttestatoRepository.Add(nuovoAttestato);
-                _appServices.AttestatoRepository.SaveChanges();
-                */
-
-                // Notifica successo
                 MessageBox.Show(
-                    $"Attestato salvato con successo per:\n{PersonaleInfo}",
-                    "Successo",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
+                    $"Attestato salvato con successo per:\n{PersonaleInfo}" +
+                    (percorsoFileFinale != null ? $"\n\nFile salvato in:\n{percorsoFileFinale}" : ""),
+                    "Successo", MessageBoxButton.OK, MessageBoxImage.Information
                 );
 
-                // Callback
                 _onSalvatoCallback?.Invoke();
 
-                // Chiudi finestra
                 Application.Current.Windows
                     .OfType<Window>()
                     .FirstOrDefault(w => w.DataContext == this)
@@ -360,23 +292,14 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Errore salvataggio attestato: {ex.Message}");
-                MessageBox.Show(
-                    $"Errore durante il salvataggio dell'attestato:\n{ex.Message}",
-                    "Errore",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                MessageBox.Show($"Errore durante il salvataggio dell'attestato:\n{ex.Message}", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         // ========================
         // DISPOSE
         // ========================
-        public void Dispose()
-        {
-            // Cleanup se necessario
-        }
+        public void Dispose() { }
 
         // ========================
         // PROPERTY CHANGED
@@ -407,7 +330,6 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
         }
 
         public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
-
         public void Execute(object parameter) => _execute();
     }
 }

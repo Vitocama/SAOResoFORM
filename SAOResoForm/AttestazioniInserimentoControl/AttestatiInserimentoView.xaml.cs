@@ -1,50 +1,45 @@
-﻿using SAOResoForm.AttestratiCreaControl;
+﻿
+using SAOResoForm.AttestatiControl.AttestatiCreaControl;
+
 using SAOResoForm.Service.App;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using AttestatiCreaView = SAOResoForm.AttestatiControl.AttestatiCreaControl.AttestatiCreaView;
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
 {
-    /// <summary>
-    /// Logica di interazione per AttestatiInserimentoView.xaml
-    /// </summary>
     public partial class AttestatiInserimentoView : Window
     {
         private AttestatiInserimentoViewModel _viewModel;
-        private readonly AppServices _appServices;
 
-        // ========================
-        // COSTRUTTORE CON PARAMETRI
-        // ========================
         public AttestatiInserimentoView(MainViewModel mainVM, AppServices appServices)
         {
             InitializeComponent();
 
-            // IMPORTANTE: Crea e imposta il DataContext
             _viewModel = new AttestatiInserimentoViewModel(mainVM, appServices);
             this.DataContext = _viewModel;
         }
 
-        // ========================
-        // DOUBLE CLICK
-        // ========================
-        private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        // DOPPIO CLICK SUL DATAGRID
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is AttestatiInserimentoViewModel viewModel)
+            if (_viewModel?.PersonaleSelezionato != null)
             {
-                if (viewModel.PersonaleSelezionato != null)
-                {
-                    var creaView = new AttestatiCreaView();
-                    creaView.ShowDialog();
-                }
+                // Apri la finestra di creazione passando l'oggetto Personale
+                var creaView = new AttestatiCreaView();
+                creaView.DataContext = new AttestatiCreaViewModel(
+                    _viewModel.PersonaleSelezionato,  // Passa l'oggetto completo
+                    _viewModel._appServices
+                );
+                creaView.Owner = this;
+                creaView.ShowDialog();
+
+                // Aggiorna dopo la chiusura
+                _viewModel.AggiornaDati();
             }
         }
-        
 
-        // ========================
-        // CLEANUP
-        // ========================
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);

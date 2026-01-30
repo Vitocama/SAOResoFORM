@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SAOResoForm.AttestatiControl.AttestatiCreaControl"
         mc:Ignorable="d"
         Title="INSERIMENTO ATTESTATO" 
-        Height="650" 
+        Height="800" 
         Width="600"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
@@ -53,26 +53,18 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Header -->
             <RowDefinition Height="*"/>
-            <!-- Form -->
             <RowDefinition Height="Auto"/>
-            <!-- Pulsanti -->
         </Grid.RowDefinitions>
 
-        <!-- ========================= -->
         <!-- HEADER -->
-        <!-- ========================= -->
-        <Border Grid.Row="0" 
-                Background="#3498db" 
-                Padding="15">
+        <Border Grid.Row="0" Background="#3498db" Padding="15">
             <StackPanel>
                 <TextBlock Text="NUOVO ATTESTATO"
                            FontSize="20"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"/>
-
                 <TextBlock Text="{Binding PersonaleInfo}"
                            FontSize="14"
                            Foreground="White"
@@ -81,46 +73,35 @@
             </StackPanel>
         </Border>
 
-        <!-- ========================= -->
         <!-- FORM -->
-        <!-- ========================= -->
-        <ScrollViewer Grid.Row="1" 
-                      VerticalScrollBarVisibility="Auto"
-                      Padding="20">
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
             <StackPanel>
-
                 <!-- Attività Formativa -->
-                <TextBlock Text="ATTIVITÀ FORMATIVA *"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="ATTIVITÀ FORMATIVA *" Style="{StaticResource LabelStyle}"/>
                 <ComboBox Style="{StaticResource ComboStyle}"
                           ItemsSource="{Binding AttivitaFormativeList}"
-                          SelectedItem="{Binding AttivitaFormativaSelezionata}"
-                          DisplayMemberPath="Nome"/>
+                          SelectedItem="{Binding AttivitaFormativaSelezionata}"/>
 
                 <!-- Materia -->
-                <TextBlock Text="MATERIA"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="MATERIA" Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
                          Text="{Binding Materia, UpdateSourceTrigger=PropertyChanged}"
                          MaxLength="200"/>
 
                 <!-- Ente Formatore -->
-                <TextBlock Text="ENTE FORMATORE *"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="ENTE FORMATORE *" Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
                          Text="{Binding EnteFormatore, UpdateSourceTrigger=PropertyChanged}"
                          MaxLength="200"/>
 
                 <!-- Ente Certificatore -->
-                <TextBlock Text="ENTE CERTIFICATORE"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="ENTE CERTIFICATORE" Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
                          Text="{Binding EnteCertificatore, UpdateSourceTrigger=PropertyChanged}"
                          MaxLength="200"/>
 
                 <!-- Titolo Corso -->
-                <TextBlock Text="TITOLO CORSO *"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="TITOLO CORSO *" Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
                          Text="{Binding TitoloCorso, UpdateSourceTrigger=PropertyChanged}"
                          MaxLength="300"
@@ -137,37 +118,35 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Inizio Corso -->
+                    <!-- Data Inizio -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="INIZIO CORSO *"
-                                   Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Text="DATA INIZIO *" Style="{StaticResource LabelStyle}"/>
                         <DatePicker Style="{StaticResource DateStyle}"
-                                    SelectedDate="{Binding DataInizioCorso}"/>
+                                    SelectedDate="{Binding DataInizio, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDateFormat="Short"
+                                    FirstDayOfWeek="Monday"
+                                    DisplayDateEnd="{Binding DataFine}"/>
                     </StackPanel>
 
-                    <!-- Fine Corso -->
+                    <!-- Data Fine -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="FINE CORSO *"
-                                   Style="{StaticResource LabelStyle}"/>
+                        <TextBlock Text="DATA FINE *" Style="{StaticResource LabelStyle}"/>
                         <DatePicker Style="{StaticResource DateStyle}"
-                                    SelectedDate="{Binding DataFineCorso}"/>
+                                    SelectedDate="{Binding DataFine, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDateFormat="Short"
+                                    FirstDayOfWeek="Monday"
+                                    DisplayDateStart="{Binding DataInizio}"/>
                     </StackPanel>
                 </Grid>
 
                 <!-- Validità Corso -->
-                <TextBlock Text="VALIDITÀ DEL CORSO (ANNI)"
-                           Style="{StaticResource LabelStyle}"/>
+                <TextBlock Text="VALIDITÀ DEL CORSO (ANNI)" Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
                          Text="{Binding ValiditaAnni, UpdateSourceTrigger=PropertyChanged}"
-                         MaxLength="2"
-                         PreviewTextInput="NumericOnly_PreviewTextInput"/>
+                         MaxLength="2"/>
 
-                <!-- ========================= -->
                 <!-- ALLEGATO FILE -->
-                <!-- ========================= -->
-                <TextBlock Text="ALLEGATO (PDF, IMMAGINE)"
-                           Style="{StaticResource LabelStyle}"/>
-
+                <TextBlock Text="ALLEGATO (PDF, IMMAGINE)" Style="{StaticResource LabelStyle}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -175,7 +154,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Nome File -->
                     <TextBox Grid.Column="0"
                              Style="{StaticResource InputStyle}"
                              Text="{Binding NomeFile, Mode=OneWay}"
@@ -183,7 +161,6 @@
                              Background="#ecf0f1"
                              Margin="0,0,10,0"/>
 
-                    <!-- Pulsante Sfoglia -->
                     <Button Grid.Column="1"
                             Content="Sfoglia..."
                             Style="{StaticResource FileButtonStyle}"
@@ -193,7 +170,6 @@
                             Command="{Binding CaricaFileCommand}"
                             Margin="0,0,5,0"/>
 
-                    <!-- Pulsante Rimuovi -->
                     <Button Grid.Column="2"
                             Content="✖"
                             Style="{StaticResource FileButtonStyle}"
@@ -205,14 +181,12 @@
                             ToolTip="Rimuovi file"/>
                 </Grid>
 
-                <!-- Info File -->
                 <TextBlock Text="{Binding PercorsoFile}"
                            FontSize="10"
                            Foreground="#7f8c8d"
                            Margin="0,5,0,0"
                            TextTrimming="CharacterEllipsis"/>
 
-                <!-- Info campi obbligatori -->
                 <TextBlock Text="* Campi obbligatori"
                            FontSize="11"
                            FontStyle="Italic"
@@ -221,14 +195,8 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ========================= -->
         <!-- PULSANTI -->
-        <!-- ========================= -->
-        <Border Grid.Row="2" 
-                Background="#ecf0f1" 
-                BorderBrush="#bdc3c7"
-                BorderThickness="0,1,0,0"
-                Padding="20">
+        <Border Grid.Row="2" Background="#ecf0f1" BorderBrush="#bdc3c7" BorderThickness="0,1,0,0" Padding="20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -236,14 +204,12 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Messaggio validazione -->
                 <TextBlock Grid.Column="0"
                            Text="{Binding MessaggioValidazione}"
                            Foreground="#e74c3c"
                            FontWeight="Bold"
                            VerticalAlignment="Center"/>
 
-                <!-- Pulsante Annulla -->
                 <Button Grid.Column="1"
                         Content="Annulla"
                         Width="100"
@@ -254,7 +220,6 @@
                         FontWeight="Bold"
                         Click="Annulla_Click"/>
 
-                <!-- Pulsante Salva -->
                 <Button Grid.Column="2"
                         Content="Salva"
                         Width="100"

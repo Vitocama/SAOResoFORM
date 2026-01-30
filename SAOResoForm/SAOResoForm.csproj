@@ -58,21 +58,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttestatiControl\AttestatiCreaControl\AttestatiCreaView.xaml.cs">
+      <DependentUpon>AttestatiCreaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AttestatiControl\AttestatiCreaControl\AttestatiCreaViewModel.cs" />
     <Compile Include="AttestatiControl\AttestatiView.xaml.cs">
       <DependentUpon>AttestatiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AttestatiControl\AttestatiViewModel.cs" />
-    <Compile Include="AttestatiControl\AttestatoInserimento.xaml.cs">
+    <Compile Include="AttestazioniInserimentoControl\AttestatoInserimento.xaml.cs">
       <DependentUpon>AttestatoInserimento.xaml</DependentUpon>
     </Compile>
     <Compile Include="AttestazioniInserimentoControl\AttestatiInserimentoView.xaml.cs">
       <DependentUpon>AttestatiInserimentoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AttestazioniInserimentoControl\AttestatiInserimentoViewModel.cs" />
-    <Compile Include="AttestratiCreaControl\AttestatiCreaView.xaml.cs">
-      <DependentUpon>AttestatiCreaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AttestratiCreaControl\AttestatiCreaViewModel.cs" />
     <Compile Include="Converter\CodUfficioToRepartoConverter.cs" />
     <Compile Include="Models\MappingCodici.cs" />
     <Compile Include="ModificaControl\ModificaView.xaml.cs">
@@ -124,19 +124,19 @@
       <DependentUpon>VisualizzaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VisualizzaControl\VisualizzaViewModelxaml.cs" />
+    <Page Include="AttestatiControl\AttestatiCreaControl\AttestatiCreaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AttestatiControl\AttestatiView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AttestatiControl\AttestatoInserimento.xaml">
+    <Page Include="AttestazioniInserimentoControl\AttestatoInserimento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestazioniInserimentoControl\AttestatiInserimentoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AttestratiCreaControl\AttestatiCreaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
