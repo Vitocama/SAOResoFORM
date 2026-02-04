@@ -193,8 +193,6 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\SAORes
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\SAOResoForm.exe
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\SAOResoForm.pdb
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\CommonServiceLocator.dll
-C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\CommunityToolkit.Mvvm.dll
-C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\CommunityToolkit.Mvvm.pdb
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\Microsoft.Bcl.HashCode.dll
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\bin\Debug\Microsoft.Data.Sqlite.dll
@@ -273,7 +271,6 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\Visual
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.g.resources
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.Properties.Resources.resources
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.csproj.GenerateResource.cache
-C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.csproj.CoreCompileInputs.cache
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoF.4E7412EE.Up2Date
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.exe
@@ -486,3 +483,5 @@ C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\Attest
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiCreaControl\AttestatiCreaView.g.cs
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestazioniInserimentoControl\AttestatoInserimento.baml
 C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\AttestatiControl\AttestatiCreaControl\AttestatiCreaView.baml
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\informazioneControl\InformazioneView.baml
+C:\Users\Hirad\source\repos\SAOResoFORM\SAOResoFORM\SAOResoForm\obj\Debug\informazioneControl\InformazioneView.g.cs

@@ -1,43 +1,43 @@
-﻿
-using SAOResoForm.AttestatiControl.AttestatiCreaControl;
-
+﻿using SAOResoForm.AttestatiControl.AttestatiCreaControl;
 using SAOResoForm.Service.App;
 using System;
 using System.Windows;
 using System.Windows.Input;
-using AttestatiCreaView = SAOResoForm.AttestatiControl.AttestatiCreaControl.AttestatiCreaView;
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
 {
     public partial class AttestatiInserimentoView : Window
     {
-        private AttestatiInserimentoViewModel _viewModel;
+        private readonly AttestatiInserimentoViewModel _viewModel;
 
         public AttestatiInserimentoView(MainViewModel mainVM, AppServices appServices)
         {
             InitializeComponent();
 
             _viewModel = new AttestatiInserimentoViewModel(mainVM, appServices);
-            this.DataContext = _viewModel;
+            DataContext = _viewModel;
         }
 
         // DOPPIO CLICK SUL DATAGRID
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (_viewModel?.PersonaleSelezionato != null)
-            {
-                // Apri la finestra di creazione passando l'oggetto Personale
-                var creaView = new AttestatiCreaView();
-                creaView.DataContext = new AttestatiCreaViewModel(
-                    _viewModel.PersonaleSelezionato,  // Passa l'oggetto completo
-                    _viewModel._appServices
-                );
-                creaView.Owner = this;
-                creaView.ShowDialog();
+            if (_viewModel?.PersonaleSelezionato == null)
+                return;
 
-                // Aggiorna dopo la chiusura
-                _viewModel.AggiornaDati();
-            }
+            // ✅ APRI SOLO LA VIEW GIUSTA
+            var creaView = new AttestatiCreaView
+            {
+                Owner = this,
+                DataContext = new AttestatiCreaViewModel(
+                    _viewModel.PersonaleSelezionato, // ✔ Personale corretto
+                    _viewModel.AppServices           // ✔ AppServices già esistente
+                )
+            };
+
+            creaView.ShowDialog();
+
+            // refresh dati
+            _viewModel.AggiornaDati();
         }
 
         protected override void OnClosed(EventArgs e)

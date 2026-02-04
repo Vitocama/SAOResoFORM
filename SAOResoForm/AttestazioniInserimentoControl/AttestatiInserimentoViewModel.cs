@@ -12,7 +12,7 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
     {
         private readonly MainViewModel _mainVM;
         public readonly AppServices _appServices; // Public per accesso dal code-behind
-
+        internal readonly AppServices AppServices;
         private ObservableCollection<Personale> _personaleList;
         public ObservableCollection<Personale> PersonaleList
         {
