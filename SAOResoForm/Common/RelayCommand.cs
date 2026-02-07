@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
+<<<<<<< HEAD
 namespace SAOResoForm.Common
 {
     /// <summary>
@@ -103,6 +104,22 @@ namespace SAOResoForm.Common
         private readonly Func<bool> _canExecute;
 
         public RelayCommand(Action execute, Func<bool> canExecute = null)
+=======
+namespace SAOResoForm.informazioneControl
+{
+    public class RelayCommand : ICommand
+    {
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
@@ -110,11 +127,16 @@ namespace SAOResoForm.Common
 
         public bool CanExecute(object parameter)
         {
+<<<<<<< HEAD
             return _canExecute == null || _canExecute();
+=======
+            return _canExecute == null || _canExecute(parameter);
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         }
 
         public void Execute(object parameter)
         {
+<<<<<<< HEAD
             _execute();
         }
 
@@ -127,6 +149,9 @@ namespace SAOResoForm.Common
         public void RaiseCanExecuteChanged()
         {
             CommandManager.InvalidateRequerySuggested();
+=======
+            _execute(parameter);
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         }
     }
 }

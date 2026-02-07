@@ -6,13 +6,17 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+<<<<<<< HEAD
 using System.Windows.Input;
+=======
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
 {
     public class AttestatiInserimentoViewModel : INotifyPropertyChanged, IDisposable
     {
         private readonly MainViewModel _mainVM;
+<<<<<<< HEAD
         private readonly AppServices _appServices;
 
         public AppServices AppServices => _appServices;
@@ -31,6 +35,10 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
         // ========================
         // COLLEZIONI
         // ========================
+=======
+        public readonly AppServices _appServices; // Public per accesso dal code-behind
+        internal readonly AppServices AppServices;
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         private ObservableCollection<Personale> _personaleList;
         public ObservableCollection<Personale> PersonaleList
         {
@@ -45,9 +53,6 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
             set { _filteredPersonaleList = value; OnPropertyChanged(); }
         }
 
-        // ========================
-        // SELEZIONE
-        // ========================
         private Personale _personaleSelezionato;
         public Personale PersonaleSelezionato
         {
@@ -60,9 +65,6 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
             }
         }
 
-        // ========================
-        // FILTRO RICERCA
-        // ========================
         private string _filtroRicerca;
         public string FiltroRicerca
         {
@@ -74,22 +76,36 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
                 ApplicaFiltro();
             }
         }
+        private int _totalePersonale;
+        public int TotalePersonale
+        {
+            get => _totalePersonale;
+            set { _totalePersonale = value; OnPropertyChanged(); }
+        }
 
+<<<<<<< HEAD
         // ========================
         // COSTRUTTORE
         // ========================
+=======
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         public AttestatiInserimentoViewModel(MainViewModel mainVM, AppServices appServices)
         {
             _mainVM = mainVM;
+<<<<<<< HEAD
             _appServices = appServices;
 
             ApriCreaAttestatoCommand = new RelayCommand(
                 ApriCreaAttestato,
                 () => PersonaleSelezionato != null);
 
+=======
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
             CaricaDati();
+            TotalePersonale = PersonaleList.Count;
         }
 
+<<<<<<< HEAD
         // ========================
         // LOGICA
         // ========================
@@ -100,6 +116,8 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
                 RichiediAperturaCreaAttestato?.Invoke(this, PersonaleSelezionato);
         }
 
+=======
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         private void CaricaDati()
         {
             var personaleList = _appServices.RepositoryService.GetAll();
@@ -119,31 +137,39 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
                 var risultati = PersonaleList.Where(p =>
                     (p.Cognome?.ToLower().Contains(filtro) ?? false) ||
                     (p.Nome?.ToLower().Contains(filtro) ?? false) ||
-                    (p.Matricola?.ToLower().Contains(filtro) ?? false) ||
-                    (p.GradoQualifica?.ToLower().Contains(filtro) ?? false) ||
-                    (p.CodUfficio?.ToString().Contains(filtro) ?? false)
+                    (p.Matricola?.ToLower().Contains(filtro) ?? false)
                 ).ToList();
 
                 FilteredPersonaleList = new ObservableCollection<Personale>(risultati);
             }
         }
 
+<<<<<<< HEAD
         // ========================
         // AGGIORNA DATI
         // ========================
         public void AggiornaDati() => CaricaDati();
+=======
+        public void AggiornaDati()
+        {
+            CaricaDati();
+        }
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
 
-        // ========================
-        // DISPOSE
-        // ========================
         public void Dispose()
         {
+<<<<<<< HEAD
             // Nessuna risorsa da rilasciare
         }
 
         // ========================
         // INotifyPropertyChanged
         // ========================
+=======
+            // Cleanup
+        }
+
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

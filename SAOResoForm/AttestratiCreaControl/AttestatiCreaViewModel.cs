@@ -9,7 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace SAOResoForm.AttestratiCreaControl
+namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
 {
     public class AttestatiCreaViewModel : INotifyPropertyChanged
     {
@@ -20,6 +20,7 @@ namespace SAOResoForm.AttestratiCreaControl
         // ========================
         // EVENTI PER LA VIEW
         // ========================
+<<<<<<< HEAD
         public event EventHandler RichiediChiusura;
         public event EventHandler<string> MostraMessaggioSuccesso;
         public event EventHandler<string> MostraMessaggioErrore;
@@ -37,6 +38,8 @@ namespace SAOResoForm.AttestratiCreaControl
 
         public ObservableCollection<string> AttivitaFormativeList { get; private set; }
 
+=======
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         private string _materia;
         public string Materia
         {
@@ -93,9 +96,13 @@ namespace SAOResoForm.AttestratiCreaControl
             private set { _dataScadenza = value; OnPropertyChanged(); }
         }
 
-        private string _note;
-        public string Note
+        // ========================
+        // FILE PROPERTIES
+        // ========================
+        private string _nomeFile;
+        public string NomeFile
         {
+<<<<<<< HEAD
             get => _note;
             set { _note = value; OnPropertyChanged(); }
         }
@@ -110,6 +117,23 @@ namespace SAOResoForm.AttestratiCreaControl
             set
             {
                 _percorsoFileOriginale = value;
+=======
+            get => _nomeFile;
+            set
+            {
+                _nomeFile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _percorsoFile;
+        public string PercorsoFile
+        {
+            get => _percorsoFile;
+            set
+            {
+                _percorsoFile = value;
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(NomeFileSelezionato));
             }
@@ -140,8 +164,13 @@ namespace SAOResoForm.AttestratiCreaControl
         // COMMANDS
         // ========================
         public ICommand SalvaCommand { get; }
+<<<<<<< HEAD
         public ICommand SelezionaFileCommand { get; }
         public ICommand AnnullaCommand { get; }
+=======
+        public ICommand CaricaFileCommand { get; }
+        public ICommand RimuoviFileCommand { get; }
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
 
         // ========================
         // CONSTRUCTOR
@@ -152,9 +181,16 @@ namespace SAOResoForm.AttestratiCreaControl
             _appServices = appServices ?? throw new ArgumentNullException(nameof(appServices));
             _onSalvatoCallback = onSalvatoCallback;
 
+<<<<<<< HEAD
             SalvaCommand = new RelayCommand(Salva);
             SelezionaFileCommand = new RelayCommand(SelezionaFile);
             AnnullaCommand = new RelayCommand(Annulla);
+=======
+            // Inizializza comandi
+            SalvaCommand = new RelayCommand(Salva, CanSalva);
+            CaricaFileCommand = new RelayCommand(CaricaFile);
+            RimuoviFileCommand = new RelayCommand(RimuoviFile, () => !string.IsNullOrEmpty(PercorsoFile));
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
 
             CaricaAttivitaFormative();
         }
@@ -164,6 +200,7 @@ namespace SAOResoForm.AttestratiCreaControl
         // ========================
         private void CaricaAttivitaFormative()
         {
+<<<<<<< HEAD
             AttivitaFormativeList = new ObservableCollection<string>
             {
                 "Corso di Formazione",
@@ -176,6 +213,46 @@ namespace SAOResoForm.AttestratiCreaControl
                 "Master",
                 "Altro"
             };
+=======
+            // TODO: Carica attività formative dal database
+        }
+
+        // ========================
+        // FILE MANAGEMENT
+        // ========================
+        private void CaricaFile()
+        {
+            try
+            {
+                var openFileDialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    Title = "Seleziona File Attestato",
+                    Filter = "PDF files (*.pdf)|*.pdf|Image files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png|All files (*.*)|*.*",
+                    FilterIndex = 1
+                };
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    PercorsoFile = openFileDialog.FileName;
+                    NomeFile = System.IO.Path.GetFileName(openFileDialog.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Errore nel caricamento del file:\n{ex.Message}",
+                    "Errore",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+        }
+
+        private void RimuoviFile()
+        {
+            PercorsoFile = null;
+            NomeFile = null;
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
         }
 
         // ========================
@@ -197,9 +274,13 @@ namespace SAOResoForm.AttestratiCreaControl
 
         private bool ValidaDati()
         {
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(AttivitaFormativa))
                 return Errore("Selezionare un'attività formativa");
 
+=======
+            // Ente Formatore obbligatorio
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
             if (string.IsNullOrWhiteSpace(EnteFormatore))
                 return Errore("Inserire l'ente formatore");
 
@@ -232,6 +313,7 @@ namespace SAOResoForm.AttestratiCreaControl
                 if (!ValidaDati())
                     return;
 
+<<<<<<< HEAD
                 string fileAllegato = SalvaFile();
 
                 var attestato = new Attestati
@@ -247,6 +329,30 @@ namespace SAOResoForm.AttestratiCreaControl
                     DataScadenzaCorso = DataScadenza?.ToString("dd/MM/yyyy"),
                     LinkAttestato = fileAllegato
                 };
+=======
+                // TODO: Crea nuovo attestato e salva nel database
+                /*
+                var nuovoAttestato = new Attestato
+                {
+                    Matricola = _personaleSelezionato.Matricola,
+                    Cognome = _personaleSelezionato.Cognome,
+                    Nome = _personaleSelezionato.Nome,
+                    Materia = Materia,
+                    EnteFormatore = EnteFormatore,
+                    EnteCertificatore = EnteCertificatore,
+                    TitoloCorso = TitoloCorso,
+                    DataInizioCorso = DataInizioCorso.Value,
+                    DataFineCorso = DataFineCorso.Value,
+                    ValiditaAnni = ValiditaAnni,
+                    DataScadenza = DataScadenza,
+                    NomeFile = NomeFile,
+                    PercorsoFile = PercorsoFile
+                };
+
+                _appServices.AttestatoRepository.Add(nuovoAttestato);
+                _appServices.AttestatoRepository.SaveChanges();
+                */
+>>>>>>> 305da8a0420ff716e2d789a230478eb1b16c1887
 
                 var ctx = new tblContext();
                 ctx.Attestati.Add(attestato);

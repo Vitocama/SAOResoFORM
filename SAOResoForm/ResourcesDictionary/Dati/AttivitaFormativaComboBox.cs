@@ -9,7 +9,7 @@ namespace RESOFORM.Dati
 {
     public class AttivitaFormativaComboBox
     {
-     public   List<string> formativa = new List<string>() {
+        public List<string> formativa = new List<string>() {
         "AGGIORNAMENTO",
         "FORMAZIONE",
         "INDOTTRINAMENTO",
@@ -17,13 +17,6 @@ namespace RESOFORM.Dati
         "SEMINARIO"
         };
 
-        public List<string> materia = new List<string>() {
-        "SICUREZZA SUL LAVORO",
-        "TECNICO",
-        "AMMINISTRATIVO",
-        "ALTRO",
-        "QUALITA'",
-        "ANTI CORRUZIONE"
-        };
+
     }
 }
