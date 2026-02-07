@@ -1,30 +1,97 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
 using System.Windows;
-using System.Windows.Input;
 
 namespace SAOResoForm.AttestratiCreaControl
 {
+    /// <summary>
+    /// Interaction logic for AttestatiCreaView.xaml
+    /// </summary>
     public partial class AttestatiCreaView : Window
     {
-        public AttestatiCreaView()
+        private readonly AttestatiCreaViewModel _viewModel;
+
+        // ========================
+        // CONSTRUCTOR
+        // ========================
+        public AttestatiCreaView(AttestatiCreaViewModel viewModel)
         {
             InitializeComponent();
+
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            DataContext = _viewModel;
+
+            SubscribeToViewModelEvents();
         }
 
-        // Validazione solo numeri per Validità Anni
-        private void NumericOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        // ========================
+        // SUBSCRIBE EVENTS
+        // ========================
+        private void SubscribeToViewModelEvents()
         {
-            e.Handled = !IsTextNumeric(e.Text);
+            _viewModel.RichiediChiusura += OnRichiediChiusura;
+            _viewModel.MostraMessaggioSuccesso += OnMostraMessaggioSuccesso;
+            _viewModel.MostraMessaggioErrore += OnMostraMessaggioErrore;
+            _viewModel.RichiediConfermaAnnullamento += OnRichiediConfermaAnnullamento;
         }
 
-        private bool IsTextNumeric(string text)
+        // ========================
+        // EVENT HANDLERS
+        // ========================
+        private void OnRichiediChiusura(object sender, EventArgs e)
         {
-            return Regex.IsMatch(text, "^[0-9]+$");
+            Close();
         }
 
-        private void Annulla_Click(object sender, RoutedEventArgs e)
+        private void OnMostraMessaggioSuccesso(object sender, string messaggio)
         {
-            this.Close();
+            MessageBox.Show(
+                messaggio,
+                "Operazione completata",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
+        private void OnMostraMessaggioErrore(object sender, string messaggio)
+        {
+            MessageBox.Show(
+                messaggio,
+                "Errore",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        private void OnRichiediConfermaAnnullamento(object sender, bool _)
+        {
+            var result = MessageBox.Show(
+                "Sei sicuro di voler annullare?\nTutti i dati inseriti andranno persi.",
+                "Conferma annullamento",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                _viewModel.ConfermaAnnullamento();
+            }
+        }
+
+        // ========================
+        // CLEANUP
+        // ========================
+        private void UnsubscribeFromViewModelEvents()
+        {
+            if (_viewModel == null)
+                return;
+
+            _viewModel.RichiediChiusura -= OnRichiediChiusura;
+            _viewModel.MostraMessaggioSuccesso -= OnMostraMessaggioSuccesso;
+            _viewModel.MostraMessaggioErrore -= OnMostraMessaggioErrore;
+            _viewModel.RichiediConfermaAnnullamento -= OnRichiediConfermaAnnullamento;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            UnsubscribeFromViewModelEvents();
+            base.OnClosed(e);
         }
     }
 }

@@ -87,17 +87,20 @@
         <!-- DATAGRID -->
         <!-- ========================= -->
         <DataGrid Grid.Row="2"
-                
-                  ItemsSource="{Binding FilteredPersonaleList}"
-                  SelectedItem="{Binding PersonaleSelezionato}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  MouseDoubleClick="MouseDoubleClick"
-                  VerticalScrollBarVisibility="Disabled"
-                  Height="300">
+          ItemsSource="{Binding FilteredPersonaleList}"
+          SelectedItem="{Binding PersonaleSelezionato}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          SelectionMode="Single"
+          CanUserAddRows="False"
+          CanUserDeleteRows="False"
+          Height="300">
+
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick"
+                      Command="{Binding ApriCreaAttestatoCommand}" />
+            </DataGrid.InputBindings>
+
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="50"

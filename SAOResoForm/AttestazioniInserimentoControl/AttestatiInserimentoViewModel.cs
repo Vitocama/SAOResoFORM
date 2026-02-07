@@ -1,25 +1,32 @@
-﻿using SAOResoForm.Models;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using SAOResoForm.Models;
 using SAOResoForm.Service.App;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
 {
     public class AttestatiInserimentoViewModel : INotifyPropertyChanged, IDisposable
     {
-
-
         private readonly MainViewModel _mainVM;
         private readonly AppServices _appServices;
-    
 
+        public AppServices AppServices => _appServices;
+
+        // ========================
+        // EVENTI
+        // ========================
+        // Questo evento segnala alla View di aprire AttestatiCreaView
+        public event EventHandler<Personale> RichiediAperturaCreaAttestato;
+
+        // ========================
+        // COMANDI
+        // ========================
+        public ICommand ApriCreaAttestatoCommand { get; }
 
         // ========================
         // COLLEZIONI
@@ -28,22 +35,14 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
         public ObservableCollection<Personale> PersonaleList
         {
             get => _personaleList;
-            set
-            {
-                _personaleList = value;
-                OnPropertyChanged();
-            }
+            set { _personaleList = value; OnPropertyChanged(); }
         }
 
         private ObservableCollection<Personale> _filteredPersonaleList;
         public ObservableCollection<Personale> FilteredPersonaleList
         {
             get => _filteredPersonaleList;
-            set
-            {
-                _filteredPersonaleList = value;
-                OnPropertyChanged();
-            }
+            set { _filteredPersonaleList = value; OnPropertyChanged(); }
         }
 
         // ========================
@@ -57,6 +56,7 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
             {
                 _personaleSelezionato = value;
                 OnPropertyChanged();
+                (ApriCreaAttestatoCommand as RelayCommand)?.RaiseCanExecuteChanged();
             }
         }
 
@@ -76,19 +76,30 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
         }
 
         // ========================
-        // CONSTRUCTOR
+        // COSTRUTTORE
         // ========================
         public AttestatiInserimentoViewModel(MainViewModel mainVM, AppServices appServices)
         {
-            _appServices = appServices;
             _mainVM = mainVM;
+            _appServices = appServices;
+
+            ApriCreaAttestatoCommand = new RelayCommand(
+                ApriCreaAttestato,
+                () => PersonaleSelezionato != null);
 
             CaricaDati();
         }
 
         // ========================
-        // CARICAMENTO DATI
+        // LOGICA
         // ========================
+        private void ApriCreaAttestato()
+        {
+            // Al doppio click, invia alla View l'oggetto selezionato
+            if (PersonaleSelezionato != null)
+                RichiediAperturaCreaAttestato?.Invoke(this, PersonaleSelezionato);
+        }
+
         private void CaricaDati()
         {
             var personaleList = _appServices.RepositoryService.GetAll();
@@ -96,9 +107,6 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
             FilteredPersonaleList = new ObservableCollection<Personale>(personaleList);
         }
 
-        // ========================
-        // FILTRO
-        // ========================
         private void ApplicaFiltro()
         {
             if (string.IsNullOrWhiteSpace(FiltroRicerca))
@@ -123,21 +131,18 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
         // ========================
         // AGGIORNA DATI
         // ========================
-        public void AggiornaDati()
-        {
-            CaricaDati();
-        }
+        public void AggiornaDati() => CaricaDati();
 
         // ========================
         // DISPOSE
         // ========================
         public void Dispose()
         {
-            // Cleanup se necessario
+            // Nessuna risorsa da rilasciare
         }
 
         // ========================
-        // PROPERTY CHANGED
+        // INotifyPropertyChanged
         // ========================
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

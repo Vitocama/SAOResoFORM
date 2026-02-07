@@ -1,54 +1,39 @@
 ﻿using SAOResoForm.AttestratiCreaControl;
+using SAOResoForm.Models;
 using SAOResoForm.Service.App;
 using System;
 using System.Windows;
-using System.Windows.Input;
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
 {
-    /// <summary>
-    /// Logica di interazione per AttestatiInserimentoView.xaml
-    /// </summary>
     public partial class AttestatiInserimentoView : Window
     {
-        private AttestatiInserimentoViewModel _viewModel;
-        private readonly AppServices _appServices;
+        private readonly AttestatiInserimentoViewModel _viewModel;
 
-        // ========================
-        // COSTRUTTORE CON PARAMETRI
-        // ========================
         public AttestatiInserimentoView(MainViewModel mainVM, AppServices appServices)
         {
             InitializeComponent();
 
-            // IMPORTANTE: Crea e imposta il DataContext
             _viewModel = new AttestatiInserimentoViewModel(mainVM, appServices);
-            this.DataContext = _viewModel;
+            DataContext = _viewModel;
+
+            _viewModel.RichiediAperturaCreaAttestato += OnRichiediAperturaCreaAttestato;
         }
 
-        // ========================
-        // DOUBLE CLICK
-        // ========================
-        private void MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OnRichiediAperturaCreaAttestato(object sender, Personale personale)
         {
-            if (DataContext is AttestatiInserimentoViewModel viewModel)
-            {
-                if (viewModel.PersonaleSelezionato != null)
-                {
-                    var creaView = new AttestatiCreaView();
-                    creaView.ShowDialog();
-                }
-            }
-        }
-        
+            var vm = new AttestatiCreaViewModel(personale, _viewModel.AppServices);
+            var view = new AttestatiCreaView(vm);
 
-        // ========================
-        // CLEANUP
-        // ========================
+            view.ShowDialog();
+        }
+
+
         protected override void OnClosed(EventArgs e)
         {
+            _viewModel.RichiediAperturaCreaAttestato -= OnRichiediAperturaCreaAttestato;
+            _viewModel.Dispose();
             base.OnClosed(e);
-            _viewModel?.Dispose();
         }
     }
 }

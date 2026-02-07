@@ -3,16 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SAOResoForm.AttestratiCreaControl"
         mc:Ignorable="d"
         Title="INSERIMENTO ATTESTATO" 
-        Height="650" 
+        Height="800" 
         Width="600"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <!-- Stile per le etichette -->
         <Style x:Key="LabelStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="13"/>
@@ -20,7 +18,6 @@
             <Setter Property="Margin" Value="0,10,0,5"/>
         </Style>
 
-        <!-- Stile per i TextBox -->
         <Style x:Key="InputStyle" TargetType="TextBox">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Padding" Value="5"/>
@@ -28,7 +25,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Stile per i ComboBox -->
         <Style x:Key="ComboStyle" TargetType="ComboBox">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Padding" Value="5"/>
@@ -36,7 +32,6 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
-        <!-- Stile per i DatePicker -->
         <Style x:Key="DateStyle" TargetType="DatePicker">
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="13"/>
@@ -46,16 +41,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Header -->
             <RowDefinition Height="*"/>
-            <!-- Form -->
             <RowDefinition Height="Auto"/>
-            <!-- Pulsanti -->
         </Grid.RowDefinitions>
 
-        <!-- ========================= -->
         <!-- HEADER -->
-        <!-- ========================= -->
         <Border Grid.Row="0" 
                 Background="#3498db" 
                 Padding="15">
@@ -74,9 +64,7 @@
             </StackPanel>
         </Border>
 
-        <!-- ========================= -->
         <!-- FORM -->
-        <!-- ========================= -->
         <ScrollViewer Grid.Row="1" 
                       VerticalScrollBarVisibility="Auto"
                       Padding="20">
@@ -87,8 +75,7 @@
                            Style="{StaticResource LabelStyle}"/>
                 <ComboBox Style="{StaticResource ComboStyle}"
                           ItemsSource="{Binding AttivitaFormativeList}"
-                          SelectedItem="{Binding AttivitaFormativaSelezionata}"
-                          DisplayMemberPath="Nome"/>
+                          SelectedItem="{Binding AttivitaFormativa}"/>
 
                 <!-- Materia -->
                 <TextBlock Text="MATERIA"
@@ -122,7 +109,7 @@
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"/>
 
-                <!-- Date in Grid 2 colonne -->
+                <!-- Date -->
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -130,7 +117,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Inizio Corso -->
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="INIZIO CORSO *"
                                    Style="{StaticResource LabelStyle}"/>
@@ -138,7 +124,6 @@
                                     SelectedDate="{Binding DataInizioCorso}"/>
                     </StackPanel>
 
-                    <!-- Fine Corso -->
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="FINE CORSO *"
                                    Style="{StaticResource LabelStyle}"/>
@@ -149,13 +134,39 @@
 
                 <!-- Validità Corso -->
                 <TextBlock Text="VALIDITÀ DEL CORSO (ANNI)"
-                           Style="{StaticResource LabelStyle}"/>
+           Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
-                         Text="{Binding ValiditaAnni, UpdateSourceTrigger=PropertyChanged}"
-                         MaxLength="2"
-                         PreviewTextInput="NumericOnly_PreviewTextInput"/>
+         Text="{Binding ValiditaAnni, UpdateSourceTrigger=PropertyChanged}"
+         MaxLength="2"/>
 
-                <!-- Note / Annotazioni -->
+                <!-- File Allegato con COMMAND -->
+                <TextBlock Text="ALLEGATO"
+                           Style="{StaticResource LabelStyle}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Style="{StaticResource InputStyle}"
+                             Text="{Binding NomeFileSelezionato}"
+                             IsReadOnly="True"
+                             Background="#f8f9fa"/>
+
+                    <!-- USARE COMMAND INVECE DI CLICK -->
+                    <Button Grid.Column="1"
+                            Content="Sfoglia..."
+                            Width="100"
+                            Height="30"
+                            Margin="10,0,0,0"
+                            Background="#3498db"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Command="{Binding SelezionaFileCommand}" Cursor="Hand"/>
+                </Grid>
+
+                <!-- Note -->
                 <TextBlock Text="NOTE / ANNOTAZIONI"
                            Style="{StaticResource LabelStyle}"/>
                 <TextBox Style="{StaticResource InputStyle}"
@@ -165,7 +176,6 @@
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"/>
 
-                <!-- Info campi obbligatori -->
                 <TextBlock Text="* Campi obbligatori"
                            FontSize="11"
                            FontStyle="Italic"
@@ -174,9 +184,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ========================= -->
         <!-- PULSANTI -->
-        <!-- ========================= -->
         <Border Grid.Row="2" 
                 Background="#ecf0f1" 
                 BorderBrush="#bdc3c7"
@@ -189,14 +197,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Messaggio validazione -->
                 <TextBlock Grid.Column="0"
                            Text="{Binding MessaggioValidazione}"
                            Foreground="#e74c3c"
                            FontWeight="Bold"
                            VerticalAlignment="Center"/>
 
-                <!-- Pulsante Annulla -->
+                <!-- USARE COMMAND INVECE DI CLICK -->
                 <Button Grid.Column="1"
                         Content="Annulla"
                         Width="100"
@@ -205,9 +212,8 @@
                         Background="#95a5a6"
                         Foreground="White"
                         FontWeight="Bold"
-                        Click="Annulla_Click"/>
+                        Command="{Binding AnnullaCommand}"/>
 
-                <!-- Pulsante Salva -->
                 <Button Grid.Column="2"
                         Content="Salva"
                         Width="100"
