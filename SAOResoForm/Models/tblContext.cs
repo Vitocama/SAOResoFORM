@@ -88,23 +88,22 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.AnnoCorso).HasColumnName("ANNO_CORSO");
 
-                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("CODICE_ATTIVITA_FORMATIVA");
+                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("CODICE_MATERIA_CORSO");
+                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
-                entity.Property(e => e.CodiceTipologiaCorso).HasColumnName("CODICE_TIPOLOGIA_CORSO");
+      
 
                 entity.Property(e => e.DataFineCorso).HasColumnName("DATA_FINE_CORSO");
 
                 entity.Property(e => e.DataInizioCorso).HasColumnName("DATA_INIZIO_CORSO");
 
-                entity.Property(e => e.DataNormalizzata).HasColumnName("DATA_NORMALIZZATA");
+               
 
                 entity.Property(e => e.DataScadenzaCorso).HasColumnName("DATA_SCADENZA_CORSO");
 
                 entity.Property(e => e.DenominazioneEnteCertificatore).HasColumnName("DENOMINAZIONE_ENTE_CERTIFICATORE");
 
-                entity.Property(e => e.DenominazioneEnteFormatore).HasColumnName("DENOMINAZIONE_ENTE_FORMATORE");
 
                 entity.Property(e => e.EnteFormatore).HasColumnName("ENTE_FORMATORE");
 
@@ -116,9 +115,6 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.ValiditaAnni).HasColumnName("VALIDITA_ANNI");
 
-                entity.Property(e => e.Variabile)
-                    .HasColumnName("VARIABILE")
-                    .HasDefaultValueSql("0");
             });
 
             modelBuilder.Entity<AttestatiVuota>(entity =>
@@ -129,9 +125,9 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.AnnoCorso).HasColumnName("ANNO_CORSO");
 
-                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("CODICE_ATTIVITA_FORMATIVA");
+                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("CODICE_MATERIA_CORSO");
+                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
                 entity.Property(e => e.CodiceTipologiaCorso).HasColumnName("CODICE_TIPOLOGIA_CORSO");
 
@@ -183,9 +179,9 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.Codice).HasColumnName("CODICE");
 
-                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("CODICE_ATTIVITA_FORMATIVA");
+                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("CODICE_MATERIA_CORSO");
+                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
                 entity.Property(e => e.CodiceTestoBreve).HasColumnName("CODICE_TESTO_BREVE");
 
@@ -303,7 +299,7 @@ namespace SAOResoForm.Models
 
                 entity.ToTable("MATERIA_CORSO");
 
-                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("CODICE_MATERIA_CORSO");
+                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -421,7 +417,7 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.AttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("CODICE_ATTIVITA_FORMATIVA");
+                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
             });
@@ -434,9 +430,9 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.AttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("CODICE_ATTIVITA_FORMATIVA");
+                entity.Property(e => e.CodiceAttivitaFormativa).HasColumnName("ATTIVITA_FORMATIVA");
 
-                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("CODICE_MATERIA_CORSO");
+                entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
                 entity.Property(e => e.CodiceTipologiaCorso).HasColumnName("CODICE_TIPOLOGIA_CORSO");
 

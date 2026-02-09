@@ -11,23 +11,23 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="553*"/>
-            <ColumnDefinition Width="377*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="465*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <!-- TITOLO -->
-        <TextBlock 
-                   Grid.ColumnSpan="2"
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"
                    Text="VISUALIZZA DATABASE INFORMAZIONE" 
                    FontSize="20" 
                    FontWeight="Bold"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Center" Margin="510,0,0,0"/>
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
 
         <!-- RICERCA E CONTATORE -->
-        <Grid Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="300"/>
@@ -62,12 +62,13 @@
 
         <!-- TITOLO LISTBOX -->
         <TextBlock Grid.Row="1" 
-                   Grid.Column="3"
+                   Grid.Column="2"
                    Text="Personale Selezionato" 
                    FontWeight="Bold"
                    FontSize="14"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   Margin="10"/>
 
         <!-- DATAGRID CON CHECKBOX -->
         <DataGrid Grid.Row="2"
@@ -77,7 +78,7 @@
                   SelectionMode="Single"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
-                  Margin="10,10,10,10" Grid.ColumnSpan="2">
+                  Margin="10">
             <DataGrid.Columns>
                 <!-- CHECKBOX -->
                 <DataGridCheckBoxColumn Header="SELEZIONATI" 
@@ -85,36 +86,36 @@
                                         Width="120"/>
 
                 <DataGridTextColumn Header="ID" 
-                            Binding="{Binding Id}" 
-                            Width="Auto"
-                            IsReadOnly="True"/>
+                                    Binding="{Binding Id}" 
+                                    Width="Auto"
+                                    IsReadOnly="True"/>
 
                 <DataGridTextColumn Header="Cognome" 
-                            Binding="{Binding Cognome}" 
-                            Width="*"
-                            IsReadOnly="True"/>
+                                    Binding="{Binding Cognome}" 
+                                    Width="*"
+                                    IsReadOnly="True"/>
 
                 <DataGridTextColumn Header="Nome" 
-                            Binding="{Binding Nome}" 
-                            Width="*"
-                            IsReadOnly="True"/>
+                                    Binding="{Binding Nome}" 
+                                    Width="*"
+                                    IsReadOnly="True"/>
 
                 <DataGridTextColumn Header="Matricola" 
-                            Binding="{Binding Matricola}" 
-                            Width="*"
-                            IsReadOnly="True"/>
+                                    Binding="{Binding Matricola}" 
+                                    Width="*"
+                                    IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <!-- SEPARATORE -->
         <GridSplitter Grid.Row="2" 
-                      Grid.Column="2"
+                      Grid.Column="1"
                       Width="5"
                       HorizontalAlignment="Stretch"
                       Background="LightGray"/>
 
-        <!-- LISTBOX PERSONALE INSERITO -->
-        <Grid Grid.Row="2" Grid.Column="3" Margin="10,10,10,10">
+        <!-- PANNELLO DESTRA: PERSONALE INSERITO -->
+        <Grid Grid.Row="2" Grid.Column="2" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -130,9 +131,9 @@
                     <DataTemplate>
                         <TextBlock>
                             <Run Text="{Binding Cognome}"/>
-                            <Run Text="_"/>
+                            <Run Text=" "/>
                             <Run Text="{Binding Nome}"/>
-                            <Run Text="_"/>
+                            <Run Text=" - matr. "/>
                             <Run Text="{Binding Matricola}"/>
                         </TextBlock>
                     </DataTemplate>
@@ -140,8 +141,6 @@
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Foreground" Value="Black"/>
-
-                        <!-- Testo nero anche quando selezionato -->
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Foreground" Value="Black"/>
@@ -176,9 +175,11 @@
 
         <!-- PULSANTI AZIONI -->
         <StackPanel Grid.Row="3" 
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Orientation="Horizontal" 
-                    HorizontalAlignment="Left" 
-                    Margin="67,10,0,10" Grid.ColumnSpan="2">
+                    HorizontalAlignment="Center" 
+                    Margin="10">
 
             <!-- PULSANTE AGGIUNGI SELEZIONATI -->
             <Button Content="Aggiungi Selezionati ►"

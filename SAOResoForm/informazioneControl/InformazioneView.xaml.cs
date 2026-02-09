@@ -1,6 +1,8 @@
-﻿using System.Windows;
-using SAOResoForm.Service.App;
+﻿using SAOResoForm.informazioneControl;
 using SAOResoForm.Service.Repository;
+using SAOResoForm.Service.Repository.tool;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace SAOResoForm.informazioneControl
 {
@@ -9,7 +11,7 @@ namespace SAOResoForm.informazioneControl
         public InformazioneView()
         {
             InitializeComponent();
-            DataContext = new InformazioneViewModel();
+            DataContext = new InformazioneViewModel(new RepositoryService(), new Tool());
         }
     }
 }

@@ -62,10 +62,6 @@
       <DependentUpon>AttestatiCreaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AttestatiControl\AttestatiCreaControl\AttestatiCreaViewModel.cs" />
-    <Compile Include="AttestatiControl\AttestatiView.xaml.cs">
-      <DependentUpon>AttestatiView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AttestatiControl\AttestatiViewModel.cs" />
     <Compile Include="AttestazioniInserimentoControl\AttestatoInserimento.xaml.cs">
       <DependentUpon>AttestatoInserimento.xaml</DependentUpon>
     </Compile>
@@ -115,7 +111,9 @@
     <Compile Include="PersonaleControl\PersonaleViewModel.cs" />
     <Compile Include="ResourcesDictionary\Dati\RepartiCodice.cs" />
     <Compile Include="ResourcesDictionary\Dati\RepartiSezioniNucleoKeyValue.cs" />
+    <Compile Include="Service\Repository\IRepositoryAttestato.cs" />
     <Compile Include="Service\Repository\IRepositoryService.cs" />
+    <Compile Include="Service\Repository\RepositoryAttestati.cs" />
     <Compile Include="Service\Repository\RepositoryService.cs" />
     <Compile Include="InserimentoControl\InserimentoViewModel.cs" />
     <Compile Include="ResourcesDictionary\Dati\SezioneCod.cs" />
@@ -129,10 +127,6 @@
     </Compile>
     <Compile Include="VisualizzaControl\VisualizzaViewModelxaml.cs" />
     <Page Include="AttestatiControl\AttestatiCreaControl\AttestatiCreaView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AttestatiControl\AttestatiView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

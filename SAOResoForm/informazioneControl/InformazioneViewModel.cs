@@ -1,19 +1,25 @@
-﻿using SAOResoForm.AttestatiControl.AttestatiCreaControl;
+﻿using Microsoft.EntityFrameworkCore;
+using SAOResoForm.AttestatiControl.AttestatiCreaControl;
 using SAOResoForm.Models;
 using SAOResoForm.Service.App;
 using SAOResoForm.Service.Repository;
+using SAOResoForm.Service.Repository.tool;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SAOResoForm.informazioneControl
 {
     public class InformazioneViewModel : INotifyPropertyChanged
     {
-        private readonly AppServices _appServices;
+        private readonly IRepositoryService _repositoryService;
+        private readonly ITool _tool;
+
         private ObservableCollection<Personale> _personaleInserito;
         private ObservableCollection<PersonaleSelezionabile> _filteredPersonaleList;
         private string _filtroRicerca;
@@ -23,77 +29,54 @@ namespace SAOResoForm.informazioneControl
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-
         public ObservableCollection<Personale> PersonaleInserito
         {
             get => _personaleInserito;
-            set
-            {
-                _personaleInserito = value;
-                OnPropertyChanged();
-            }
+            set { _personaleInserito = value; OnPropertyChanged(); }
         }
 
         public ObservableCollection<PersonaleSelezionabile> FilteredPersonaleList
         {
             get => _filteredPersonaleList;
-            set
-            {
-                _filteredPersonaleList = value;
-                OnPropertyChanged();
-            }
+            set { _filteredPersonaleList = value; OnPropertyChanged(); }
         }
 
         public string FiltroRicerca
         {
             get => _filtroRicerca;
-            set
-            {
-                _filtroRicerca = value;
-                OnPropertyChanged();
-                ApplicaFiltro();
-            }
+            set { _filtroRicerca = value; OnPropertyChanged(); ApplicaFiltro(); }
         }
 
         public int TotalePersonale
         {
             get => _totalePersonale;
-            set
-            {
-                _totalePersonale = value;
-                OnPropertyChanged();
-            }
+            set { _totalePersonale = value; OnPropertyChanged(); }
         }
 
         public PersonaleSelezionabile PersonaleSelezionato
         {
             get => _personaleSelezionato;
-            set
-            {
-                _personaleSelezionato = value;
-                OnPropertyChanged();
-            }
+            set { _personaleSelezionato = value; OnPropertyChanged(); }
         }
-
         #endregion
 
         #region Commands
-
         public ICommand AggiungiPersonaleCommand { get; }
         public ICommand AggiungiSelezionatiCommand { get; }
         public ICommand RimuoviPersonaleCommand { get; }
         public ICommand PulisciSelezioneCommand { get; }
         public ICommand CreaAttestatoCommand { get; }
-
         #endregion
 
-        public InformazioneViewModel()
+        #region Constructor
+        public InformazioneViewModel(IRepositoryService repositoryService, ITool tool)
         {
-            
+            _repositoryService = repositoryService;
+            _tool = tool;
+
             PersonaleInserito = new ObservableCollection<Personale>();
             FilteredPersonaleList = new ObservableCollection<PersonaleSelezionabile>();
 
-            // Inizializza i comandi
             AggiungiPersonaleCommand = new RelayCommand(AggiungiPersonale, CanAggiungiPersonale);
             AggiungiSelezionatiCommand = new RelayCommand(AggiungiSelezionati, CanAggiungiSelezionati);
             RimuoviPersonaleCommand = new RelayCommand(RimuoviPersonale, CanRimuoviPersonale);
@@ -102,174 +85,121 @@ namespace SAOResoForm.informazioneControl
 
             CaricaPersonale();
         }
+        #endregion
 
-        #region Metodi Privati
-
+        #region Private Methods
         private void CaricaPersonale()
         {
-            using (var context = new tblContext())
-            {
-                var personaleList = context.Personale.ToList();
-                TotalePersonale = personaleList.Count;
+             var context = new tblContext();
+            var personaleList = context.Personale.AsNoTracking().ToList();
 
-                FilteredPersonaleList.Clear();
-                foreach (var p in personaleList)
-                {
-                    FilteredPersonaleList.Add(new PersonaleSelezionabile { Personale = p });
-                }
+            TotalePersonale = personaleList.Count;
+
+            FilteredPersonaleList.Clear();
+            foreach (var p in personaleList)
+            {
+                FilteredPersonaleList.Add(new PersonaleSelezionabile { Personale = p });
             }
         }
 
         private void ApplicaFiltro()
         {
-            using (var context = new tblContext())
+             var context = new tblContext();
+            var query = context.Personale.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(FiltroRicerca))
             {
-                var query = context.Personale.AsQueryable();
+                string filtro = FiltroRicerca.ToLower();
+                query = query.Where(p => p.Cognome.ToLower().Contains(filtro)
+                                       || p.Nome.ToLower().Contains(filtro)
+                                       || p.Matricola.Contains(filtro));
+            }
 
-                if (!string.IsNullOrWhiteSpace(FiltroRicerca))
-                {
-                    string filtro = FiltroRicerca.ToLower();
-                    query = query.Where(p =>
-                        p.Cognome.ToLower().Contains(filtro) ||
-                        p.Nome.ToLower().Contains(filtro) ||
-                        p.Matricola.Contains(filtro));
-                }
+            var risultati = query.OrderBy(p => p.Cognome)
+                                 .ThenBy(p => p.Nome)
+                                 .ToList();
 
-                var risultati = query.OrderBy(p => p.Cognome)
-                                    .ThenBy(p => p.Nome)
-                                    .ToList();
-
-                FilteredPersonaleList.Clear();
-                foreach (var p in risultati)
-                {
-                    FilteredPersonaleList.Add(new PersonaleSelezionabile { Personale = p });
-                }
+            FilteredPersonaleList.Clear();
+            foreach (var p in risultati)
+            {
+                FilteredPersonaleList.Add(new PersonaleSelezionabile { Personale = p });
             }
         }
-
         #endregion
 
         #region Command Methods
-
         private void AggiungiPersonale(object parameter)
         {
-            if (PersonaleSelezionato != null)
+            if (PersonaleSelezionato != null && !PersonaleInserito.Any(p => p.Id == PersonaleSelezionato.Id))
             {
-                // Verifica se non è già presente (confronto per Id)
-                if (!PersonaleInserito.Any(p => p.Id == PersonaleSelezionato.Id))
-                {
-                    PersonaleInserito.Add(PersonaleSelezionato.Personale);
-                }
+                PersonaleInserito.Add(PersonaleSelezionato.Personale);
             }
         }
 
-        private bool CanAggiungiPersonale(object parameter)
-        {
-            return PersonaleSelezionato != null &&
-                   !PersonaleInserito.Any(p => p.Id == PersonaleSelezionato.Id);
-        }
+        private bool CanAggiungiPersonale(object parameter) => PersonaleSelezionato != null &&
+                                                             !PersonaleInserito.Any(p => p.Id == PersonaleSelezionato.Id);
 
         private void AggiungiSelezionati(object parameter)
         {
-            // Trova tutti i personale con IsSelected = true
             var selezionati = FilteredPersonaleList.Where(p => p.IsSelected).ToList();
 
-            foreach (var personaleWrapper in selezionati)
+            foreach (var p in selezionati)
             {
-                // Verifica se non è già presente nella lista inseriti
-                if (!PersonaleInserito.Any(p => p.Id == personaleWrapper.Id))
-                {
-                    PersonaleInserito.Add(personaleWrapper.Personale);
-                }
-            }
+                if (!PersonaleInserito.Any(x => x.Id == p.Id))
+                    PersonaleInserito.Add(p.Personale);
 
-            // Deseleziona tutti dopo l'aggiunta
-            foreach (var personaleWrapper in selezionati)
-            {
-                personaleWrapper.IsSelected = false;
+                p.IsSelected = false;
             }
         }
 
-        private bool CanAggiungiSelezionati(object parameter)
-        {
-            return FilteredPersonaleList != null &&
-                   FilteredPersonaleList.Any(p => p.IsSelected);
-        }
+        private bool CanAggiungiSelezionati(object parameter) =>
+            FilteredPersonaleList != null && FilteredPersonaleList.Any(p => p.IsSelected);
 
         private void RimuoviPersonale(object parameter)
         {
-            var personale = parameter as Personale;
-            if (personale != null)
-            {
+            if (parameter is Personale personale)
                 PersonaleInserito.Remove(personale);
-            }
         }
 
-        private bool CanRimuoviPersonale(object parameter)
-        {
-            return parameter is Personale;
-        }
+        private bool CanRimuoviPersonale(object parameter) => parameter is Personale;
 
         private void PulisciSelezione(object parameter)
         {
             PersonaleInserito.Clear();
-
-            // Deseleziona anche tutti i checkbox nel DataGrid
-            foreach (var personale in FilteredPersonaleList)
-            {
-                personale.IsSelected = false;
-            }
+            foreach (var p in FilteredPersonaleList)
+                p.IsSelected = false;
         }
 
-        private bool CanPulisciSelezione(object parameter)
-        {
-            return PersonaleInserito.Count > 0;
-        }
+        private bool CanPulisciSelezione(object parameter) => PersonaleInserito.Count > 0;
 
         private void CreaAttestato(object parameter)
         {
-            // Apre la finestra AttestatiCreaView passando il personale selezionato
-            var attestatiView = new AttestatiCreaView();
-            attestatiView.ShowDialog();
+            if (PersonaleInserito.Count == 0) return;
+
+            // Passa solo gli ID al nuovo View
+            var personaleIds = PersonaleInserito.Select(p => p.Id).ToList();
+            var view = new AttestatiCreaView(personaleIds);
+            view.ShowDialog();
         }
 
-        private bool CanCreaAttestato(object parameter)
-        {
-            return PersonaleInserito.Count > 0;
-        }
-
+        private bool CanCreaAttestato(object parameter) => PersonaleInserito.Count > 0;
         #endregion
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 
-    /// <summary>
-    /// Classe wrapper per aggiungere la funzionalità di selezione tramite checkbox
-    /// alla classe Personale senza modificarla direttamente
-    /// </summary>
     public class PersonaleSelezionabile : INotifyPropertyChanged
     {
         private bool _isSelected;
-
         public Personale Personale { get; set; }
 
         public bool IsSelected
         {
             get => _isSelected;
-            set
-            {
-                if (_isSelected != value)
-                {
-                    _isSelected = value;
-                    OnPropertyChanged();
-                }
-            }
+            set { _isSelected = value; OnPropertyChanged(); }
         }
 
-        // Proprietà delegate per binding diretto
         public long Id => Personale.Id;
         public string Cognome => Personale.Cognome;
         public string Nome => Personale.Nome;
@@ -277,10 +207,8 @@ namespace SAOResoForm.informazioneControl
         public string DisplayText => $"{Cognome}_{Nome}_{Matricola}";
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }
+

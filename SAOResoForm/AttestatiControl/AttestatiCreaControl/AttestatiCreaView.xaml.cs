@@ -1,58 +1,23 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using SAOResoForm.Models;
+using SAOResoForm.Repositories;
+using SAOResoForm.Service.App;
+using SAOResoForm.Service.Repository;
+using SAOResoForm.Service.Repository.tool;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 
-namespace SAOResoForm.AttestatiControl.AttestatiCreaControl  // ← CORRETTO
+namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
 {
-    /// <summary>
-    /// Logica di interazione per AttestatiCreaView.xaml
-    /// </summary>
     public partial class AttestatiCreaView : Window
     {
-        public AttestatiCreaView()
+        public AttestatiCreaView(List<long> personaleIds)
         {
             InitializeComponent();
-        }
 
-        // ========================
-        // VALIDAZIONE SOLO NUMERI
-        // ========================
-        private void NumericOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !IsTextNumeric(e.Text);
-        }
+         
 
-        private bool IsTextNumeric(string text)
-        {
-            return Regex.IsMatch(text, "^[0-9]+$");
-        }
-
-        // ========================
-        // PULSANTE ANNULLA
-        // ========================
-        private void Annulla_Click(object sender, RoutedEventArgs e)
-        {
-            var risultato = MessageBox.Show(
-                "Sei sicuro di voler annullare? I dati inseriti andranno persi.",
-                "Conferma Annullamento",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question
-            );
-
-            if (risultato == MessageBoxResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
-        // ========================
-        // CLEANUP
-        // ========================
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            (DataContext as IDisposable)?.Dispose();
+            DataContext = new AttestatiCreaViewModel(personaleIds, new RepositoryAttestato(), new Tool());
         }
     }
 }

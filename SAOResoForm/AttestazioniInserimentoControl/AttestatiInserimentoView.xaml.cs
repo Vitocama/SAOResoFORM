@@ -2,6 +2,7 @@
 using SAOResoForm.Service.App;
 using System;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
@@ -25,17 +26,7 @@ namespace SAOResoForm.AttestatiControl.AttestazioniInserimentoControl
                 return;
 
             // ✅ APRI SOLO LA VIEW GIUSTA
-            var creaView = new AttestatiCreaView
-            {
-                Owner = this,
-                DataContext = new AttestatiCreaViewModel(
-                    _viewModel.PersonaleSelezionato, // ✔ Personale corretto
-                    _viewModel.AppServices           // ✔ AppServices già esistente
-                )
-            };
-
-            creaView.ShowDialog();
-
+  
             // refresh dati
             _viewModel.AggiornaDati();
         }
