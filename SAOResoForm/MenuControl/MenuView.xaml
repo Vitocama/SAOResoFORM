@@ -36,7 +36,7 @@
 
             <!-- REPORTISTICHE -->
             <Border Grid.Row="3" Style="{StaticResource BorderMenu}">
-                <Button Content="REPORTISTICHE" Style="{StaticResource MenuButton}" />
+                <Button Content="REPORTISTICHE" Style="{StaticResource MenuButton}" Command="{Binding OpenReportisticaCommand}"/>
             </Border>
 
             <!-- CREA ACCOUNT -->

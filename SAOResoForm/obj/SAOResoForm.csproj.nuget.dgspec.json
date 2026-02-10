@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hirad\\source\\repos\\SAOResoFORM\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj": {}
+    "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hirad\\source\\repos\\SAOResoFORM\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj": {
+    "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hirad\\source\\repos\\SAOResoFORM\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj",
+        "projectUniqueName": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj",
         "projectName": "SAOResoForm",
-        "projectPath": "C:\\Users\\Hirad\\source\\repos\\SAOResoFORM\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj",
+        "projectPath": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj",
         "packagesPath": "C:\\Users\\Hirad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hirad\\source\\repos\\SAOResoFORM\\SAOResoFORM\\SAOResoForm\\obj\\",
+        "outputPath": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "UsingMicrosoftNETSdk": false,

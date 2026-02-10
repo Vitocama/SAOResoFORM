@@ -70,6 +70,8 @@
     </Compile>
     <Compile Include="AttestazioniInserimentoControl\AttestatiInserimentoViewModel.cs" />
     <Compile Include="Converter\CodUfficioToRepartoConverter.cs" />
+    <Compile Include="Converter\DataScadenzaToColorConverter.cs" />
+    <Compile Include="Converter\DataScadenzaToForegroundConverter.cs" />
     <Compile Include="informazioneControl\InformazioneView.xaml.cs">
       <DependentUpon>InformazioneView.xaml</DependentUpon>
     </Compile>
@@ -79,6 +81,10 @@
       <DependentUpon>ModificaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModificaControl\ModificaViewModel.cs" />
+    <Compile Include="Reportistica\ReportisticaView.xaml.cs">
+      <DependentUpon>ReportisticaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reportistica\ReportisticaViewModel.cs" />
     <Compile Include="ResourcesDictionary\Dati\AttivitaFormativa.cs" />
     <Compile Include="ResourcesDictionary\Dati\AttivitaFormativaComboBox.cs" />
     <Compile Include="ResourcesDictionary\Dati\Cod_UUOO.cs" />
@@ -179,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PersonaleControl\PersonaleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reportistica\ReportisticaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

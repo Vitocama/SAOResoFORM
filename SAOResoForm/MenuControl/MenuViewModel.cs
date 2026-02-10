@@ -4,6 +4,7 @@ using SAOResoForm.AttestatiControl.AttestazioniInserimentoControl;
 using SAOResoForm.HomeControl;
 using SAOResoForm.informazioneControl;
 using SAOResoForm.PersonaleControl;
+using SAOResoForm.Reportistica;
 using SAOResoForm.Service.App;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
@@ -24,10 +25,13 @@ namespace SAOResoForm.MenuControl
         private readonly IRepositoryService _repositoryService;
         private readonly ITool _tool;
         private  InformazioneView _informazioneView;
+        private  ReportisticaView _reportisticaView;
 
         public ICommand OpenHomeCommand { get; }
         public ICommand OpenPersonaleCommand { get; }
         public ICommand OpenAttestatiCommand { get; }
+
+        public ICommand OpenReportisticaCommand { get; }
 
         public MenuViewModel(MainViewModel mainVM, AppServices services)
         {
@@ -46,7 +50,29 @@ namespace SAOResoForm.MenuControl
             OpenPersonaleCommand = new RelayCommand(OpenPersonaleCommandExecute);
 
             OpenAttestatiCommand = new RelayCommand(OpenAttestati);
+
+            OpenReportisticaCommand = new RelayCommand(OpenReportistica);
            
+        }
+
+        private void OpenReportistica()
+        {
+            if(_reportisticaView == null || !_reportisticaView.IsVisible)
+{
+                _reportisticaView = new ReportisticaView();
+
+                _reportisticaView.Closed += (s, e) => _reportisticaView = null;
+                _reportisticaView.Show();
+            }
+else
+            {
+                if (_reportisticaView.WindowState == WindowState.Minimized)
+                    _reportisticaView.WindowState = WindowState.Normal;
+
+                _reportisticaView.Activate();
+                _reportisticaView.Focus();
+            }
+
         }
 
         private void OpenAttestati()

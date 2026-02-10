@@ -28,27 +28,6 @@ namespace SAOResoForm.Service.Repository
             }
         }
 
-        public string Delete(int id)
-        {
-            try
-            {
-                using (var context = new tblContext())
-                {
-                    var personale = context.Personale.Find(id);
-                    if (personale != null)
-                    {
-                        context.Personale.Remove(personale);
-                        context.SaveChanges();
-                        return $"Personale con ID {id} eliminato con successo!";
-                    }
-                    return $"Personale con ID {id} non trovato.";
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"Errore nell'eliminazione: {ex.Message}";
-            }
-        }
 
         public string Update(Personale item)
         {
@@ -147,6 +126,11 @@ namespace SAOResoForm.Service.Repository
             {
                 throw new Exception($"Errore nella ricerca: {ex.Message}");
             }
+        }
+
+        public string Delete(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
