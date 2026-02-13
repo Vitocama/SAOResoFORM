@@ -218,52 +218,52 @@
 
                 <!-- TITOLO CORSO -->
                 <DataGridTextColumn Header="Titolo Corso" 
-                                    Width="200"
+                                    Width="auto"
                                     Binding="{Binding TitoloCorso}"/>
 
                 <!-- CODICE ATTIVITÀ FORMATIVA -->
                 <DataGridTextColumn Header="Attività Formativa" 
-                                    Width="50"
+                                    Width="auto"
                                     Binding="{Binding CodiceAttivitaFormativa}"/>
 
                 <!-- CODICE MATERIA CORSO -->
                 <DataGridTextColumn Header="Cod. Materia Corso" 
-                                    Width="140"
+                                    Width="auto"
                                     Binding="{Binding CodiceMateriaCorso}"/>
 
                 <!-- ENTE FORMATORE -->
                 <DataGridTextColumn Header="Ente Formatore" 
-                                    Width="180"
+                                    Width="auto"
                                     Binding="{Binding EnteFormatore}"/>
 
                 <!-- ENTE CERTIFICATORE -->
                 <DataGridTextColumn Header="Ente Certificatore" 
-                                    Width="180"
+                                    Width="auto"
                                     Binding="{Binding DenominazioneEnteCertificatore}"/>
 
                 <!-- DATA INIZIO CORSO -->
                 <DataGridTextColumn Header="Data Inizio" 
-                                    Width="100"
+                                    Width="auto"
                                     Binding="{Binding DataInizioCorso}"/>
 
                 <!-- DATA FINE CORSO -->
                 <DataGridTextColumn Header="Data Fine" 
-                                    Width="100"
+                                    Width="auto"
                                     Binding="{Binding DataFineCorso}"/>
 
                 <!-- ANNO CORSO -->
                 <DataGridTextColumn Header="Anno" 
-                                    Width="70"
+                                    Width="auto"
                                     Binding="{Binding AnnoCorso}"/>
 
                 <!-- VALIDITÀ ANNI -->
                 <DataGridTextColumn Header="Validità (anni)" 
-                                    Width="100"
+                                    Width="auto"
                                     Binding="{Binding ValiditaAnni}"/>
 
                 <!-- DATA SCADENZA CON COLORE TESTO -->
                 <DataGridTextColumn Header="Data Scadenza" 
-                                    Width="110"
+                                    Width="auto"
                                     Binding="{Binding DataScadenzaCorso}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">

@@ -8,7 +8,7 @@ namespace SAOResoForm.Converter
     /// <summary>
     /// Converte la data di scadenza in un colore di testo:
     /// - Rosso scuro se scaduto
-    /// - Arancione scuro se in scadenza
+    /// - Marrone scuro se in scadenza (per sfondo giallo)
     /// - Nero altrimenti
     /// </summary>
     public class DataScadenzaToForegroundConverter : IValueConverter
@@ -32,16 +32,16 @@ namespace SAOResoForm.Converter
             DateTime oggi = DateTime.Now.Date;
             DateTime seiMesiDaOggi = oggi.AddMonths(6);
 
-            // Scaduto (rosso scuro)
+            // 🔴 Scaduto (nero)
             if (dataScadenza < oggi)
             {
-                return new SolidColorBrush(Color.FromRgb(139, 0, 0)); // Rosso scuro
+                return new SolidColorBrush(Color.FromRgb(0, 0, 0)); // Rosso scuro
             }
 
-            // In scadenza entro 6 mesi (arancione scuro)
+            // 🟤 In scadenza entro 6 mesi (marrone scuro - leggibile su giallo)
             if (dataScadenza <= seiMesiDaOggi)
             {
-                return new SolidColorBrush(Color.FromRgb(204, 102, 0)); // Arancione scuro
+                return new SolidColorBrush(Color.FromRgb(153, 76, 0)); // Marrone scuro
             }
 
             return Brushes.Black;
