@@ -50,13 +50,7 @@ namespace SAOResoForm.Reportistica
         public string FiltroRicerca
         {
             get => _filtroRicerca;
-            set
-            {
-                if (Set(ref _filtroRicerca, value))
-                {
-                    ApplicaFiltro();
-                }
-            }
+            set => Set(ref _filtroRicerca, value); // ✅ Rimosso UpdateSourceTrigger automatico
         }
 
         #endregion
@@ -67,6 +61,7 @@ namespace SAOResoForm.Reportistica
         public ICommand SalvaCommand => new RelayCommand(SalvaModifiche, () => _attestatiModificati.Count > 0);
         public ICommand AggiornaCommand => new RelayCommand(CaricaDati);
         public ICommand ResetFiltroCommand => new RelayCommand(ResetFiltro);
+        public ICommand ApplicaFiltroCommand => new RelayCommand(ApplicaFiltro); // ✅ NUOVO COMANDO
 
         // ✅ Nuovi comandi per filtri Attivo
         public ICommand MostraTuttiCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.Tutti));
@@ -171,22 +166,20 @@ namespace SAOResoForm.Reportistica
                     contatoreAggiornamenti++;
                 }
 
-                if(contatoreAggiornamenti==1)
-                MessageBox.Show(
-                    $"Salvataggio corretto!",
-                    "Salvataggio Completato CheckBox",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
+                if (contatoreAggiornamenti == 1)
+                    MessageBox.Show(
+                        $"Salvataggio corretto!",
+                        "Salvataggio Completato CheckBox",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
                 else
                     MessageBox.Show(
-                     $"Salvataggio di {contatoreAggiornamenti} modifiche",
-                     "Salvataggio Completato CheckBox",
-                     MessageBoxButton.OK,
-                     MessageBoxImage.Information
-                 );
-
-
+                        $"Salvataggio di {contatoreAggiornamenti} modifiche",
+                        "Salvataggio Completato CheckBox",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
 
                 _attestatiModificati.Clear();
 
@@ -243,12 +236,13 @@ namespace SAOResoForm.Reportistica
                     using (var writer = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
                     {
                         // Intestazione
-                        writer.WriteLine("Matricola;Titolo Corso;Codice Attività;Codice Materia;Ente Formatore;Ente Certificatore;Data Inizio;Data Fine;Anno Corso;Validità Anni;Data Scadenza;Link Attestato;Attivo");
+                        writer.WriteLine("Dipendente;Matricola;Titolo Corso;Codice Attività;Codice Materia;Ente Formatore;Ente Certificatore;Data Inizio;Data Fine;Anno Corso;Validità Anni;Data Scadenza;Link Attestato;Attivo");
 
                         // Dati
                         foreach (var attestato in datiDaEsportare)
                         {
-                            var linea = $"{EscapaCsv(attestato.MatricolaDipendente)};" +
+                            var linea = $"{EscapaCsv(attestato.Dipendente)};" +
+                                        $"{EscapaCsv(attestato.MatricolaDipendente)};" +
                                         $"{EscapaCsv(attestato.TitoloCorso)};" +
                                         $"{EscapaCsv(attestato.CodiceAttivitaFormativa)};" +
                                         $"{EscapaCsv(attestato.CodiceMateriaCorso)};" +
@@ -316,6 +310,7 @@ namespace SAOResoForm.Reportistica
                 risultati = risultati.Where(a =>
                     a.Id.ToString().Contains(filtro) ||
                     (!string.IsNullOrEmpty(a.MatricolaDipendente) && a.MatricolaDipendente.ToLower().Contains(filtro)) ||
+                    (!string.IsNullOrEmpty(a.Dipendente) && a.Dipendente.ToLower().Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.TitoloCorso) && a.TitoloCorso.ToLower().Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.CodiceAttivitaFormativa) && a.CodiceAttivitaFormativa.ToLower().Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.CodiceMateriaCorso) && a.CodiceMateriaCorso.ToLower().Contains(filtro)) ||

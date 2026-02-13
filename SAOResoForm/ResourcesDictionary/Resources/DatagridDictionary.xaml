@@ -18,7 +18,7 @@
         <!-- Grigio chiaro -->
         <Setter Property="Background" Value="White"/>
         <Setter Property="RowBackground" Value="LightBlue"/>
-        <Setter Property="AlternatingRowBackground" Value="LightPink"/>
+        <Setter Property="AlternatingRowBackground" Value="#DBD736"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
 
@@ -41,7 +41,7 @@
                     <!-- Trigger per righe alternate -->
                     <Style.Triggers>
                         <Trigger Property="AlternationIndex" Value="1">
-                            <Setter Property="Background" Value="LightPink"/>
+                            <Setter Property="Background" Value="#DBD736"/>
                         </Trigger>
 
                         <!-- Trigger per selezione -->

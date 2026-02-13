@@ -21,7 +21,7 @@ namespace SAOResoForm.ResourcesDictionary.Dati
 
         public static Dictionary<string, List<string>> Data2 => new Dictionary<string, List<string>>
         {
-            { "-", new List<string> { "-" } },
+            
             { "DA", new List<string> { "-", "PCN", "CONSULENTE GIURIDICO", "SPP", "UCS", "URP" } },
             { "RAM", new List<string> { "-", "ATTIVITÀ NEGOZIALI", "GESTIONE FINANZIARIA", "GESTIONE PATRIMONIALE", "SEGRETERIA RAM" } },
             { "RCLE", new List<string> { "-", "PIANIFICAZIONE ESECUTIVA", "SEGRETERIA RCLE", "STUDI ED ESPERIENZE", "VERIFICA DI CONFORMITÀ" } },

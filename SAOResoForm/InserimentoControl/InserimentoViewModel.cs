@@ -343,8 +343,10 @@ namespace SAOResoForm.InserimentoControl
 
             // Calcolo COD_UUOO
             Cod_UUOO reparti = new Cod_UUOO();
-            string chiave = $"{RepartoSelezionato ?? ""} {SezioneSelezionata ?? ""} {NucleoSelezionato ?? ""}".Trim();
-
+            string reparto = RepartoSelezionato ?? "";
+            string sezione = SezioneSelezionata?.Replace("-", "") ?? "";
+            string nucleo = NucleoSelezionato?.Replace("-", "") ?? "";
+            string chiave = $"{reparto} {sezione} {nucleo}".Trim();
             int? cod_UUOO = null;
             if (reparti.reparti.ContainsKey(chiave))
             {
@@ -356,6 +358,7 @@ namespace SAOResoForm.InserimentoControl
                     "Attenzione", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+           
 
             // Creazione oggetto Personale
             var indice = new tblContext().Personale.Max(p => (int?)p.Id) ?? 0;

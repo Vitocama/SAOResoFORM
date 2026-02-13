@@ -4532,11 +4532,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj",
+      "projectUniqueName": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj",
       "projectName": "SAOResoForm",
-      "projectPath": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\SAOResoForm.csproj",
+      "projectPath": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\SAOResoForm.csproj",
       "packagesPath": "C:\\Users\\Hirad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\obj\\",
+      "outputPath": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "UsingMicrosoftNETSdk": false,
@@ -4608,13 +4608,5 @@
         "#import": []
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Si è verificato un errore durante il recupero dei dati sulla vulnerabilità del pacchetto: Non è possibile caricare l'indice del servizio per l'origine https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }

@@ -187,7 +187,7 @@
                     Grid.ColumnSpan="3" 
                     Margin="0,0,0,20">
             <Button Content="SALVA" 
-                    Command="{Binding SalvaCommand}"/>
+                    Command="{Binding SalvaCommand}" Height="50"/>
         </StackPanel>
     </Grid>
 </UserControl>

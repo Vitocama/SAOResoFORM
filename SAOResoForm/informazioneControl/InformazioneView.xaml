@@ -11,23 +11,21 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="979*"/>
+            <ColumnDefinition Width="Auto" MinWidth="11"/>
+            <ColumnDefinition Width="410*"/>
         </Grid.ColumnDefinitions>
 
         <!-- TITOLO -->
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="3"
+        <TextBlock
                    Text="VISUALIZZA DATABASE INFORMAZIONE" 
                    FontSize="20" 
                    FontWeight="Bold"
                    HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center" Height="26" Width="380"/>
 
         <!-- RICERCA E CONTATORE -->
-        <Grid Grid.Row="1" Grid.Column="0" Margin="10">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="300"/>
@@ -67,8 +65,7 @@
                    FontWeight="Bold"
                    FontSize="14"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="10"/>
+                   VerticalAlignment="Center" Height="18" Width="144"/>
 
         <!-- DATAGRID CON CHECKBOX -->
         <DataGrid Grid.Row="2"
@@ -78,7 +75,7 @@
                   SelectionMode="Single"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
-                  Margin="10">
+                  Margin="10,10,10,10">
             <DataGrid.Columns>
                 <!-- CHECKBOX -->
                 <DataGridCheckBoxColumn Header="SELEZIONATI" 
@@ -110,12 +107,11 @@
         <!-- SEPARATORE -->
         <GridSplitter Grid.Row="2" 
                       Grid.Column="1"
-                      Width="5"
                       HorizontalAlignment="Stretch"
-                      Background="LightGray"/>
+                      Background="LightGray" Margin="4,0,4,0"/>
 
         <!-- PANNELLO DESTRA: PERSONALE INSERITO -->
-        <Grid Grid.Row="2" Grid.Column="2" Margin="10">
+        <Grid Grid.Row="2" Grid.Column="2" Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -176,10 +172,9 @@
         <!-- PULSANTI AZIONI -->
         <StackPanel Grid.Row="3" 
                     Grid.Column="0"
-                    Grid.ColumnSpan="3"
                     Orientation="Horizontal" 
-                    HorizontalAlignment="Center" 
-                    Margin="10">
+                    HorizontalAlignment="Left" 
+                    Margin="435,10,0,10" Width="530">
 
             <!-- PULSANTE AGGIUNGI SELEZIONATI -->
             <Button Content="Aggiungi Selezionati ►"

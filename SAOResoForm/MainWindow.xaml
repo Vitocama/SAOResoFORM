@@ -32,7 +32,7 @@
         <!-- CONTENUTO -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/> <!-- Menu -->
+                <ColumnDefinition Width="165"/> <!-- Menu -->
                 <ColumnDefinition Width="*"/>   <!-- Pagina Dinamica -->
             </Grid.ColumnDefinitions>
 

@@ -214,6 +214,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                     var attestato = new Attestati
                     {
                         Id = nuovoId+1,
+                        Dipendente=$"{personale.Cognome} {personale.Nome}" ,
                         MatricolaDipendente = personale.Matricola,
                         CodiceAttivitaFormativa = AttivitaFormativaSelezionata,
                         CodiceMateriaCorso = Materia,

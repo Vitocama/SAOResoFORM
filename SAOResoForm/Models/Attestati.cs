@@ -8,6 +8,7 @@ namespace SAOResoForm.Models
         #region Fields
 
         private int _id;
+        private string _dipendente;
         private bool _attivita;
         private string _matricolaDipendente;
         private string _titoloCorso;
@@ -37,6 +38,15 @@ namespace SAOResoForm.Models
             get => _attivita;
             set => SetProperty(ref _attivita, value);
         }
+
+        public string Dipendente
+        {
+            get => _dipendente;
+            set => SetProperty(ref _dipendente, value);
+        }
+
+
+
 
         public string MatricolaDipendente
         {
