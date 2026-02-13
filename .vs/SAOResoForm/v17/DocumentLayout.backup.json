@@ -3,56 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\reportistica\\reportisticaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\reportistica\\reportisticaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\modificacontrol\\modificaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\modificacontrol\\modificaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\reportistica\\reportisticaview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\reportistica\\reportisticaview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\inserimentocontrol\\inserimentoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\inserimentocontrol\\inserimentoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\reportistica\\reportisticaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\reportistica\\reportisticaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\converter\\datascadenzatocolorconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\converter\\datascadenzatocolorconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\converter\\datascadenzatoforegroundconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\converter\\datascadenzatoforegroundconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\saoresoform\\models\\attestati.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\models\\attestati.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\visualizzacontrol\\visualizzaviewmodelxaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\visualizzacontrol\\visualizzaviewmodelxaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\menucontrol\\menuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\menucontrol\\menuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\visualizzacontrol\\visualizzaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\visualizzacontrol\\visualizzaview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\personalecontrol\\personaleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\personalecontrol\\personaleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\menucontrol\\menuviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\menucontrol\\menuviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\attestaticontrol\\attestaticreacontrol\\attestaticreaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\attestaticontrol\\attestaticreacontrol\\attestaticreaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|c:\\users\\hirad\\desktop\\saoresoform\\saoresoform\\resourcesdictionary\\dati\\repartisezioninucleokeyvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}|SAOResoForm\\SAOResoForm.csproj|solutionrelative:saoresoform\\resourcesdictionary\\dati\\repartisezioninucleokeyvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 770,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,166 +34,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DataScadenzaToColorConverter.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Converter\\DataScadenzaToColorConverter.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\Converter\\DataScadenzaToColorConverter.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Converter\\DataScadenzaToColorConverter.cs",
-              "RelativeToolTip": "SAOResoForm\\Converter\\DataScadenzaToColorConverter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "InserimentoViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\InserimentoControl\\InserimentoViewModel.cs",
+              "RelativeDocumentMoniker": "SAOResoForm\\InserimentoControl\\InserimentoViewModel.cs",
+              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\InserimentoControl\\InserimentoViewModel.cs",
+              "RelativeToolTip": "SAOResoForm\\InserimentoControl\\InserimentoViewModel.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAADwv5QAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T13:23:49.651Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "App.xaml",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\App.xaml",
-              "RelativeDocumentMoniker": "SAOResoForm\\App.xaml",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\App.xaml",
-              "RelativeToolTip": "SAOResoForm\\App.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-10T13:17:23.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DataScadenzaToForegroundConverter.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\Converter\\DataScadenzaToForegroundConverter.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\Converter\\DataScadenzaToForegroundConverter.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoForm\\SAOResoForm\\Converter\\DataScadenzaToForegroundConverter.cs",
-              "RelativeToolTip": "SAOResoForm\\Converter\\DataScadenzaToForegroundConverter.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T13:14:32.49Z",
+              "WhenOpened": "2026-02-13T08:47:57.809Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ReportisticaViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaViewModel.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\Reportistica\\ReportisticaViewModel.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaViewModel.cs",
-              "RelativeToolTip": "SAOResoForm\\Reportistica\\ReportisticaViewModel.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAAwDoAAAAqAAAAAAAAAA==",
+              "Title": "ModificaViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\ModificaControl\\ModificaViewModel.cs",
+              "RelativeDocumentMoniker": "SAOResoForm\\ModificaControl\\ModificaViewModel.cs",
+              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\ModificaControl\\ModificaViewModel.cs*",
+              "RelativeToolTip": "SAOResoForm\\ModificaControl\\ModificaViewModel.cs*",
+              "ViewState": "AgIAAAABAAAAAAAAAAAswAgBAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T07:06:27.304Z",
+              "WhenOpened": "2026-02-13T08:47:30.722Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ReportisticaView.xaml",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaView.xaml",
-              "RelativeDocumentMoniker": "SAOResoForm\\Reportistica\\ReportisticaView.xaml",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaView.xaml",
-              "RelativeToolTip": "SAOResoForm\\Reportistica\\ReportisticaView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-10T07:05:16.973Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ReportisticaView.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaView.xaml.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\Reportistica\\ReportisticaView.xaml.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Reportistica\\ReportisticaView.xaml.cs",
-              "RelativeToolTip": "SAOResoForm\\Reportistica\\ReportisticaView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "RepartiSezioniNucleoKeyValue.cs",
+              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\ResourcesDictionary\\Dati\\RepartiSezioniNucleoKeyValue.cs",
+              "RelativeDocumentMoniker": "SAOResoForm\\ResourcesDictionary\\Dati\\RepartiSezioniNucleoKeyValue.cs",
+              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\ResourcesDictionary\\Dati\\RepartiSezioniNucleoKeyValue.cs",
+              "RelativeToolTip": "SAOResoForm\\ResourcesDictionary\\Dati\\RepartiSezioniNucleoKeyValue.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAADwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T13:17:36.249Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Attestati.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Models\\Attestati.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\Models\\Attestati.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\Models\\Attestati.cs",
-              "RelativeToolTip": "SAOResoForm\\Models\\Attestati.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-09T11:48:55.98Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "VisualizzaViewModelxaml.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\VisualizzaControl\\VisualizzaViewModelxaml.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\VisualizzaControl\\VisualizzaViewModelxaml.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\VisualizzaControl\\VisualizzaViewModelxaml.cs",
-              "RelativeToolTip": "SAOResoForm\\VisualizzaControl\\VisualizzaViewModelxaml.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T10:01:12.974Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MenuView.xaml",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\MenuControl\\MenuView.xaml",
-              "RelativeDocumentMoniker": "SAOResoForm\\MenuControl\\MenuView.xaml",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\MenuControl\\MenuView.xaml",
-              "RelativeToolTip": "SAOResoForm\\MenuControl\\MenuView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-10T07:07:34.971Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "MenuViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\MenuControl\\MenuViewModel.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\MenuControl\\MenuViewModel.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\MenuControl\\MenuViewModel.cs",
-              "RelativeToolTip": "SAOResoForm\\MenuControl\\MenuViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-10T07:08:36.107Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PersonaleView.xaml",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\PersonaleControl\\PersonaleView.xaml",
-              "RelativeDocumentMoniker": "SAOResoForm\\PersonaleControl\\PersonaleView.xaml",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\PersonaleControl\\PersonaleView.xaml",
-              "RelativeToolTip": "SAOResoForm\\PersonaleControl\\PersonaleView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-10T09:00:24.777Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "VisualizzaView.xaml",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\VisualizzaControl\\VisualizzaView.xaml",
-              "RelativeDocumentMoniker": "SAOResoForm\\VisualizzaControl\\VisualizzaView.xaml",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\VisualizzaControl\\VisualizzaView.xaml",
-              "RelativeToolTip": "SAOResoForm\\VisualizzaControl\\VisualizzaView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-10T09:00:40.535Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "AttestatiCreaViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\AttestatiControl\\AttestatiCreaControl\\AttestatiCreaViewModel.cs",
-              "RelativeDocumentMoniker": "SAOResoForm\\AttestatiControl\\AttestatiCreaControl\\AttestatiCreaViewModel.cs",
-              "ToolTip": "C:\\Users\\Hirad\\Desktop\\SAOResoFORM\\SAOResoForm\\AttestatiControl\\AttestatiCreaControl\\AttestatiCreaViewModel.cs",
-              "RelativeToolTip": "SAOResoForm\\AttestatiControl\\AttestatiCreaControl\\AttestatiCreaViewModel.cs",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAwwKEAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-09T10:12:02.561Z",
+              "WhenOpened": "2026-02-13T08:26:06.283Z",
               "EditorCaption": ""
             }
           ]

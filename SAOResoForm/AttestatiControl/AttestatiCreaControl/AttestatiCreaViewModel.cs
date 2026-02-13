@@ -196,7 +196,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                 Directory.CreateDirectory(cartellaBaseSAO);
 
                 var db = new tblContext();
-                long nuovoId = db.Attestati.Any() ? db.Attestati.Max(a => a.Id) + 1 : 1;
+                int nuovoId = db.Attestati.Any() ? db.Attestati.Max(a => a.Id) + 1 : 1;
 
                 foreach (var personale in PersonaleSelezionato)
                 {
@@ -213,7 +213,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
 
                     var attestato = new Attestati
                     {
-                        Id = nuovoId++,
+                        Id = nuovoId+1,
                         MatricolaDipendente = personale.Matricola,
                         CodiceAttivitaFormativa = AttivitaFormativaSelezionata,
                         CodiceMateriaCorso = Materia,

@@ -76,7 +76,6 @@
       <DependentUpon>InformazioneView.xaml</DependentUpon>
     </Compile>
     <Compile Include="informazioneControl\InformazioneViewModel.cs" />
-    <Compile Include="Models\MappingCodici.cs" />
     <Compile Include="ModificaControl\ModificaView.xaml.cs">
       <DependentUpon>ModificaView.xaml</DependentUpon>
     </Compile>
@@ -85,7 +84,6 @@
       <DependentUpon>ReportisticaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reportistica\ReportisticaViewModel.cs" />
-    <Compile Include="ResourcesDictionary\Dati\AttivitaFormativa.cs" />
     <Compile Include="ResourcesDictionary\Dati\AttivitaFormativaComboBox.cs" />
     <Compile Include="ResourcesDictionary\Dati\Cod_UUOO.cs" />
     <Compile Include="Common\CommonBase.cs" />
@@ -99,7 +97,6 @@
       <DependentUpon>InserimentoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainViewModel.cs" />
-    <Compile Include="ResourcesDictionary\Dati\Materia.cs" />
     <Compile Include="MenuControl\MenuViewModel.cs" />
     <Compile Include="MenuControl\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
@@ -110,21 +107,16 @@
     <Compile Include="HeaderControl\HeaderView.xaml.cs">
       <DependentUpon>HeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResourcesDictionary\Dati\NucleoCod.cs" />
     <Compile Include="PersonaleControl\PersonaleView.xaml.cs">
       <DependentUpon>PersonaleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PersonaleControl\PersonaleViewModel.cs" />
-    <Compile Include="ResourcesDictionary\Dati\RepartiCodice.cs" />
     <Compile Include="ResourcesDictionary\Dati\RepartiSezioniNucleoKeyValue.cs" />
     <Compile Include="Service\Repository\IRepositoryAttestato.cs" />
     <Compile Include="Service\Repository\IRepositoryService.cs" />
     <Compile Include="Service\Repository\RepositoryAttestati.cs" />
     <Compile Include="Service\Repository\RepositoryService.cs" />
     <Compile Include="InserimentoControl\InserimentoViewModel.cs" />
-    <Compile Include="ResourcesDictionary\Dati\SezioneCod.cs" />
-    <Compile Include="ResourcesDictionary\Dati\Tipologia.cs" />
-    <Compile Include="ResourcesDictionary\Dati\TipologiaDelCorso.cs" />
     <Compile Include="Common\ViewSelector.cs" />
     <Compile Include="Service\Repository\tool\ITool.cs" />
     <Compile Include="Service\Repository\tool\Tool.cs" />
@@ -240,25 +232,8 @@
   <ItemGroup>
     <Compile Include="Models\AccountUtenti.cs" />
     <Compile Include="Models\Attestati.cs" />
-    <Compile Include="Models\AttestatiVuota.cs" />
-    <Compile Include="Models\CatalogoTrio.cs" />
-    <Compile Include="Models\CatMilitari.cs" />
-    <Compile Include="Models\Corsi.cs" />
-    <Compile Include="Models\Corso0001.cs" />
-    <Compile Include="Models\EntiFormatori.cs" />
-    <Compile Include="Models\GradoMilitari.cs" />
-    <Compile Include="Models\Incarico.cs" />
-    <Compile Include="Models\MateriaCorso.cs" />
-    <Compile Include="Models\Param.cs" />
     <Compile Include="Models\Personale.cs" />
-    <Compile Include="Models\ProfiloCivili.cs" />
-    <Compile Include="Models\QualificaCivili.cs" />
-    <Compile Include="Models\StatoServizio.cs" />
-    <Compile Include="Models\Tables.cs" />
     <Compile Include="Models\tblContext.cs" />
-    <Compile Include="Models\TipoFormazione.cs" />
-    <Compile Include="Models\TipologiaCorso.cs" />
-    <Compile Include="Models\To.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

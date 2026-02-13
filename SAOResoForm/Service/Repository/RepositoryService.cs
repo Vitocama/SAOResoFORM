@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using SAOResoForm.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using SAOResoForm.Dati;
 
@@ -91,10 +90,10 @@ namespace SAOResoForm.Service.Repository
         {
             try
             {
-                using (var context = new tblContext())
-                {
-                    return context.Personale.ToList();
-                }
+                var db = new tblContext();
+                
+                    return db.Personale.ToList();
+                
             }
             catch (Exception ex)
             {

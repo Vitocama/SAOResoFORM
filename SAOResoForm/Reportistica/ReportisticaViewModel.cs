@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using Microsoft.Win32; // ✅ AGGIUNGI QUESTA
+using Microsoft.Win32;
 using SAOResoForm.Models;
 using SAOResoForm.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,12 @@ namespace SAOResoForm.Reportistica
         private ObservableCollection<Attestati> _bdAttestati;
         private ObservableCollection<Attestati> _filteredBDAttestati;
         private string _filtroRicerca;
+
+        // ✅ Lista per tracciare gli attestati modificati
+        private HashSet<int> _attestatiModificati;
+
+        // ✅ Filtro attivo corrente
+        private FiltroAttivoEnum _filtroAttivoCorrente = FiltroAttivoEnum.Tutti;
 
         #endregion
 
@@ -55,8 +63,15 @@ namespace SAOResoForm.Reportistica
 
         #region Command
 
-        private ICommand _esportaCommand;
-        public ICommand EsportaCommand =>  new RelayCommand(EsportaInCsv);
+        public ICommand EsportaCommand => new RelayCommand(EsportaInCsv);
+        public ICommand SalvaCommand => new RelayCommand(SalvaModifiche, () => _attestatiModificati.Count > 0);
+        public ICommand AggiornaCommand => new RelayCommand(CaricaDati);
+        public ICommand ResetFiltroCommand => new RelayCommand(ResetFiltro);
+
+        // ✅ Nuovi comandi per filtri Attivo
+        public ICommand MostraTuttiCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.Tutti));
+        public ICommand MostraAttiviCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.SoloAttivi));
+        public ICommand MostraNonAttiviCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.SoloNonAttivi));
 
         #endregion
 
@@ -68,6 +83,7 @@ namespace SAOResoForm.Reportistica
 
             BDAttestati = new ObservableCollection<Attestati>();
             FilteredBDAttestati = new ObservableCollection<Attestati>();
+            _attestatiModificati = new HashSet<int>();
 
             CaricaDati();
         }
@@ -82,13 +98,26 @@ namespace SAOResoForm.Reportistica
             {
                 var attestati = _repositoryAttestato.GetAll();
 
+                // Rimuovi gli handler precedenti
+                foreach (var attestato in BDAttestati)
+                {
+                    attestato.PropertyChanged -= Attestato_PropertyChanged;
+                }
+
                 BDAttestati.Clear();
+                _attestatiModificati.Clear();
+
                 foreach (var attestato in attestati)
                 {
+                    // ✅ Sottoscrivi all'evento PropertyChanged
+                    attestato.PropertyChanged += Attestato_PropertyChanged;
                     BDAttestati.Add(attestato);
                 }
 
                 ApplicaFiltro();
+
+                // Aggiorna lo stato del comando Salva
+                CommandManager.InvalidateRequerySuggested();
             }
             catch (Exception ex)
             {
@@ -99,6 +128,94 @@ namespace SAOResoForm.Reportistica
                     MessageBoxImage.Error
                 );
             }
+        }
+
+        // ✅ Traccia solo gli attestati modificati
+        private void Attestato_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender is Attestati attestatoModificato && e.PropertyName == nameof(Attestati.Attivo))
+            {
+                // Aggiungi l'ID alla lista dei modificati
+                if (!_attestatiModificati.Contains(attestatoModificato.Id))
+                {
+                    _attestatiModificati.Add(attestatoModificato.Id);
+
+                    // Aggiorna lo stato del comando Salva
+                    CommandManager.InvalidateRequerySuggested();
+                }
+            }
+        }
+
+        // ✅ Salva solo gli attestati modificati
+        private void SalvaModifiche()
+        {
+            try
+            {
+                if (_attestatiModificati.Count == 0)
+                {
+                    MessageBox.Show(
+                        "Nessuna modifica da salvare.",
+                        "Informazione",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
+                    return;
+                }
+
+                int contatoreAggiornamenti = 0;
+
+                // Salva solo gli attestati che sono stati modificati
+                foreach (var attestato in BDAttestati.Where(a => _attestatiModificati.Contains(a.Id)))
+                {
+                    _repositoryAttestato.Update(attestato);
+                    contatoreAggiornamenti++;
+                }
+
+                if(contatoreAggiornamenti==1)
+                MessageBox.Show(
+                    $"Salvataggio corretto!",
+                    "Salvataggio Completato CheckBox",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+                else
+                    MessageBox.Show(
+                     $"Salvataggio di {contatoreAggiornamenti} modifiche",
+                     "Salvataggio Completato CheckBox",
+                     MessageBoxButton.OK,
+                     MessageBoxImage.Information
+                 );
+
+
+
+                _attestatiModificati.Clear();
+
+                // Aggiorna lo stato del comando Salva (disabilita il pulsante)
+                CommandManager.InvalidateRequerySuggested();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Errore durante il salvataggio: {ex.Message}",
+                    "Errore",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+        }
+
+        private void ResetFiltro()
+        {
+            FiltroRicerca = string.Empty;
+            _filtroAttivoCorrente = FiltroAttivoEnum.Tutti;
+            ApplicaFiltro();
+        }
+
+        // ✅ Imposta il filtro per Attivo
+        private void ImpostaFiltroAttivo(FiltroAttivoEnum filtro)
+        {
+            _filtroAttivoCorrente = filtro;
+            ApplicaFiltro();
         }
 
         private void EsportaInCsv()
@@ -114,7 +231,6 @@ namespace SAOResoForm.Reportistica
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    // ✅ USA FilteredBDAttestati invece di FiltraAttestati
                     var datiDaEsportare = FilteredBDAttestati?.ToList() ?? BDAttestati.ToList();
 
                     if (!datiDaEsportare.Any())
@@ -127,7 +243,7 @@ namespace SAOResoForm.Reportistica
                     using (var writer = new StreamWriter(saveFileDialog.FileName, false, Encoding.UTF8))
                     {
                         // Intestazione
-                        writer.WriteLine("Matricola;Titolo Corso;Codice Attività;Codice Materia;Ente Formatore;Ente Certificatore;Data Inizio;Data Fine;Anno Corso;Validità Anni;Data Scadenza;Link Attestato");
+                        writer.WriteLine("Matricola;Titolo Corso;Codice Attività;Codice Materia;Ente Formatore;Ente Certificatore;Data Inizio;Data Fine;Anno Corso;Validità Anni;Data Scadenza;Link Attestato;Attivo");
 
                         // Dati
                         foreach (var attestato in datiDaEsportare)
@@ -143,7 +259,8 @@ namespace SAOResoForm.Reportistica
                                         $"{EscapaCsv(attestato.AnnoCorso)};" +
                                         $"{EscapaCsv(attestato.ValiditaAnni)};" +
                                         $"{EscapaCsv(attestato.DataScadenzaCorso)};" +
-                                        $"{EscapaCsv(attestato.LinkAttestato)}";
+                                        $"{EscapaCsv(attestato.LinkAttestato)};" +
+                                        $"{(attestato.Attivo ? "Sì" : "No")}";
 
                             writer.WriteLine(linea);
                         }
@@ -152,7 +269,6 @@ namespace SAOResoForm.Reportistica
                     MessageBox.Show($"Esportazione completata con successo!\nFile salvato in: {saveFileDialog.FileName}",
                         "Esportazione", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Opzionale: apri il file
                     if (MessageBox.Show("Vuoi aprire il file?", "Esportazione",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
@@ -185,22 +301,19 @@ namespace SAOResoForm.Reportistica
             return valore;
         }
 
+        // ✅ Filtro combinato: ricerca testuale + stato Attivo
         private void ApplicaFiltro()
         {
             FilteredBDAttestati.Clear();
 
-            if (string.IsNullOrWhiteSpace(FiltroRicerca))
-            {
-                foreach (var attestato in BDAttestati)
-                {
-                    FilteredBDAttestati.Add(attestato);
-                }
-            }
-            else
+            // Prima applica il filtro testuale
+            IEnumerable<Attestati> risultati = BDAttestati;
+
+            if (!string.IsNullOrWhiteSpace(FiltroRicerca))
             {
                 var filtro = FiltroRicerca.ToLower();
 
-                var risultati = BDAttestati.Where(a =>
+                risultati = risultati.Where(a =>
                     a.Id.ToString().Contains(filtro) ||
                     (!string.IsNullOrEmpty(a.MatricolaDipendente) && a.MatricolaDipendente.ToLower().Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.TitoloCorso) && a.TitoloCorso.ToLower().Contains(filtro)) ||
@@ -215,12 +328,51 @@ namespace SAOResoForm.Reportistica
                     (!string.IsNullOrEmpty(a.DataScadenzaCorso) && a.DataScadenzaCorso.Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.LinkAttestato) && a.LinkAttestato.ToLower().Contains(filtro))
                 );
+            }
 
-                foreach (var attestato in risultati)
+            // Poi applica il filtro Attivo
+            switch (_filtroAttivoCorrente)
+            {
+                case FiltroAttivoEnum.SoloAttivi:
+                    risultati = risultati.Where(a => a.Attivo);
+                    break;
+                case FiltroAttivoEnum.SoloNonAttivi:
+                    risultati = risultati.Where(a => !a.Attivo);
+                    break;
+                case FiltroAttivoEnum.Tutti:
+                default:
+                    // Nessun filtro aggiuntivo
+                    break;
+            }
+
+            // Aggiungi i risultati alla collection filtrata
+            foreach (var attestato in risultati)
+            {
+                FilteredBDAttestati.Add(attestato);
+            }
+        }
+
+        public override void Cleanup()
+        {
+            if (BDAttestati != null)
+            {
+                foreach (var attestato in BDAttestati)
                 {
-                    FilteredBDAttestati.Add(attestato);
+                    attestato.PropertyChanged -= Attestato_PropertyChanged;
                 }
             }
+            base.Cleanup();
+        }
+
+        #endregion
+
+        #region Enums
+
+        private enum FiltroAttivoEnum
+        {
+            Tutti,
+            SoloAttivi,
+            SoloNonAttivi
         }
 
         #endregion

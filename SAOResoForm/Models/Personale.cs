@@ -23,5 +23,6 @@ namespace SAOResoForm.Models
         public string Incarico { get; set; }
         public string StatoServizio { get; set; }
         public string Annotazioni { get; set; }
+        public bool Attivo { get; set; }
     }
 }

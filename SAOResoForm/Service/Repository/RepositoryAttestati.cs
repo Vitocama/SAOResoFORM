@@ -23,21 +23,23 @@ namespace SAOResoForm.Repositories
             }
         }
 
-        
-
         #endregion
 
         #region Read
 
-       
-  
+        public List<Attestati> GetAll()
+        {
+            using (var db = new tblContext())
+            {
+                return db.Attestati.Where(x => x.Id != 0).ToList();
+            }
+        }
 
         public List<Attestati> GetScaduti()
         {
             using (var db = new tblContext())
             {
                 var dataOggi = DateTime.Now.ToString("yyyy-MM-dd");
-
                 return db.Attestati
                     .Where(a => !string.IsNullOrEmpty(a.DataScadenzaCorso) &&
                                a.DataScadenzaCorso.CompareTo(dataOggi) < 0)
@@ -52,7 +54,6 @@ namespace SAOResoForm.Repositories
             {
                 var dataOggi = DateTime.Now.ToString("yyyy-MM-dd");
                 var dataSoglia = DateTime.Now.AddDays(giorniSoglia).ToString("yyyy-MM-dd");
-
                 return db.Attestati
                     .Where(a => !string.IsNullOrEmpty(a.DataScadenzaCorso) &&
                                a.DataScadenzaCorso.CompareTo(dataOggi) >= 0 &&
@@ -79,45 +80,15 @@ namespace SAOResoForm.Repositories
             }
         }
 
-      
-
         #endregion
-
-
 
         #region Utility
 
-      
-
-       
-
-             public Attestati SalvaAttestato(Attestati attestato)
+        public Attestati SalvaAttestato(Attestati attestato)
         {
             return Add(attestato);
         }
 
-        public List<Attestati> GetAll()
-        {var db= new tblContext();
-
-            return db.Attestati.Where(x=>x.Id != 0).ToList();
-        }
-
-        public List<Attestati> GetByMatricola(string matricola)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int CountByMatricola(string matricola)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-
-
-
-
-
         #endregion
     }
+}
