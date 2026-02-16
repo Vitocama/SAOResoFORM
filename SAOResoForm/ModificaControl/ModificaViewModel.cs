@@ -6,19 +6,25 @@ using SAOResoForm.Service.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace SAOResoForm.ModificaControl
 {
-    internal class ModificaViewModel : INotifyPropertyChanged
+    public class ModificaViewModel : INotifyPropertyChanged
     {
         private readonly IRepositoryService _repository;
         private readonly RepartiSezioniNucleoKeyValue _keyValues = new RepartiSezioniNucleoKeyValue();
 
         // Personale dal DB - MODIFICATO DIRETTAMENTE
         private Personale _personaleOriginale;
+
+        // ============ VALORI ORIGINALI PER RINOMINA CARTELLA ============
+        private string _cognomeOriginale;
+        private string _nomeOriginale;
+        private string _matricolaOriginale;
 
         // ============ EVENTO PER NOTIFICARE L'AGGIORNAMENTO ============
         public event EventHandler DatiAggiornati;
@@ -265,6 +271,11 @@ namespace SAOResoForm.ModificaControl
             // Carica personale originale dal DB
             _personaleOriginale = _repository.GetById(item.Matricola);
 
+            // ============ SALVA I VALORI ORIGINALI PER LA RINOMINA ============
+            _cognomeOriginale = _personaleOriginale?.Cognome;
+            _nomeOriginale = _personaleOriginale?.Nome;
+            _matricolaOriginale = _personaleOriginale?.Matricola;
+
             // Inizializza liste per ComboBox
             Reparti = _keyValues.Data1.Keys.ToList();
             Incarichi = new List<string> { " ", "DA", "VDA", "CAPO REPARTO", "CAPO SEZIONE", "CAPO NUCLEO", "CAPO UFFICIO", "CAPO SERVIZIO", "ADDETTO", "CAPO UNITA", "RSPP", "ASPP", "RSAQ", "AMMINISTRATORE" };
@@ -329,9 +340,9 @@ namespace SAOResoForm.ModificaControl
                 return null;
 
             codUfficio = codUfficio.Trim();
-            if (codUfficio.Contains("-"))
+            if (codUfficio.Contains(" "))
             {
-                string reparto = codUfficio.Split('-')[0].Trim();
+                string reparto = codUfficio.Split(' ')[0].Trim();
                 if (Reparti != null && Reparti.Contains(reparto))
                     return reparto;
             }
@@ -348,12 +359,12 @@ namespace SAOResoForm.ModificaControl
                 return null;
 
             codUfficio = codUfficio.Trim();
-            if (codUfficio.Contains("-"))
+            if (codUfficio.Contains(" "))
             {
-                var parti = codUfficio.Split('-');
+                string[] parti = codUfficio.Split(' ');
                 if (parti.Length >= 2)
                 {
-                    return parti[1].Trim();
+                    return parti[1];
                 }
             }
             return null;
@@ -365,9 +376,9 @@ namespace SAOResoForm.ModificaControl
                 return null;
 
             codUfficio = codUfficio.Trim();
-            if (codUfficio.Contains("-"))
+            if (codUfficio.Contains(" "))
             {
-                var parti = codUfficio.Split('-');
+                var parti = codUfficio.Split(' ');
                 if (parti.Length >= 3)
                 {
                     return parti[2].Trim();
@@ -378,26 +389,172 @@ namespace SAOResoForm.ModificaControl
 
         private void updateCommand()
         {
-            // Salva Reparto/Sezione/Nucleo solo se checkbox attiva
-            if (ModificaRepartoSezioneNucleo)
+            try
             {
-                _personaleOriginale.CodReparto = RepartoSelezionato;
-                _personaleOriginale.CodSezione = SezioneSelezionata;
-                _personaleOriginale.CodNucleo = NucleoSelezionato;
+                // ============ SALVA IL VECCHIO NOME PRIMA DELLE MODIFICHE ============
+                string vecchioCognome = _cognomeOriginale;
+                string vecchioNome = _nomeOriginale;
+                string vecchiaMatricola = _matricolaOriginale;
+
+                // Salva Reparto/Sezione/Nucleo solo se checkbox attiva
+                if (ModificaRepartoSezioneNucleo)
+                {
+                    _personaleOriginale.CodReparto = RepartoSelezionato;
+                    _personaleOriginale.CodSezione = SezioneSelezionata;
+                    _personaleOriginale.CodNucleo = NucleoSelezionato;
+                }
+
+                // Salva nel database
+                string risultato = _repository.Update(_personaleOriginale);
+
+                if (risultato.Contains("successo"))
+                {
+                    // ============ AGGIORNA ATTESTATI SE NOME/COGNOME È CAMBIATO ============
+                    if (vecchioCognome != _personaleOriginale.Cognome || vecchioNome != _personaleOriginale.Nome)
+                    {
+                        AggiornaAttestatiDipendente(_personaleOriginale.Matricola, _personaleOriginale.Cognome, _personaleOriginale.Nome);
+                    }
+
+                    // Rinomina la cartella DOPO il salvataggio nel DB
+                    RinominaCartellaPersonale(vecchioCognome, vecchioNome, vecchiaMatricola);
+
+                    // Aggiorna i valori originali per future modifiche
+                    _cognomeOriginale = _personaleOriginale.Cognome;
+                    _nomeOriginale = _personaleOriginale.Nome;
+                    _matricolaOriginale = _personaleOriginale.Matricola;
+
+                    MessageBox.Show(risultato,
+                                    "Aggiornamento",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+
+                    // Notifica aggiornamento
+                    DatiAggiornati?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    MessageBox.Show(risultato,
+                                    "Aggiornamento",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Warning);
+                }
             }
-
-            // Salva nel database
-            string risultato = _repository.Update(_personaleOriginale);
-
-            MessageBox.Show(risultato,
-                            "Aggiornamento",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information);
-
-            // ============ NOTIFICA SOLO SE SALVATO CON SUCCESSO ============
-            if (risultato.Contains("successo"))
+            catch (Exception ex)
             {
-                DatiAggiornati?.Invoke(this, EventArgs.Empty);
+                MessageBox.Show($"Errore durante l'aggiornamento: {ex.Message}",
+                               "Errore",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+        }
+
+        // ============ METODO PER AGGIORNARE ATTESTATI ============
+        private void AggiornaAttestatiDipendente(string matricola, string nuovoCognome, string nuovoNome)
+        {
+            try
+            {
+                using (var db = new tblContext())
+                {
+                    // Trova tutti gli attestati del dipendente
+                    var attestatiDaAggiornare = db.Attestati
+                        .Where(a => a.MatricolaDipendente == matricola)
+                        .ToList();
+
+                    if (attestatiDaAggiornare.Any())
+                    {
+                        // Aggiorna il campo Dipendente per ogni attestato
+                        foreach (var attestato in attestatiDaAggiornare)
+                        {
+                            attestato.Dipendente = $"{nuovoCognome} {nuovoNome}";
+                        }
+
+                        db.SaveChanges();
+
+                        MessageBox.Show($"Aggiornati {attestatiDaAggiornare.Count} attestati con il nuovo nome.",
+                                       "Attestati Aggiornati",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Errore durante l'aggiornamento degli attestati: {ex.Message}",
+                               "Errore",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+        }
+
+        // ============ METODO PER RINOMINARE LA CARTELLA ============
+        private void RinominaCartellaPersonale(string vecchioCognome, string vecchioNome, string vecchiaMatricola)
+        {
+            try
+            {
+                string cartellaBase = @"C:\SAO\";
+
+                string vecchioNomeCartella = $"{vecchioCognome}_{vecchioNome}_{vecchiaMatricola}";
+                string nuovoNomeCartella = $"{_personaleOriginale.Cognome}_{_personaleOriginale.Nome}_{_personaleOriginale.Matricola}";
+
+                string vecchioPercorso = Path.Combine(cartellaBase, vecchioNomeCartella);
+                string nuovoPercorso = Path.Combine(cartellaBase, nuovoNomeCartella);
+
+                // Se il nome non è cambiato, non fare nulla
+                if (vecchioNomeCartella.Equals(nuovoNomeCartella, StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                // Se la vecchia cartella esiste, rinominala
+                if (Directory.Exists(vecchioPercorso))
+                {
+                    if (!Directory.Exists(nuovoPercorso))
+                    {
+                        Directory.Move(vecchioPercorso, nuovoPercorso);
+                        MessageBox.Show($"Cartella rinominata:\n'{vecchioNomeCartella}' → '{nuovoNomeCartella}'",
+                                       "Cartella Aggiornata",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"La cartella '{nuovoNomeCartella}' esiste già!",
+                                       "Attenzione",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    // La cartella non esiste: creala con il nuovo nome
+                    if (!Directory.Exists(nuovoPercorso))
+                    {
+                        Directory.CreateDirectory(nuovoPercorso);
+                        MessageBox.Show($"Cartella creata: '{nuovoNomeCartella}'",
+                                       "Cartella Creata",
+                                       MessageBoxButton.OK,
+                                       MessageBoxImage.Information);
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Permessi insufficienti.\nEsegui come amministratore.",
+                               "Errore Permessi",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show($"Errore I/O: {ex.Message}",
+                               "Errore",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Errore: {ex.Message}",
+                               "Errore",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
             }
         }
 

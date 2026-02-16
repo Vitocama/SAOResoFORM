@@ -584,3 +584,5 @@ C:\Users\Hirad\Desktop\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.exe
 C:\Users\Hirad\Desktop\SAOResoFORM\SAOResoForm\obj\Debug\SAOResoForm.pdb
 C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\obj\Debug\Reportistica\ReportisticaView.g.cs
 C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\obj\Debug\Reportistica\ReportisticaView.baml
+C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\bin\Debug\Microsoft.Xaml.Behaviors.pdb

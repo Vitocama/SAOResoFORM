@@ -196,7 +196,12 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                 Directory.CreateDirectory(cartellaBaseSAO);
 
                 var db = new tblContext();
+
                 int nuovoId = db.Attestati.Any() ? db.Attestati.Max(a => a.Id) + 1 : 1;
+
+                // ============ GENERA IL NUMERO RANDOM UNA SOLA VOLTA ============
+                Random random = new Random();
+                int numeroRandomComune = random.Next(1000, 9999);
 
                 foreach (var personale in PersonaleSelezionato)
                 {
@@ -204,17 +209,19 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                     string percorsoCartellaPersonale = Path.Combine(cartellaBaseSAO, nomeCartellaPersonale);
                     Directory.CreateDirectory(percorsoCartellaPersonale);
 
+                    // ============ USA IL NUMERO RANDOM COMUNE ============
                     string percorsoNuovoFile = _tool.RinominaFile(
-                        personale,
-                        DataFine ?? DateTime.Now,
-                        PercorsoFile,
-                        percorsoCartellaPersonale
-                    );
+       personale,
+       DataFine ?? DateTime.Now,
+       PercorsoFile,
+       percorsoCartellaPersonale,
+       numeroRandomComune  // ← Passa il numero random comune
+   );
 
                     var attestato = new Attestati
                     {
-                        Id = nuovoId+1,
-                        Dipendente=$"{personale.Cognome} {personale.Nome}" ,
+                        Id = nuovoId,
+                        Dipendente = $"{personale.Cognome} {personale.Nome}",
                         MatricolaDipendente = personale.Matricola,
                         CodiceAttivitaFormativa = AttivitaFormativaSelezionata,
                         CodiceMateriaCorso = Materia,
@@ -225,20 +232,20 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                         ValiditaAnni = validitaAnniInt.ToString(),
                         TitoloCorso = TitoloCorso,
                         DataScadenzaCorso = DataFine.HasValue && validitaAnniInt > 0
-        ? DataFine.Value.AddYears(validitaAnniInt).ToString("dd-MM-yyyy")
-        : validitaAnniInt == 0
-            ? "01-01-3000"
-            : null,
-                        AnnoCorso = DataFine?.Year.ToString(), 
+                            ? DataFine.Value.AddYears(validitaAnniInt).ToString("dd-MM-yyyy")
+                            : validitaAnniInt == 0
+                                ? "01-01-3000"
+                                : null,
+                        AnnoCorso = DataFine?.Year.ToString(),
                         LinkAttestato = percorsoNuovoFile
                     };
 
                     db.Attestati.Add(attestato);
+                    nuovoId++;
                 }
 
                 await db.SaveChangesAsync();
 
-                // Imposta il flag e disabilita il comando
                 _isSalvato = true;
                 (SalvaCommand as RelayCommand)?.RaiseCanExecuteChanged();
 
@@ -248,6 +255,17 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             {
                 MessaggioValidazione = $"Errore durante il salvataggio: {ex.Message}";
             }
+        }
+
+        // ============ METODO PER GENERARE NOME FILE UNICO ============
+        private string GeneraNomeFileUnico(DateTime dataFine, string percorsoOriginale)
+        {
+            string estensione = Path.GetExtension(percorsoOriginale);
+            Random random = new Random();
+            int randomNum = random.Next(1000, 9999);
+            string dataFormattata = dataFine.ToString("dd-MM-yyyy");
+
+            return $"{dataFormattata}_{randomNum}{estensione}";
         }
 
         private void CaricaFile()

@@ -22,6 +22,7 @@ namespace SAOResoForm.Models
         private string _validitaAnni;
         private string _dataScadenzaCorso;
         private string _linkAttestato;
+        private string _note;
 
         #endregion
 
@@ -43,6 +44,12 @@ namespace SAOResoForm.Models
         {
             get => _dipendente;
             set => SetProperty(ref _dipendente, value);
+        }
+
+        public string Note
+        {
+            get => _note;
+            set => SetProperty(ref _note, value);
         }
 
 

@@ -77,6 +77,7 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.CodiceMateriaCorso).HasColumnName("MATERIA_CORSO");
 
+                entity.Property(e => e.Note).HasColumnName("NOTE");
 
                 entity.Property(e => e.DataFineCorso).HasColumnName("DATA_FINE_CORSO");
 

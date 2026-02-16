@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -62,6 +63,47 @@ namespace SAOResoForm.Reportistica
         public ICommand AggiornaCommand => new RelayCommand(CaricaDati);
         public ICommand ResetFiltroCommand => new RelayCommand(ResetFiltro);
         public ICommand ApplicaFiltroCommand => new RelayCommand(ApplicaFiltro); // ✅ NUOVO COMANDO
+
+        public ICommand ApriDocumentoCommand => new RelayCommand<Attestati>(ApriDocumento);
+
+        private void ApriDocumento(Attestati attestato)
+        {
+            try
+            {
+                if (attestato == null)
+                {
+                    MessageBox.Show("Nessun attestato selezionato.", "Attenzione",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(attestato.LinkAttestato))
+                {
+                    MessageBox.Show("Nessun documento associato a questo attestato.", "Attenzione",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (!File.Exists(attestato.LinkAttestato))
+                {
+                    MessageBox.Show($"File non trovato:\n{attestato.LinkAttestato}", "Errore",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Apri il documento con l'applicazione predefinita
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = attestato.LinkAttestato,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Errore nell'apertura del documento: {ex.Message}", "Errore",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         // ✅ Nuovi comandi per filtri Attivo
         public ICommand MostraTuttiCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.Tutti));

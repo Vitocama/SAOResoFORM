@@ -30,11 +30,11 @@ namespace SAOResoForm.Service.Repository
 
         public string Update(Personale item)
         {
-            string coduff = string.Join(" - ", new[] { item.CodReparto, item.CodSezione, item.CodNucleo }
-     .Where(s => !string.IsNullOrWhiteSpace(s)));
+            string coduff = item.CodReparto + " - " + item.CodSezione + " - " + item.CodNucleo;
 
-            Cod_UUOO cod_UUOO = new Cod_UUOO();
-            string valore = cod_UUOO.reparti[coduff].ToString();
+            coduff = coduff.TrimEnd(' ', '-');
+
+            int valoreCodUfficio=new Cod_UUOO().reparti[coduff];
 
             try
             {
@@ -53,7 +53,7 @@ namespace SAOResoForm.Service.Repository
                         esistente.CodReparto = item.CodReparto;
                         esistente.CodSezione = item.CodSezione;
                         esistente.CodNucleo = item.CodNucleo;
-                        esistente.CodUfficio = int.Parse(valore);
+                        esistente.CodUfficio = valoreCodUfficio; // ← AGGIUNTO CALCOLO COD_UFFICIO
                         esistente.Incarico = item.Incarico;
                         esistente.StatoServizio = item.StatoServizio;
                         esistente.Annotazioni = item.Annotazioni;

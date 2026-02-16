@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:SAOResoForm.Reportistica"
         xmlns:converters="clr-namespace:SAOResoForm.Converter"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Reportistica Database Attestati"
         Height="700"
@@ -17,7 +18,7 @@
     <Window.Resources>
         <converters:DataScadenzaToColorConverter x:Key="DataScadenzaToColorConverter"/>
         <converters:DataScadenzaToForegroundConverter x:Key="DataScadenzaToForegroundConverter"/>
-
+        <converters:DataScadenzaToNoteConverter x:Key="DataScadenzaToNoteConverter"/>
     </Window.Resources>
 
     <!-- ========================= -->
@@ -57,20 +58,20 @@
 
             <!-- ETICHETTA CERCA -->
             <TextBlock Grid.Column="0" Grid.Row="0"
-               Text="Cerca:"
-               VerticalAlignment="Center"
-               FontSize="14"
-               Margin="0,0,10,0"/>
+                       Text="Cerca:"
+                       VerticalAlignment="Center"
+                       FontSize="14"
+                       Margin="0,0,10,0"/>
 
             <!-- TEXTBOX RICERCA -->
             <TextBox Grid.Column="1" Grid.Row="0"
-             Width="285"
-             Height="30"
-             VerticalContentAlignment="Center"
-             FontSize="14"
-             Text="{Binding FiltroRicerca, UpdateSourceTrigger=PropertyChanged}"/>
+                     Width="285"
+                     Height="30"
+                     VerticalContentAlignment="Center"
+                     FontSize="14"
+                     Text="{Binding FiltroRicerca, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- ✅ PULSANTE APPLICA FILTRO (subito dopo TextBox) -->
+            <!-- ✅ PULSANTE APPLICA FILTRO -->
             <Button Grid.Column="2" Grid.Row="0"
                     Content="APPLICA FILTRO"
                     Command="{Binding ApplicaFiltroCommand}"
@@ -80,92 +81,99 @@
                     FontWeight="Bold"
                     Margin="5,0,0,0"/>
 
-            <!-- ✅ PULSANTI FILTRO ATTIVO (a sinistra) -->
+            <!-- ✅ PULSANTI FILTRO ATTIVO -->
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                Orientation="Horizontal"
-                HorizontalAlignment="Left"
-                Margin="0,10,0,0">
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Margin="0,10,0,0">
 
                 <TextBlock Text="Filtro Stato:"
-                   FontSize="14"
-                   FontWeight="Bold"
-                   VerticalAlignment="Center"
-                   Margin="0,0,10,0"/>
+                           FontSize="14"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
 
                 <Button Content="TUTTI"
-                Command="{Binding MostraTuttiCommand}"
-                Width="100"
-                Height="30"
-                FontSize="12"
-                FontWeight="Bold"
-                Margin="5,0"/>
+                        Command="{Binding MostraTuttiCommand}"
+                        Width="100"
+                        Height="30"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Margin="5,0"/>
 
                 <Button Content="SOLO NON VISIBILI"
-                Command="{Binding MostraAttiviCommand}"
-                Width="151"
-                Height="30"
-                FontSize="12"
-                FontWeight="Bold"
-                Margin="5,0"/>
+                        Command="{Binding MostraAttiviCommand}"
+                        Width="151"
+                        Height="30"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Margin="5,0"/>
 
                 <Button Content="SOLO VISIBILI"
-                Command="{Binding MostraNonAttiviCommand}"
-                Width="140"
-                Height="30"
-                FontSize="12"
-                FontWeight="Bold"
-                Margin="5,0"/>
+                        Command="{Binding MostraNonAttiviCommand}"
+                        Width="140"
+                        Height="30"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Margin="5,0"/>
             </StackPanel>
 
-            <!-- ✅ CONTATORE RISULTATI (allineato a destra) -->
+            <!-- ✅ CONTATORE RISULTATI -->
             <StackPanel Grid.Column="3" Grid.Row="1"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Margin="0,10,30,0">
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0,10,30,0">
 
                 <TextBlock Text="Visualizzati: "
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="#2C3E50"
-                   VerticalAlignment="Center"/>
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#2C3E50"
+                           VerticalAlignment="Center"/>
 
                 <TextBlock Text="{Binding FilteredBDAttestati.Count}"
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="#27ae60"
-                   VerticalAlignment="Center"/>
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Foreground="#27ae60"
+                           VerticalAlignment="Center"/>
 
                 <TextBlock Text=" / "
-                   FontSize="14"
-                   FontWeight="Normal"
-                   Foreground="#7f8c8d"
-                   Margin="5,0"
-                   VerticalAlignment="Center"/>
+                           FontSize="14"
+                           FontWeight="Normal"
+                           Foreground="#7f8c8d"
+                           Margin="5,0"
+                           VerticalAlignment="Center"/>
 
                 <TextBlock Text="{Binding BDAttestati.Count}"
-                   FontSize="14"
-                   FontWeight="Normal"
-                   Foreground="#7f8c8d"
-                   VerticalAlignment="Center"/>
+                           FontSize="14"
+                           FontWeight="Normal"
+                           Foreground="#7f8c8d"
+                           VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>
 
         <!-- ========================= -->
-        <!-- DATAGRID CON COLORI -->
+        <!-- DATAGRID CON COLORI E DOPPIO CLICK -->
         <!-- ========================= -->
-        <DataGrid Grid.Row="2"
+        <DataGrid x:Name="dgAttestati"
+                  Grid.Row="2"
                   Margin="10"
                   ItemsSource="{Binding FilteredBDAttestati}"
-                  SelectedItem="{Binding AttestatoSelezionato}"
                   AutoGenerateColumns="False"
-                  IsReadOnly="True"
                   SelectionMode="Single"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserSortColumns="True"
                   GridLinesVisibility="Horizontal"
                   HorizontalGridLinesBrush="#6C9DC9">
+
+            <!-- ✅ DOPPIO CLICK PER APRIRE DOCUMENTO -->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding ApriDocumentoCommand}" 
+                                           CommandParameter="{Binding SelectedItem, ElementName=dgAttestati}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <!-- ========================= -->
             <!-- STILE RIGHE CON COLORI -->
@@ -192,18 +200,20 @@
                 <!-- ID -->
                 <DataGridTextColumn Header="ID" 
                                     Width="50"
-                                    Binding="{Binding Id}"/>
+                                    Binding="{Binding Id}"
+                                    IsReadOnly="True"/>
 
+                <!-- DIPENDENTE -->
                 <DataGridTextColumn Header="Dipendente" 
-                    Width="180"
-                    Binding="{Binding Dipendente}"/>
+                                    Width="180"
+                                    Binding="{Binding Dipendente}"
+                                    IsReadOnly="True"/>
 
-
-                <!-- CHECKBOX ATTIVITÀ -->
+                <!-- CHECKBOX ATTIVO -->
                 <DataGridCheckBoxColumn Header="Attivo" 
-                        Width="80"
-                        Binding="{Binding Attivo, UpdateSourceTrigger=PropertyChanged}"
-                        IsReadOnly="False">
+                                        Width="80"
+                                        Binding="{Binding Attivo, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="False">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="CheckBox">
                             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -211,60 +221,72 @@
                         </Style>
                     </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>
+
                 <!-- MATRICOLA DIPENDENTE -->
                 <DataGridTextColumn Header="Matricola" 
                                     Width="100"
-                                    Binding="{Binding MatricolaDipendente}"/>
+                                    Binding="{Binding MatricolaDipendente}"
+                                    IsReadOnly="True"/>
 
                 <!-- TITOLO CORSO -->
                 <DataGridTextColumn Header="Titolo Corso" 
-                                    Width="auto"
-                                    Binding="{Binding TitoloCorso}"/>
+                                    Width="Auto"
+                                    Binding="{Binding TitoloCorso}"
+                                    IsReadOnly="True"/>
 
                 <!-- CODICE ATTIVITÀ FORMATIVA -->
                 <DataGridTextColumn Header="Attività Formativa" 
-                                    Width="auto"
-                                    Binding="{Binding CodiceAttivitaFormativa}"/>
+                                    Width="Auto"
+                                    Binding="{Binding CodiceAttivitaFormativa}"
+                                    IsReadOnly="True"/>
 
                 <!-- CODICE MATERIA CORSO -->
                 <DataGridTextColumn Header="Cod. Materia Corso" 
-                                    Width="auto"
-                                    Binding="{Binding CodiceMateriaCorso}"/>
+                                    Width="Auto"
+                                    Binding="{Binding CodiceMateriaCorso}"
+                                    IsReadOnly="True"/>
 
                 <!-- ENTE FORMATORE -->
                 <DataGridTextColumn Header="Ente Formatore" 
-                                    Width="auto"
-                                    Binding="{Binding EnteFormatore}"/>
+                                    Width="Auto"
+                                    Binding="{Binding EnteFormatore}"
+                                    IsReadOnly="True"/>
 
                 <!-- ENTE CERTIFICATORE -->
                 <DataGridTextColumn Header="Ente Certificatore" 
-                                    Width="auto"
-                                    Binding="{Binding DenominazioneEnteCertificatore}"/>
+                                    Width="Auto"
+                                    Binding="{Binding DenominazioneEnteCertificatore}"
+                                    IsReadOnly="True"/>
 
                 <!-- DATA INIZIO CORSO -->
                 <DataGridTextColumn Header="Data Inizio" 
-                                    Width="auto"
-                                    Binding="{Binding DataInizioCorso}"/>
+                                    Width="Auto"
+                                    Binding="{Binding DataInizioCorso}"
+                                    IsReadOnly="True"/>
 
                 <!-- DATA FINE CORSO -->
                 <DataGridTextColumn Header="Data Fine" 
-                                    Width="auto"
-                                    Binding="{Binding DataFineCorso}"/>
+                                    Width="Auto"
+                                    Binding="{Binding DataFineCorso}"
+                                    IsReadOnly="True"/>
 
                 <!-- ANNO CORSO -->
                 <DataGridTextColumn Header="Anno" 
-                                    Width="auto"
-                                    Binding="{Binding AnnoCorso}"/>
+                                    Width="Auto"
+                                    Binding="{Binding AnnoCorso}"
+                                    IsReadOnly="True"/>
 
                 <!-- VALIDITÀ ANNI -->
                 <DataGridTextColumn Header="Validità (anni)" 
-                                    Width="auto"
-                                    Binding="{Binding ValiditaAnni}"/>
+                                    Width="Auto"
+                                    Binding="{Binding ValiditaAnni}"
+                                    IsReadOnly="True"/>
 
                 <!-- DATA SCADENZA CON COLORE TESTO -->
                 <DataGridTextColumn Header="Data Scadenza" 
-                                    Width="auto"
-                                    Binding="{Binding DataScadenzaCorso}">
+                                    Width="Auto"
+                                    Binding="{Binding DataScadenzaCorso}"
+                                    IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Foreground" 
@@ -274,6 +296,15 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
+                <DataGridTextColumn Header="Note Scadenza" 
+                    Width="Auto"
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="DataScadenzaCorso" 
+                 Converter="{StaticResource DataScadenzaToNoteConverter}"/>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
             </DataGrid.Columns>
         </DataGrid>
 
@@ -281,33 +312,33 @@
         <!-- PULSANTI AZIONI -->
         <!-- ========================= -->
         <StackPanel Grid.Row="3" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Center" 
-            Margin="10">
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="10">
 
             <Button Content="SALVA MODIFICHE"
-            Command="{Binding SalvaCommand}"
-            Width="180"
-            Height="40"
-            FontSize="14"
-            FontWeight="Bold"
-            Margin="5"/>
+                    Command="{Binding SalvaCommand}"
+                    Width="180"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Margin="5"/>
 
             <Button Content="RESET FILTRO"
-            Command="{Binding ResetFiltroCommand}"
-            Width="150"
-            Height="40"
-            FontSize="14"
-            FontWeight="Bold"
-            Margin="5"/>
+                    Command="{Binding ResetFiltroCommand}"
+                    Width="150"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Margin="5"/>
 
             <Button Content="ESPORTA"
-            Command="{Binding EsportaCommand}"
-            Width="150"
-            Height="40"
-            FontSize="14"
-            FontWeight="Bold"
-            Margin="5"/>
+                    Command="{Binding EsportaCommand}"
+                    Width="150"
+                    Height="40"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Margin="5"/>
         </StackPanel>
 
     </Grid>
