@@ -109,11 +109,7 @@
                 <DataGridTextColumn Header="ID" Width="50"
                                     Binding="{Binding Id}"/>
 
-                <DataGridTextColumn Header="Grado/Qualifica" Width="120"
-                                    Binding="{Binding GradoQualifica}"/>
-
-                <DataGridTextColumn Header="Categoria/Profilo" Width="120"
-                                    Binding="{Binding CategoriaProfilo}"/>
+               
 
                 <DataGridTextColumn Header="Cognome" Width="120"
                                     Binding="{Binding Cognome}"/>
@@ -126,6 +122,12 @@
 
                 <DataGridTextColumn Header="Matricola" Width="100"
                                     Binding="{Binding Matricola}"/>
+
+                <DataGridTextColumn Header="Grado/Qualifica" Width="120"
+                     Binding="{Binding GradoQualifica}"/>
+
+                <DataGridTextColumn Header="Categoria/Profilo" Width="120"
+                     Binding="{Binding CategoriaProfilo}"/>
 
                 <!-- ========================= -->
                 <!-- CAMPI CALCOLATI -->

@@ -45,14 +45,14 @@ namespace SAOResoForm.Service.Repository
                     if (esistente != null)  // ← AGGIUNTO CONTROLLO
                     {
                         // Aggiorna i campi
-                        esistente.Nome = item.Nome;
-                        esistente.Cognome = item.Cognome;
+                        esistente.Nome = item.Nome.ToUpper();
+                        esistente.Cognome = item.Cognome.ToUpper();
                         esistente.GradoQualifica = item.GradoQualifica;
                         esistente.CategoriaProfilo = item.CategoriaProfilo;
                         esistente.MilCiv = item.MilCiv;
-                        esistente.CodReparto = item.CodReparto;
-                        esistente.CodSezione = item.CodSezione;
-                        esistente.CodNucleo = item.CodNucleo;
+                        esistente.CodReparto = item.CodReparto.ToUpper();
+                        esistente.CodSezione = item.CodSezione.ToUpper();
+                        esistente.CodNucleo = item.CodNucleo.ToUpper();
                         esistente.CodUfficio = valoreCodUfficio; // ← AGGIUNTO CALCOLO COD_UFFICIO
                         esistente.Incarico = item.Incarico;
                         esistente.StatoServizio = item.StatoServizio;

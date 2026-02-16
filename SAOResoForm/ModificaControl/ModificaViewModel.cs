@@ -412,11 +412,20 @@ namespace SAOResoForm.ModificaControl
                     // ============ AGGIORNA ATTESTATI SE NOME/COGNOME È CAMBIATO ============
                     if (vecchioCognome != _personaleOriginale.Cognome || vecchioNome != _personaleOriginale.Nome)
                     {
-                        AggiornaAttestatiDipendente(_personaleOriginale.Matricola, _personaleOriginale.Cognome, _personaleOriginale.Nome);
+                        // CORREZIONE: Aggiunti i parametri mancanti vecchioCognome e vecchioNome
+                        AggiornaAttestatiDipendente(
+                            _personaleOriginale.Matricola,
+                            _personaleOriginale.Cognome,
+                            _personaleOriginale.Nome,
+                            vecchioCognome,
+                            vecchioNome
+                        );
                     }
-
-                    // Rinomina la cartella DOPO il salvataggio nel DB
-                    RinominaCartellaPersonale(vecchioCognome, vecchioNome, vecchiaMatricola);
+                    else
+                    {
+                        // Se il nome non è cambiato, rinomina solo la cartella (es. cambio matricola)
+                        RinominaCartellaPersonale(vecchioCognome, vecchioNome, vecchiaMatricola);
+                    }
 
                     // Aggiorna i valori originali per future modifiche
                     _cognomeOriginale = _personaleOriginale.Cognome;
@@ -449,7 +458,7 @@ namespace SAOResoForm.ModificaControl
         }
 
         // ============ METODO PER AGGIORNARE ATTESTATI ============
-        private void AggiornaAttestatiDipendente(string matricola, string nuovoCognome, string nuovoNome)
+        private void AggiornaAttestatiDipendente(string matricola, string nuovoCognome, string nuovoNome, string vecchioCognome, string vecchioNome)
         {
             try
             {
@@ -462,15 +471,46 @@ namespace SAOResoForm.ModificaControl
 
                     if (attestatiDaAggiornare.Any())
                     {
-                        // Aggiorna il campo Dipendente per ogni attestato
+                        string vecchiaCartella = $"{vecchioCognome.ToUpper()}_{vecchioNome.ToUpper()}_{matricola}";
+                        string nuovaCartella = $"{nuovoCognome.ToUpper()}_{nuovoNome.ToUpper()}_{matricola}";
+
+                        string percorsoBase = @"C:\SAO";
+                        string vecchioPercorsoCartella = Path.Combine(percorsoBase, vecchiaCartella);
+                        string nuovoPercorsoCartella = Path.Combine(percorsoBase, nuovaCartella);
+
+                        // Rinomina la cartella se esiste
+                        if (Directory.Exists(vecchioPercorsoCartella))
+                        {
+                            if (!Directory.Exists(nuovoPercorsoCartella))
+                            {
+                                Directory.Move(vecchioPercorsoCartella, nuovoPercorsoCartella);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"La cartella {nuovaCartella} esiste già!",
+                                               "Attenzione",
+                                               MessageBoxButton.OK,
+                                               MessageBoxImage.Warning);
+                                return;
+                            }
+                        }
+
+                        // Aggiorna gli attestati nel database
                         foreach (var attestato in attestatiDaAggiornare)
                         {
                             attestato.Dipendente = $"{nuovoCognome} {nuovoNome}";
+
+                            // Aggiorna solo il percorso della cartella, mantenendo il nome del file
+                            if (!string.IsNullOrEmpty(attestato.LinkAttestato))
+                            {
+                                string nomeFile = Path.GetFileName(attestato.LinkAttestato);
+                                attestato.LinkAttestato = Path.Combine(nuovoPercorsoCartella, nomeFile);
+                            }
                         }
 
                         db.SaveChanges();
 
-                        MessageBox.Show($"Aggiornati {attestatiDaAggiornare.Count} attestati con il nuovo nome.",
+                        MessageBox.Show($"Aggiornati {attestatiDaAggiornare.Count} attestati.\nCartella rinominata da:\n{vecchiaCartella}\na:\n{nuovaCartella}",
                                        "Attestati Aggiornati",
                                        MessageBoxButton.OK,
                                        MessageBoxImage.Information);
@@ -493,8 +533,8 @@ namespace SAOResoForm.ModificaControl
             {
                 string cartellaBase = @"C:\SAO\";
 
-                string vecchioNomeCartella = $"{vecchioCognome}_{vecchioNome}_{vecchiaMatricola}";
-                string nuovoNomeCartella = $"{_personaleOriginale.Cognome}_{_personaleOriginale.Nome}_{_personaleOriginale.Matricola}";
+                string vecchioNomeCartella = $"{vecchioCognome.ToUpper()}_{vecchioNome.ToUpper()}_{vecchiaMatricola}";
+                string nuovoNomeCartella = $"{_personaleOriginale.Cognome.ToUpper()}_{_personaleOriginale.Nome.ToUpper()}_{_personaleOriginale.Matricola}";
 
                 string vecchioPercorso = Path.Combine(cartellaBase, vecchioNomeCartella);
                 string nuovoPercorso = Path.Combine(cartellaBase, nuovoNomeCartella);

@@ -221,16 +221,16 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                     var attestato = new Attestati
                     {
                         Id = nuovoId,
-                        Dipendente = $"{personale.Cognome} {personale.Nome}",
+                        Dipendente = $"{personale.Cognome} {personale.Nome}".ToUpper(),
                         MatricolaDipendente = personale.Matricola,
-                        CodiceAttivitaFormativa = AttivitaFormativaSelezionata,
-                        CodiceMateriaCorso = Materia,
-                        EnteFormatore = EnteFormatore,
-                        DenominazioneEnteCertificatore = EnteCertificatore,
+                        CodiceAttivitaFormativa = AttivitaFormativaSelezionata.ToUpper(),
+                        CodiceMateriaCorso = Materia.ToUpper(),
+                        EnteFormatore = EnteFormatore.ToUpper(),
+                        DenominazioneEnteCertificatore = EnteCertificatore.ToUpper(),
                         DataFineCorso = DataFine?.ToString("dd-MM-yyyy"),
                         DataInizioCorso = DataInizio?.ToString("dd-MM-yyyy"),
                         ValiditaAnni = validitaAnniInt.ToString(),
-                        TitoloCorso = TitoloCorso,
+                        TitoloCorso = TitoloCorso.ToUpper(),
                         DataScadenzaCorso = DataFine.HasValue && validitaAnniInt > 0
                             ? DataFine.Value.AddYears(validitaAnniInt).ToString("dd-MM-yyyy")
                             : validitaAnniInt == 0

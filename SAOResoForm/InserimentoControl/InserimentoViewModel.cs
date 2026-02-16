@@ -343,10 +343,12 @@ namespace SAOResoForm.InserimentoControl
 
             // Calcolo COD_UUOO
             Cod_UUOO reparti = new Cod_UUOO();
-            string reparto = RepartoSelezionato ?? "";
-            string sezione = SezioneSelezionata?.Replace("-", "") ?? "";
-            string nucleo = NucleoSelezionato?.Replace("-", "") ?? "";
-            string chiave = $"{reparto} {sezione} {nucleo}".Trim();
+            string reparto = RepartoSelezionato;
+            string sezione = SezioneSelezionata ?? "";
+            string nucleo = NucleoSelezionato ?? "";
+            string chiave = $"{reparto} - {sezione} - {nucleo}".TrimEnd('-', ' ');
+            chiave = chiave.Trim();
+
             int? cod_UUOO = null;
             if (reparti.reparti.ContainsKey(chiave))
             {
@@ -365,8 +367,8 @@ namespace SAOResoForm.InserimentoControl
             var item = new Personale
             {
                 Id = indice + 1,
-                Nome = Nome,
-                Cognome = Cognome,
+                Nome = Nome.ToUpper(),
+                Cognome = Cognome.ToUpper(),
                 Matricola = Matricola,
                 Annotazioni = Annotazioni,
                 GradoQualifica = GradoQualifica,

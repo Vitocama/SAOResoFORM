@@ -222,6 +222,17 @@
                     </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>
 
+                <DataGridTextColumn Header="Note Scadenza" 
+     Width="Auto"
+     IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="DataScadenzaCorso" 
+  Converter="{StaticResource DataScadenzaToNoteConverter}"/>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+
+
                 <!-- MATRICOLA DIPENDENTE -->
                 <DataGridTextColumn Header="Matricola" 
                                     Width="100"
@@ -296,14 +307,7 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Note Scadenza" 
-                    Width="Auto"
-                    IsReadOnly="True">
-                    <DataGridTextColumn.Binding>
-                        <Binding Path="DataScadenzaCorso" 
-                 Converter="{StaticResource DataScadenzaToNoteConverter}"/>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+               
 
             </DataGrid.Columns>
         </DataGrid>
