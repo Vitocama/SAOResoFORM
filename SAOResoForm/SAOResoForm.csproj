@@ -72,10 +72,19 @@
     <Compile Include="Converter\CodUfficioToRepartoConverter.cs" />
     <Compile Include="Converter\DataScadenzaToColorConverter.cs" />
     <Compile Include="Converter\DataScadenzaToForegroundConverter.cs" />
+    <Compile Include="Converter\InverseBoolConverter.cs" />
+    <Compile Include="DBScelta\SceltaDBView.xaml.cs">
+      <DependentUpon>SceltaDBView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DBScelta\SceltaDBViewModel.cs" />
     <Compile Include="informazioneControl\InformazioneView.xaml.cs">
       <DependentUpon>InformazioneView.xaml</DependentUpon>
     </Compile>
     <Compile Include="informazioneControl\InformazioneViewModel.cs" />
+    <Compile Include="LoginControl\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginControl\LoginViewModel.cs" />
     <Compile Include="ModificaControl\ModificaView.xaml.cs">
       <DependentUpon>ModificaView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DBScelta\SceltaDBView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HomeControl\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InserimentoControl\InserimentoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginControl\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourcesDictionary\Resources\TextBoxDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourcesDictionary\Resources\WindowDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

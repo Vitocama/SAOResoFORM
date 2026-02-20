@@ -3,13 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="INSERIMENTO DEGLI ATTESTATI" Height="600" Width="1400">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#1F3657" Offset="0.0"/>
+                <GradientStop Color="#2F5078" Offset="0.5"/>
+                <GradientStop Color="#1F3657" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="979*"/>
             <ColumnDefinition Width="Auto" MinWidth="11"/>
@@ -17,12 +23,12 @@
         </Grid.ColumnDefinitions>
 
         <!-- TITOLO -->
-        <TextBlock
-                   Text="VISUALIZZA DATABASE INFORMAZIONE" 
+        <TextBlock Text="VISUALIZZA DATABASE INFORMAZIONE" 
                    FontSize="20" 
                    FontWeight="Bold"
+                   Foreground="White"
                    HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" Height="26" Width="380"/>
+                   VerticalAlignment="Center"/>
 
         <!-- RICERCA E CONTATORE -->
         <Grid Grid.Row="1" Grid.Column="0" Margin="10,10,10,10">
@@ -36,7 +42,8 @@
             <TextBlock Grid.Column="0"
                        Text="Cerca Personale:" 
                        VerticalAlignment="Center" 
-                       FontWeight="Bold" 
+                       FontWeight="Bold"
+                       Foreground="White"
                        Margin="0,0,10,0"/>
 
             <TextBox Grid.Column="1"
@@ -49,7 +56,7 @@
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        FontWeight="Bold"
-                       Foreground="#2C3E50"
+                       Foreground="White"
                        Margin="10,0,0,0">
                 <Run Text="Elementi visualizzati: "/>
                 <Run Text="{Binding FilteredPersonaleList.Count, Mode=OneWay}"/>
@@ -64,8 +71,9 @@
                    Text="Personale Selezionato" 
                    FontWeight="Bold"
                    FontSize="14"
+                   Foreground="White"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Height="18" Width="144"/>
+                   VerticalAlignment="Center"/>
 
         <!-- DATAGRID CON CHECKBOX -->
         <DataGrid Grid.Row="2"
@@ -77,26 +85,21 @@
                   CanUserDeleteRows="False"
                   Margin="10,10,10,10">
             <DataGrid.Columns>
-                <!-- CHECKBOX -->
                 <DataGridCheckBoxColumn Header="SELEZIONATI" 
                                         Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" 
                                         Width="120"/>
-
                 <DataGridTextColumn Header="ID" 
                                     Binding="{Binding Id}" 
                                     Width="Auto"
                                     IsReadOnly="True"/>
-
                 <DataGridTextColumn Header="Cognome" 
                                     Binding="{Binding Cognome}" 
                                     Width="*"
                                     IsReadOnly="True"/>
-
                 <DataGridTextColumn Header="Nome" 
                                     Binding="{Binding Nome}" 
                                     Width="*"
                                     IsReadOnly="True"/>
-
                 <DataGridTextColumn Header="Matricola" 
                                     Binding="{Binding Matricola}" 
                                     Width="*"
@@ -139,8 +142,8 @@
                         <Setter Property="Foreground" Value="Black"/>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Background" Value="#BBDEFB"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="#2F5078"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -162,7 +165,7 @@
             <TextBlock Grid.Row="2"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
-                       Foreground="#27AE60"
+                       Foreground="White"
                        Margin="0,5,0,0">
                 <Run Text="Totale inseriti: "/>
                 <Run Text="{Binding PersonaleInserito.Count, Mode=OneWay}"/>
@@ -176,7 +179,6 @@
                     HorizontalAlignment="Left" 
                     Margin="435,10,0,10" Width="530">
 
-            <!-- PULSANTE AGGIUNGI SELEZIONATI -->
             <Button Content="Aggiungi Selezionati ►"
                     Command="{Binding AggiungiSelezionatiCommand}"
                     Width="180"
@@ -186,7 +188,6 @@
                     Foreground="White"
                     FontWeight="Bold"/>
 
-            <!-- PULSANTE PULISCI -->
             <Button Content="Pulisci Selezione"
                     Command="{Binding PulisciSelezioneCommand}"
                     Width="150"
@@ -196,7 +197,6 @@
                     Foreground="White"
                     FontWeight="Bold"/>
 
-            <!-- PULSANTE CREA ATTESTATO -->
             <Button Content="📄 Crea Attestato"
                     Command="{Binding CreaAttestatoCommand}"
                     Width="170"

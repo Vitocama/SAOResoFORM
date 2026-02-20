@@ -31,7 +31,7 @@ namespace SAOResoForm.Repositories
         {
             using (var db = new tblContext())
             {
-                return db.Attestati.Where(x => x.Id != 0).ToList();
+                return db.Attestati.Where(x => x.Id !=0).ToList();
             }
         }
 
@@ -89,7 +89,23 @@ namespace SAOResoForm.Repositories
             return Add(attestato);
         }
 
-       
+        public List<Attestati> getNotVisible()
+        {
+            using (var db = new tblContext())
+            {
+                return db.Attestati.Where(x => x.Attivo == true).ToList();
+            }
+        }
+
+        public List<Attestati> getVisible()
+        {
+            using (var db = new tblContext())
+            {
+                return db.Attestati.Where(x => x.Attivo != true).ToList();
+            }
+        }
+
+
 
         #endregion
     }

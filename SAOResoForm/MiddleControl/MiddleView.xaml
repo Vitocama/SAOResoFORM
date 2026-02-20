@@ -12,12 +12,9 @@
 
                 <StackPanel.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#0A3568" Offset="0.0"/>
-
-                        <GradientStop Color="#0A3568" Offset="0.5"/>
-
-                        <GradientStop Color="#3A6BA4" Offset="0.1111"/>
-
+                        <GradientStop Color="#1A2F4E" Offset="0.0"/>
+                        <GradientStop Color="#2A4A6B" Offset="0.5"/>
+                        <GradientStop Color="#1A2F4E" Offset="1.0"/>
                     </LinearGradientBrush>
                 </StackPanel.Background>
                 <Image Source="/img/marina-logo.png" Margin="10,0,0,0">

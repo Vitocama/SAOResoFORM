@@ -28,28 +28,14 @@
             <!-- PRIMO PULSANTE - INSERIMENTO -->
             <Button Content="INSERIMENTO" 
                     Command="{Binding OpenInserimentoCommand}"
-                    Width="180"
-                    Height="50"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Background="#3498DB"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Margin="0,0,0,10"/>
+                    Style="{StaticResource  NavyButtonStyle}"   
+                   />
 
             <!-- SECONDO PULSANTE - VISUALIZZA -->
             <Button Content="VISUALIZZA" 
                     Command="{Binding OpenVisualizzaCommand}"
-                    Width="180"
-                    Height="50"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Background="#2ECC71"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Margin="0,0,0,10"/>
+                    Style="{StaticResource NavyButtonStyle}"
+                 />
         </StackPanel>
 
         <!-- ✅ AREA CONTENUTO A DESTRA (se necessaria) -->

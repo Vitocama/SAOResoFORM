@@ -7,23 +7,143 @@
         xmlns:converters="clr-namespace:SAOResoForm.Converter"
         mc:Ignorable="d"
         Title="Visualizza Database"
-        Height="600"
-        Width="1400"
-        WindowStartupLocation="CenterScreen">
+        Height="650"
+        Width="1450"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F2F5">
 
-    <!-- ========================= -->
-    <!-- RISORSE -->
-    <!-- ========================= -->
     <Window.Resources>
         <converters:CodUfficioToRepartoConverter x:Key="RepartoConverter"/>
         <converters:CodUfficioToSezioneConverter x:Key="SezioneConverter"/>
         <converters:CodUfficioToNucleoConverter x:Key="NucleoConverter"/>
+
+        <!-- ======== COLORI ======== -->
+        <Color x:Key="PrimaryColor">#2563EB</Color>
+        <Color x:Key="PrimaryHoverColor">#1D4ED8</Color>
+        <Color x:Key="SurfaceColor">#FFFFFF</Color>
+        <Color x:Key="BackgroundColor">#F0F2F5</Color>
+        <Color x:Key="BorderColor">#E2E8F0</Color>
+        <Color x:Key="TextPrimaryColor">#1E293B</Color>
+        <Color x:Key="TextSecondaryColor">#64748B</Color>
+        <Color x:Key="AccentGreenColor">#16A34A</Color>
+        <Color x:Key="HeaderBgColor">#1E293B</Color>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{StaticResource PrimaryHoverColor}"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
+        <SolidColorBrush x:Key="AccentGreenBrush" Color="{StaticResource AccentGreenColor}"/>
+        <SolidColorBrush x:Key="HeaderBgBrush" Color="{StaticResource HeaderBgColor}"/>
+
+        <!-- ======== STILE PULSANTE FLAT ======== -->
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource PrimaryHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ======== STILE TEXTBOX RICERCA ======== -->
+        <Style x:Key="SearchBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ======== STILE DATAGRID ======== -->
+        <Style x:Key="ModernDataGridStyle" TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F8FAFC"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="ColumnHeaderHeight" Value="42"/>
+            <Setter Property="RowHeight" Value="38"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+        </Style>
+
+        <!-- ======== STILE HEADER COLONNA ======== -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource HeaderBgBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+        </Style>
+
+        <!-- ======== STILE RIGA SELEZIONATA ======== -->
+        <Style TargetType="DataGridRow">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#DBEAFE"/>
+                    <Setter Property="Foreground" Value="#1E40AF"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EFF6FF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <!-- ========================= -->
-    <!-- LAYOUT -->
+    <!-- LAYOUT PRINCIPALE -->
     <!-- ========================= -->
-    <Grid>
+    <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -32,147 +152,168 @@
         </Grid.RowDefinitions>
 
         <!-- ========================= -->
-        <!-- TITOLO -->
+        <!-- HEADER -->
         <!-- ========================= -->
-        <TextBlock Grid.Row="0"
-                   Text="VISUALIZZA DATABASE"
-                   Style="{StaticResource HeadText}"
-                   HorizontalAlignment="Center"
-                   Margin="0,10"/>
+        <Border Grid.Row="0"
+                Background="{StaticResource HeaderBgBrush}"
+                Padding="24,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <TextBlock Text="VISUALIZZA DATABASE"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               />
+                    <TextBlock Text="SAO · ResoForm"
+                               FontSize="11"
+                               Foreground="#94A3B8"
+                               Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <!-- Badge contatori -->
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="0,0,4,0">
+
+                    <Border Background="#1E3A5F"
+                            CornerRadius="6"
+                            Padding="14,8"
+                            Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Visualizzati  "
+                                       Foreground="#94A3B8"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding FilteredPersonaleList.Count}"
+                                       Foreground="{StaticResource AccentGreenBrush}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#1E3A5F"
+                            CornerRadius="6"
+                            Padding="14,8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Totale  "
+                                       Foreground="#94A3B8"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding PersonaleList.Count}"
+                                       Foreground="White"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </Grid>
+        </Border>
 
         <!-- ========================= -->
         <!-- BARRA DI RICERCA -->
         <!-- ========================= -->
-        <Grid Grid.Row="1" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
+                Background="White"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="16,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0"
-                       Text="Cerca:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,10,0"/>
+                <!-- Icona cerca -->
+                <TextBlock Grid.Column="0"
+                           Text="🔍"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Margin="0,0,8,0"/>
 
-            <TextBox Grid.Column="1"
-                     Width="300"
-                     MaxWidth="600"
-                     HorizontalAlignment="Left"
-                     Text="{Binding FiltroRicerca, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <StackPanel Grid.Column="2"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Margin="0,0,20,0">
-
-                <TextBlock Text="Visualizzati: "
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#2C3E50"
-                           />
-
-                <TextBlock Text="{Binding FilteredPersonaleList.Count}"
-                           FontSize="14"
-                           FontWeight="Bold"
-                           Foreground="#27ae60"
-                           />
-
-                <TextBlock Text=" / "
-                           FontSize="14"
-                           
-                           />
-
-                <TextBlock Text="{Binding PersonaleList.Count}"
-                           FontSize="14"
-                           Foreground="#7f8c8d"
-                           Margin="0,0,20,0"
-                           />
-            </StackPanel>
-        </Grid>
+                <TextBox Grid.Column="1"
+                         Style="{StaticResource SearchBoxStyle}"
+                         Text="{Binding FiltroRicerca, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </Border>
 
         <!-- ========================= -->
         <!-- DATAGRID -->
         <!-- ========================= -->
-        <DataGrid Grid.Row="2"
-                  Margin="10"
-                  ItemsSource="{Binding FilteredPersonaleList}"
-                  SelectedItem="{Binding PersonaleSelezionato}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  MouseDoubleClick="MouseDoubleClick">
+        <Border Grid.Row="2"
+                Margin="16,12"
+                CornerRadius="8"
+                Background="White"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000"
+                                  Opacity="0.06"
+                                  BlurRadius="12"
+                                  ShadowDepth="2"
+                                  Direction="270"/>
+            </Border.Effect>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="50"
-                                    Binding="{Binding Id}"/>
+            <DataGrid Style="{StaticResource ModernDataGridStyle}"
+                      ItemsSource="{Binding FilteredPersonaleList}"
+                      SelectedItem="{Binding PersonaleSelezionato}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      MouseDoubleClick="MouseDoubleClick">
 
-               
-
-                <DataGridTextColumn Header="Cognome" Width="120"
-                                    Binding="{Binding Cognome}"/>
-
-                <DataGridTextColumn Header="Nome" Width="120"
-                                    Binding="{Binding Nome}"/>
-
-                <DataGridTextColumn Header="Mil/Civ" Width="80"
-                                    Binding="{Binding MilCiv}"/>
-
-                <DataGridTextColumn Header="Matricola" Width="100"
-                                    Binding="{Binding Matricola}"/>
-
-                <DataGridTextColumn Header="Grado/Qualifica" Width="120"
-                     Binding="{Binding GradoQualifica}"/>
-
-                <DataGridTextColumn Header="Categoria/Profilo" Width="120"
-                     Binding="{Binding CategoriaProfilo}"/>
-
-                <!-- ========================= -->
-                <!-- CAMPI CALCOLATI -->
-                <!-- ========================= -->
-                <DataGridTextColumn Header="Reparto" Width="150"
-                                    Binding="{Binding CodUfficio, Converter={StaticResource RepartoConverter}}"/>
-
-                <DataGridTextColumn Header="Sezione" Width="150"
-                                    Binding="{Binding CodUfficio, Converter={StaticResource SezioneConverter}}"/>
-
-                <DataGridTextColumn Header="Nucleo" Width="150"
-                                    Binding="{Binding CodUfficio, Converter={StaticResource NucleoConverter}}"/>
-
-                <!-- ========================= -->
-                <!-- ALTRI CAMPI -->
-                <!-- ========================= -->
-                <DataGridTextColumn Header="Cod. Ufficio" Width="100"
-                                    Binding="{Binding CodUfficio}"/>
-
-                <DataGridTextColumn Header="Incarico" Width="150"
-                                    Binding="{Binding Incarico}"/>
-
-                <DataGridTextColumn Header="Stato Servizio" Width="120"
-                                    Binding="{Binding StatoServizio}"/>
-
-                <DataGridTextColumn Header="Annotazioni" Width="200"
-                                    Binding="{Binding Annotazioni}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID"             Width="55"  Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Cognome"        Width="130" Binding="{Binding Cognome}"/>
+                    <DataGridTextColumn Header="Nome"           Width="120" Binding="{Binding Nome}"/>
+                    <DataGridTextColumn Header="Mil/Civ"        Width="80"  Binding="{Binding MilCiv}"/>
+                    <DataGridTextColumn Header="Matricola"      Width="100" Binding="{Binding Matricola}"/>
+                    <DataGridTextColumn Header="Grado/Qualifica"    Width="130" Binding="{Binding GradoQualifica}"/>
+                    <DataGridTextColumn Header="Categoria/Profilo"  Width="130" Binding="{Binding CategoriaProfilo}"/>
+                    <DataGridTextColumn Header="Reparto"        Width="155" Binding="{Binding CodUfficio, Converter={StaticResource RepartoConverter}}"/>
+                    <DataGridTextColumn Header="Sezione"        Width="155" Binding="{Binding CodUfficio, Converter={StaticResource SezioneConverter}}"/>
+                    <DataGridTextColumn Header="Nucleo"         Width="155" Binding="{Binding CodUfficio, Converter={StaticResource NucleoConverter}}"/>
+                    <DataGridTextColumn Header="Cod. Ufficio"   Width="100" Binding="{Binding CodUfficio}"/>
+                    <DataGridTextColumn Header="Incarico"       Width="155" Binding="{Binding Incarico}"/>
+                    <DataGridTextColumn Header="Stato Servizio" Width="120" Binding="{Binding StatoServizio}"/>
+                    <DataGridTextColumn Header="Annotazioni"    Width="200" Binding="{Binding Annotazioni}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
 
         <!-- ========================= -->
-        <!-- PULSANTE AGGIORNA -->
+        <!-- FOOTER CON PULSANTE -->
         <!-- ========================= -->
-        <StackPanel Grid.Row="3" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Center" 
-                    Margin="10">
-            <Button Content="AGGIORNA DATAGRID"
-                    Command="{Binding AggiornaCommand}"
-                    Width="180"
-                    Height="40"
-                    FontSize="14"
-                    FontWeight="Bold"
-                    Margin="5"/>
-        </StackPanel>
+        <Border Grid.Row="3"
+                Background="White"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="16,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1"
+                        Content="⟳  AGGIORNA"
+                        Command="{Binding AggiornaCommand}"
+                        Style="{StaticResource FlatButtonStyle}"
+                        Width="160"
+                        Height="38"/>
+            </Grid>
+        </Border>
 
     </Grid>
 </Window>

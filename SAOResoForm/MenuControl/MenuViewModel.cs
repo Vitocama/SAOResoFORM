@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using SAOResoForm.AttestatiControl;
 using SAOResoForm.AttestatiControl.AttestazioniInserimentoControl;
+using SAOResoForm.DBScelta;
 using SAOResoForm.HomeControl;
 using SAOResoForm.informazioneControl;
 using SAOResoForm.PersonaleControl;
@@ -26,12 +27,15 @@ namespace SAOResoForm.MenuControl
         private readonly ITool _tool;
         private  InformazioneView _informazioneView;
         private  ReportisticaView _reportisticaView;
+        private  SceltaDBView _dbSceltaView;    
 
         public ICommand OpenHomeCommand { get; }
         public ICommand OpenPersonaleCommand { get; }
         public ICommand OpenAttestatiCommand { get; }
 
         public ICommand OpenReportisticaCommand { get; }
+
+        public ICommand openSceltaDBCommand { get; }
 
         public MenuViewModel(MainViewModel mainVM, AppServices services)
         {
@@ -52,7 +56,10 @@ namespace SAOResoForm.MenuControl
             OpenAttestatiCommand = new RelayCommand(OpenAttestati);
 
             OpenReportisticaCommand = new RelayCommand(OpenReportistica);
-           
+
+            openSceltaDBCommand=new RelayCommand(OpenSceltaDB);
+
+
         }
 
         private void OpenReportistica()
@@ -97,5 +104,23 @@ else
             // Passa AppServices invece dei singoli servizi
             _mainVM.CurrentViewModel = new PersonaleViewModel(_mainVM, _services);
         }
+
+        private void OpenSceltaDB()
+        {
+            if (_dbSceltaView == null || !_dbSceltaView.IsVisible)
+            {
+                _dbSceltaView = new SceltaDBView();
+                _dbSceltaView.Closed += (s, e) => _dbSceltaView = null;
+                _dbSceltaView.Show();
+            }
+            else
+            {
+                if (_dbSceltaView.WindowState == WindowState.Minimized)
+                    _dbSceltaView.WindowState = WindowState.Normal;
+                _dbSceltaView.Activate();
+                _dbSceltaView.Focus();
+            }
+        }
+
     }
 }

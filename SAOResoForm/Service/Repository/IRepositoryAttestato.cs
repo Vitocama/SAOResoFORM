@@ -9,6 +9,10 @@ namespace SAOResoForm.Repositories
         Attestati Add(Attestati attestato);
 
         // Read
+
+        List<Attestati> getNotVisible();
+
+        List<Attestati> getVisible();
         List<Attestati> GetAll();
         List<Attestati> GetScaduti();
         List<Attestati> GetInScadenza(int giorniSoglia = 30);
@@ -17,7 +21,7 @@ namespace SAOResoForm.Repositories
         Attestati Update(Attestati attestato);
 
         // Utility
-        Attestati SalvaAttestato(Attestati attestato);
+        
 
        
     }

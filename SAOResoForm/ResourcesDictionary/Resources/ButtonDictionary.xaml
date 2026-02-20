@@ -26,9 +26,9 @@
                             <Setter TargetName="border" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#FF2E5C83" Offset="0.8"/>
-                                        <GradientStop Color="#FF385475" Offset="0.4"/>
-                                        <GradientStop Color="#FF16344B" Offset="0.5"/>
+                                        <GradientStop Color="#1A2F4E" Offset="0.0"/>
+                                        <GradientStop Color="#2A4A6B" Offset="0.5"/>
+                                        <GradientStop Color="#1A2F4E" Offset="1.0"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
@@ -71,4 +71,77 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="NavyButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#1A2F4E" Offset="0.0"/>
+                    <GradientStop Color="#2A4A6B" Offset="0.5"/>
+                    <GradientStop Color="#1A2F4E" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#E8EEF5"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="6"
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#2A4A6B" Offset="0.0"/>
+                                        <GradientStop Color="#3A6A9B" Offset="0.5"/>
+                                        <GradientStop Color="#2A4A6B" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#060F1A" Offset="0.0"/>
+                                        <GradientStop Color="#0F1F35" Offset="0.5"/>
+                                        <GradientStop Color="#060F1A" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="border" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleY="0.97"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
 </ResourceDictionary>

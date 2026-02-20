@@ -30,11 +30,29 @@ namespace SAOResoForm.Service.Repository
 
         public string Update(Personale item)
         {
-            string coduff = item.CodReparto + " - " + item.CodSezione + " - " + item.CodNucleo;
+            string coduff = item.CodReparto + item.CodSezione + item.CodNucleo;
+
+            string valoreCodUfficio = "";
+
+            try
+            {
+                coduff = int.Parse(coduff).ToString();
+                Cod_UUOO cod_UUOO = new Cod_UUOO();
+                string reparti = cod_UUOO.reparti.FirstOrDefault(x => x.Value.ToString() == coduff).Key;
+
+                string[] codice = reparti?.Split('-') ?? new string[3];
+
+                item.CodReparto = codice.Length > 0 ? codice[0].Trim() : "";
+                item.CodSezione = codice.Length > 1 ? codice[1].Trim() : "";
+                item.CodNucleo = codice.Length > 2 ? codice[2].Trim() : "";
+            }
+            catch {
+                coduff = item.CodReparto + " - " + item.CodSezione + " - " + item.CodNucleo;
+            }
 
             coduff = coduff.TrimEnd(' ', '-');
 
-            int valoreCodUfficio=new Cod_UUOO().reparti[coduff];
+           
 
             try
             {
@@ -53,7 +71,7 @@ namespace SAOResoForm.Service.Repository
                         esistente.CodReparto = item.CodReparto.ToUpper();
                         esistente.CodSezione = item.CodSezione.ToUpper();
                         esistente.CodNucleo = item.CodNucleo.ToUpper();
-                        esistente.CodUfficio = valoreCodUfficio; // ← AGGIUNTO CALCOLO COD_UFFICIO
+                        esistente.CodUfficio = long.TryParse(coduff, out long val) ? val : 0; // ← AGGIUNTO CALCOLO COD_UFFICIO
                         esistente.Incarico = item.Incarico;
                         esistente.StatoServizio = item.StatoServizio;
                         esistente.Annotazioni = item.Annotazioni;
@@ -128,6 +146,11 @@ namespace SAOResoForm.Service.Repository
         }
 
         public string Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SalvaModifiche()
         {
             throw new NotImplementedException();
         }

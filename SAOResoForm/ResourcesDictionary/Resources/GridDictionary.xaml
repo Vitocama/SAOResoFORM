@@ -4,11 +4,10 @@
     <Style TargetType="Grid" x:Key="TotaleSfondo">
         <Setter Property="Background">
             <Setter.Value>
-                <LinearGradientBrush StartPoint="0,0"
-                                     EndPoint="0,1">
-                    <GradientStop Color="#0A3568" Offset="0.0"/>
-                    <GradientStop Color="#0A3568" Offset="0.5"/>
-                    <GradientStop Color="#3A6BA4" Offset="1.0"/>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#1A2F4E" Offset="0.0"/>
+                    <GradientStop Color="#2A4A6B" Offset="0.5"/>
+                    <GradientStop Color="#1A2F4E" Offset="1.0"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>

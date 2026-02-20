@@ -1,4 +1,5 @@
 ﻿using SAOResoForm.Repositories;
+using SAOResoForm.Service.Repository.tool;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace SAOResoForm.Reportistica
         public ReportisticaView()
         {
             InitializeComponent();
-            DataContext=new ReportisticaViewModel(new RepositoryAttestato());
+            DataContext = new ReportisticaViewModel(new RepositoryAttestato(), new Tool()
+                );
         }
     }
 }

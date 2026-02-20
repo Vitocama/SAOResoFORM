@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.IO;
+using System.Windows;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -23,20 +25,33 @@ namespace SAOResoForm.Models
         public virtual DbSet<Attestati> Attestati { get; set; }
     
         public virtual DbSet<Personale> Personale { get; set; }
-       
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                try
+                string percorsoSalvato = SAOResoForm.DBScelta.SceltaDBViewModel.CaricaPercorso();
+
+                if (string.IsNullOrWhiteSpace(percorsoSalvato))
                 {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                    optionsBuilder.UseSqlite("Data Source=C:\\SAO\\TBL\\tbl.sqlite");
-                } catch {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                    optionsBuilder.UseSqlite("Data Source=C:\\\\\\\\SAO\\\\\\\\TBL\\\\\\\\SAOnew.sqlite");
+                    MessageBox.Show("Nessun database configurato.\nAndare su Impostazioni e selezionare il database.",
+                                   "Database non configurato",
+                                   MessageBoxButton.OK,
+                                   MessageBoxImage.Warning);
+                    return;
                 }
+
+                if (!File.Exists(percorsoSalvato))
+                {
+                    MessageBox.Show($"Il database non è raggiungibile:\n{percorsoSalvato}",
+                                   "Database non trovato",
+                                   MessageBoxButton.OK,
+                                   MessageBoxImage.Error);
+                    return;
+                }
+
+                optionsBuilder.UseSqlite($"Data Source={percorsoSalvato}");
             }
         }
 

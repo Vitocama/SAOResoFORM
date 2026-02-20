@@ -17,6 +17,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <!-- HOME -->
@@ -43,6 +44,11 @@
             <!-- CREA ACCOUNT -->
             <Border Grid.Row="4" Style="{StaticResource BorderMenu}">
                 <Button Content="CREA ACCOUNT" Style="{StaticResource MenuButton}" />
+            </Border>
+
+            <!-- CREA SCELTADB -->
+            <Border Grid.Row="5" Style="{StaticResource  BorderMenu}">
+                <Button Content="SCELTA DB" Style="{StaticResource MenuButton}" Command="{Binding  openSceltaDBCommand}" />
             </Border>
 
         </Grid>
