@@ -1,18 +1,10 @@
-﻿using Microsoft.Xaml.Behaviors.Media;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SAOResoForm.Service.IdentityService
 {
-  
-        public interface IIdentity
-        {
+    public interface IIdentity
+    {
         bool Autenticato(string utente, string password);
-            
-        }
+        bool CambiaPassword(string utente, string nuovaPassword);
     }
-
-
+}

@@ -8,7 +8,8 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        SizeToContent="Height">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
@@ -68,7 +69,7 @@
             </Setter>
         </Style>
 
-        <!-- Stile pulsante icona (occhio / chiudi) — nessun hover colorato -->
+        <!-- Stile pulsante icona (occhio / chiudi) -->
         <Style x:Key="IconButtonStyle" TargetType="Button">
             <Setter Property="Background"       Value="Transparent"/>
             <Setter Property="BorderThickness"  Value="0"/>
@@ -93,6 +94,59 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Stile link testo -->
+        <Style x:Key="LinkButtonStyle" TargetType="Button">
+            <Setter Property="Background"       Value="Transparent"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock x:Name="Tb"
+                                   Text="{TemplateBinding Content}"
+                                   TextDecorations="Underline"
+                                   Foreground="#1E3A5F"
+                                   FontSize="11"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Tb" Property="Foreground" Value="#2A5298"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Stile pulsante verde (salva password) -->
+        <Style x:Key="GreenButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#388E3C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#1B5E20"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#AAAAAA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Border CornerRadius="12" Background="White"
@@ -118,7 +172,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- TITOLO -->
                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                         <TextBlock Text="&#xE72E;"
                                    FontFamily="Segoe MDL2 Assets"
@@ -131,7 +184,6 @@
                                    Margin="0,8,0,0"/>
                     </StackPanel>
 
-                    <!-- PULSANTE CHIUDI -->
                     <Button Grid.Column="1"
                             Content="✖"
                             Command="{Binding ChiudiCommand}"
@@ -146,9 +198,10 @@
                 </Grid>
             </Border>
 
-            <!-- FORM LOGIN -->
-            <StackPanel Grid.Row="1" Margin="32,26,32,26" VerticalAlignment="Center">
+            <!-- FORM -->
+            <StackPanel Grid.Row="1" Margin="32,26,32,26" VerticalAlignment="Top">
 
+                <!-- USERNAME -->
                 <TextBlock Text="Utente" FontSize="11" FontWeight="SemiBold"
                            Foreground="#555555" Margin="0,0,0,5"/>
                 <Border BorderBrush="#CCCCCC" BorderThickness="1"
@@ -168,6 +221,7 @@
                     </Grid>
                 </Border>
 
+                <!-- PASSWORD ATTUALE -->
                 <TextBlock Text="Password" FontSize="11" FontWeight="SemiBold"
                            Foreground="#555555" Margin="0,0,0,5"/>
                 <Border BorderBrush="#CCCCCC" BorderThickness="1"
@@ -179,27 +233,23 @@
                             <ColumnDefinition Width="36"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- ICONA LUCCHETTO -->
                         <TextBlock Grid.Column="0"
                                    Text="&#xE72E;" FontFamily="Segoe MDL2 Assets"
                                    FontSize="14" Foreground="#AAAAAA"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>
 
-                        <!-- PASSWORD NASCOSTA -->
                         <PasswordBox Grid.Column="1"
                                      x:Name="PwdPassword"
                                      PasswordChanged="PwdPassword_PasswordChanged"
                                      Visibility="{Binding MostraPassword,
                                          Converter={StaticResource InverseBoolToVisConverter}}"/>
 
-                        <!-- PASSWORD VISIBILE -->
                         <TextBox Grid.Column="1"
                                  Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
                                  Visibility="{Binding MostraPassword,
                                      Converter={StaticResource BoolToVisConverter}}"/>
 
-                        <!-- PULSANTE OCCHIO -->
                         <Button Grid.Column="2"
                                 Content="{Binding IconaOcchio}"
                                 Command="{Binding TogglePasswordCommand}"
@@ -210,12 +260,14 @@
                     </Grid>
                 </Border>
 
+                <!-- ERRORE -->
                 <TextBlock Text="{Binding ErrorMessage}"
                            Foreground="#C0392B" FontSize="11"
                            Margin="0,0,0,14"
                            Visibility="{Binding HasError,
                                Converter={StaticResource BoolToVisConverter}}"/>
 
+                <!-- PROGRESS -->
                 <ProgressBar IsIndeterminate="True" Height="3"
                              Margin="0,0,0,12"
                              Foreground="#1E3A5F" Background="Transparent"
@@ -223,12 +275,74 @@
                              Visibility="{Binding IsBusy,
                                  Converter={StaticResource BoolToVisConverter}}"/>
 
+                <!-- ACCEDI -->
                 <Button Content="ACCEDI"
                         Background="#1E3A5F"
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding IsBusy,
                             Converter={StaticResource InverseBoolConverter},
                             FallbackValue=True}"/>
+
+                <!-- LINK CAMBIA PASSWORD -->
+                <Button Content="Cambia password"
+                        Command="{Binding ToggleCambiaPasswordCommand}"
+                        Style="{StaticResource LinkButtonStyle}"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,0"/>
+
+                <!-- SEZIONE CAMBIA PASSWORD -->
+                <StackPanel Visibility="{Binding MostraCambiaPassword,
+                                Converter={StaticResource BoolToVisConverter}}"
+                            Margin="0,14,0,0">
+
+                    <Separator Margin="0,0,0,14" Background="#E0E0E0"/>
+
+                    <TextBlock Text="Nuova Password" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#555555" Margin="0,0,0,5"/>
+                    <Border BorderBrush="#CCCCCC" BorderThickness="1"
+                            CornerRadius="6" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="&#xE72E;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Foreground="#AAAAAA"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            <PasswordBox Grid.Column="1"
+                                         x:Name="PwdNuova"
+                                         PasswordChanged="PwdNuova_PasswordChanged"/>
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Text="Conferma Password" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#555555" Margin="0,0,0,5"/>
+                    <Border BorderBrush="#CCCCCC" BorderThickness="1"
+                            CornerRadius="6" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="&#xE72E;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="14" Foreground="#AAAAAA"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            <PasswordBox Grid.Column="1"
+                                         x:Name="PwdConferma"
+                                         PasswordChanged="PwdConferma_PasswordChanged"/>
+                        </Grid>
+                    </Border>
+
+                    <Button Content="SALVA NUOVA PASSWORD"
+                            Background="#2E7D32"
+                            Style="{StaticResource GreenButtonStyle}"
+                            Command="{Binding CambiaPasswordCommand}"/>
+                </StackPanel>
+
             </StackPanel>
         </Grid>
     </Border>

@@ -1,32 +1,40 @@
-﻿using SAOResoForm.Service.IdentityService;
-using System.Windows;
+﻿using System.Windows;
 
 namespace SAOResoForm.LoginControl
 {
     public partial class LoginView : Window
     {
-        public LoginView()
+        private readonly LoginViewModel _vm;
+
+        public LoginView(LoginViewModel vm)
         {
             InitializeComponent();
+            _vm = vm;
+            DataContext = _vm;
 
-            var vm = new LoginViewModel(new Identity());
-            vm.LoginSucceeded += (s, e) => { DialogResult = true; Close(); };
-            vm.RichiestaChiusura += (s, e) => { DialogResult = false; Close(); };
-
-            vm.PropertyChanged += (s, e) =>
+            _vm.LoginSucceeded += (sender, args) =>
             {
-                if (e.PropertyName == nameof(LoginViewModel.MostraPassword))
-                    if (!vm.MostraPassword)
-                        PwdPassword.Password = vm.Password;  // occhio chiuso → aggiorna PasswordBox
+                DialogResult = true;
+                Close();
             };
 
-            DataContext = vm;
+            _vm.RichiestaChiusura += (sender, args) =>
+            {
+                DialogResult = false;
+                Close();
+            };
         }
 
+        // PASSWORD ATTUALE
         private void PwdPassword_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is LoginViewModel vm)
-                vm.Password = PwdPassword.Password;
-        }
+            => _vm.Password = PwdPassword.Password;
+
+        // NUOVA PASSWORD
+        private void PwdNuova_PasswordChanged(object sender, RoutedEventArgs e)
+            => _vm.NuovaPassword = PwdNuova.Password;
+
+        // CONFERMA PASSWORD
+        private void PwdConferma_PasswordChanged(object sender, RoutedEventArgs e)
+            => _vm.ConfermaPassword = PwdConferma.Password;
     }
 }
