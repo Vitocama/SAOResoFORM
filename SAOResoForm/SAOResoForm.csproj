@@ -73,6 +73,7 @@
     <Compile Include="Converter\DataScadenzaToColorConverter.cs" />
     <Compile Include="Converter\DataScadenzaToForegroundConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
+    <Compile Include="Converter\InverseBoolToVisibilityConverter..cs" />
     <Compile Include="DBScelta\SceltaDBView.xaml.cs">
       <DependentUpon>SceltaDBView.xaml</DependentUpon>
     </Compile>
@@ -121,6 +122,8 @@
     </Compile>
     <Compile Include="PersonaleControl\PersonaleViewModel.cs" />
     <Compile Include="ResourcesDictionary\Dati\RepartiSezioniNucleoKeyValue.cs" />
+    <Compile Include="Service\IdentityService\Identity.cs" />
+    <Compile Include="Service\IdentityService\IIdentity.cs" />
     <Compile Include="Service\Repository\IRepositoryAttestato.cs" />
     <Compile Include="Service\Repository\IRepositoryService.cs" />
     <Compile Include="Service\Repository\RepositoryAttestati.cs" />

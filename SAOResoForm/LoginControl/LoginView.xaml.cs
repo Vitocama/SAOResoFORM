@@ -1,25 +1,32 @@
-﻿using System.Windows;
+﻿using SAOResoForm.Service.IdentityService;
+using System.Windows;
 
 namespace SAOResoForm.LoginControl
 {
     public partial class LoginView : Window
     {
-        private readonly LoginViewModel _vm;
-
-        public LoginView(LoginViewModel vm)
+        public LoginView()
         {
             InitializeComponent();
-            _vm = vm;
-            DataContext = _vm;
 
-            _vm.LoginSucceeded += (sender, args) =>
+            var vm = new LoginViewModel(new Identity());
+            vm.LoginSucceeded += (s, e) => { DialogResult = true; Close(); };
+            vm.RichiestaChiusura += (s, e) => { DialogResult = false; Close(); };
+
+            vm.PropertyChanged += (s, e) =>
             {
-                DialogResult = true;
-                Close();
+                if (e.PropertyName == nameof(LoginViewModel.MostraPassword))
+                    if (!vm.MostraPassword)
+                        PwdPassword.Password = vm.Password;  // occhio chiuso → aggiorna PasswordBox
             };
+
+            DataContext = vm;
         }
 
         private void PwdPassword_PasswordChanged(object sender, RoutedEventArgs e)
-            => _vm.Password = PwdPassword.Password;
+        {
+            if (DataContext is LoginViewModel vm)
+                vm.Password = PwdPassword.Password;
+        }
     }
 }

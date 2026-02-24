@@ -11,22 +11,17 @@ namespace SAOResoForm
         public MainWindow()
         {
             InitializeComponent();
-
             var repositoryService = new RepositoryService();
             var tool = new Tool();
             var appServices = new AppServices(repositoryService, tool);
-
             DataContext = new MainViewModel(appServices);
 
-            // Apri il login dopo che la finestra è caricata
             Loaded += (s, e) =>
             {
-                var loginVm = new LoginViewModel();
-                var loginView = new LoginView(loginVm) { Owner = this };
-
+                var loginView = new LoginView { Owner = this };
                 if (loginView.ShowDialog() != true)
                 {
-                    Close(); // Login fallito → chiudi tutto
+                    Close();
                 }
             };
         }

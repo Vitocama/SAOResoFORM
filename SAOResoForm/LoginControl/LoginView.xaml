@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SAOResoForm.Converter"
         Title="Accesso"
-        Height="340" Width="420"
+        Height="400" Width="420"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None"
@@ -12,7 +12,8 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
-        <local:InverseBoolConverter   x:Key="InverseBoolConverter"/>
+        <local:InverseBoolConverter                x:Key="InverseBoolConverter"/>
+        <local:InverseBoolToVisibilityConverter    x:Key="InverseBoolToVisConverter"/>
 
         <Style TargetType="TextBox">
             <Setter Property="BorderThickness"          Value="0"/>
@@ -32,6 +33,7 @@
             <Setter Property="FocusVisualStyle"         Value="{x:Null}"/>
         </Style>
 
+        <!-- Stile base pulsanti -->
         <Style TargetType="Button">
             <Setter Property="Foreground"       Value="White"/>
             <Setter Property="FontSize"         Value="13"/>
@@ -44,7 +46,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Bd"
-                                Background="#1E3A5F"
+                                Background="{TemplateBinding Background}"
                                 CornerRadius="6"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
@@ -65,6 +67,32 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Stile pulsante icona (occhio / chiudi) — nessun hover colorato -->
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+            <Setter Property="Background"       Value="Transparent"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="Transparent" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#22FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#44FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Border CornerRadius="12" Background="White"
@@ -79,23 +107,46 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!-- HEADER BLU -->
             <Border Grid.Row="0"
                     CornerRadius="12,12,0,0"
                     Background="#1E3A5F"
-                    Padding="24,22">
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="&#xE72E;"
-                               FontFamily="Segoe MDL2 Assets"
-                               FontSize="30" Foreground="White"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="Accedi al Sistema"
-                               FontSize="16" FontWeight="SemiBold"
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               Margin="0,8,0,0"/>
-                </StackPanel>
+                    Padding="24,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- TITOLO -->
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE72E;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="30" Foreground="White"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Accedi al Sistema"
+                                   FontSize="16" FontWeight="SemiBold"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- PULSANTE CHIUDI -->
+                    <Button Grid.Column="1"
+                            Content="✖"
+                            Command="{Binding ChiudiCommand}"
+                            Style="{StaticResource IconButtonStyle}"
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Width="30"
+                            Height="30"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"/>
+                </Grid>
             </Border>
 
+            <!-- FORM LOGIN -->
             <StackPanel Grid.Row="1" Margin="32,26,32,26" VerticalAlignment="Center">
 
                 <TextBlock Text="Utente" FontSize="11" FontWeight="SemiBold"
@@ -125,15 +176,37 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="36"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="36"/>
                         </Grid.ColumnDefinitions>
+
+                        <!-- ICONA LUCCHETTO -->
                         <TextBlock Grid.Column="0"
                                    Text="&#xE72E;" FontFamily="Segoe MDL2 Assets"
                                    FontSize="14" Foreground="#AAAAAA"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>
+
+                        <!-- PASSWORD NASCOSTA -->
                         <PasswordBox Grid.Column="1"
                                      x:Name="PwdPassword"
-                                     PasswordChanged="PwdPassword_PasswordChanged"/>
+                                     PasswordChanged="PwdPassword_PasswordChanged"
+                                     Visibility="{Binding MostraPassword,
+                                         Converter={StaticResource InverseBoolToVisConverter}}"/>
+
+                        <!-- PASSWORD VISIBILE -->
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding MostraPassword,
+                                     Converter={StaticResource BoolToVisConverter}}"/>
+
+                        <!-- PULSANTE OCCHIO -->
+                        <Button Grid.Column="2"
+                                Content="{Binding IconaOcchio}"
+                                Command="{Binding TogglePasswordCommand}"
+                                Style="{StaticResource IconButtonStyle}"
+                                FontSize="14"
+                                Width="36"
+                                Height="36"/>
                     </Grid>
                 </Border>
 
@@ -151,6 +224,7 @@
                                  Converter={StaticResource BoolToVisConverter}}"/>
 
                 <Button Content="ACCEDI"
+                        Background="#1E3A5F"
                         Command="{Binding LoginCommand}"
                         IsEnabled="{Binding IsBusy,
                             Converter={StaticResource InverseBoolConverter},

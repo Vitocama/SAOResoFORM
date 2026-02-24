@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using SAOResoForm.Service.IdentityService;
 using System;
 using System.Windows.Input;
 
@@ -8,6 +9,9 @@ namespace SAOResoForm.LoginControl
     public class LoginViewModel : ViewModelBase
     {
         public event EventHandler LoginSucceeded;
+        public event EventHandler RichiestaChiusura;
+
+        private readonly IIdentity _iidentity;
 
         private string _username = string.Empty;
         public string Username
@@ -20,7 +24,12 @@ namespace SAOResoForm.LoginControl
             }
         }
 
-        public string Password { get; set; } = string.Empty;
+        private string _password = string.Empty;
+        public string Password
+        {
+            get => _password;
+            set => Set(ref _password, value);
+        }
 
         private string _errorMessage = string.Empty;
         public string ErrorMessage
@@ -46,24 +55,44 @@ namespace SAOResoForm.LoginControl
             }
         }
 
-        public ICommand LoginCommand { get; }
-
-        public LoginViewModel()
+        private bool _mostraPassword;
+        public bool MostraPassword
         {
+            get => _mostraPassword;
+            set
+            {
+                Set(ref _mostraPassword, value);
+                RaisePropertyChanged(nameof(IconaOcchio));
+            }
+        }
+
+        public string IconaOcchio => MostraPassword ? "🙈" : "👁";
+
+        public ICommand LoginCommand { get; }
+        public ICommand ChiudiCommand { get; }
+        public ICommand TogglePasswordCommand { get; }
+
+        public LoginViewModel(IIdentity iidentity)
+        {
+            _iidentity = iidentity ?? throw new ArgumentNullException(nameof(iidentity)); // ← corretto
+
             LoginCommand = new RelayCommand(
                 execute: () => EseguiLogin(),
                 canExecute: () => !string.IsNullOrWhiteSpace(Username) && !IsBusy
             );
+
+            ChiudiCommand = new RelayCommand(() => RichiestaChiusura?.Invoke(this, EventArgs.Empty));
+
+            TogglePasswordCommand = new RelayCommand(() => MostraPassword = !MostraPassword);
         }
 
         private void EseguiLogin()
         {
             IsBusy = true;
             ErrorMessage = string.Empty;
-
             try
             {
-                if (VerificaCredenziali(Username, Password))
+                if (VerificaCredenziali(Username, Password))  // ← ora ritorna bool
                     LoginSucceeded?.Invoke(this, EventArgs.Empty);
                 else
                     ErrorMessage = "Credenziali non valide. Riprovare.";
@@ -74,10 +103,11 @@ namespace SAOResoForm.LoginControl
             }
         }
 
-        private bool VerificaCredenziali(string username, string password)
+        private bool VerificaCredenziali(string username, string password) // ← bool
         {
-            // ESEMPIO STATICO — sostituisci con query EF/DB reale
-            return username == "admin" && password == "1234";
+            bool autenticato = _iidentity.Autenticato(username, password);
+
+            return autenticato;
         }
     }
 }
