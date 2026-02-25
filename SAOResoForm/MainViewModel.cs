@@ -1,6 +1,7 @@
 ﻿using SAOResoForm.HomeControl;
 using SAOResoForm.MenuControl;
 using SAOResoForm.Service.App;
+using SAOResoForm.Service.IdentityService;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
 using System.ComponentModel;
@@ -25,10 +26,10 @@ namespace SAOResoForm
 
         public MenuViewModel MenuVM { get; }
 
-        public MainViewModel(AppServices services)  // ← AGGIUNGI IL PARAMETRO
+        public MainViewModel(AppServices services)
         {
-            _services = services;  // ← ASSEGNA IL PARAMETRO
-            MenuVM = new MenuViewModel(this, _services);
+            _services = services;
+            MenuVM = new MenuViewModel(this, services, new Identity());
             CurrentViewModel = new HomeViewModel();
         }
 

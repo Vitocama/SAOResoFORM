@@ -3,6 +3,7 @@ using SAOResoForm.Service.App;
 using SAOResoForm.Service.IdentityService;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
+using System.Security.Principal;
 using System.Windows;
 
 namespace SAOResoForm
@@ -12,7 +13,6 @@ namespace SAOResoForm
         public MainWindow()
         {
             InitializeComponent();
-
             var repositoryService = new RepositoryService();
             var tool = new Tool();
             var appServices = new AppServices(repositoryService, tool);
@@ -25,9 +25,7 @@ namespace SAOResoForm
                 var loginView = new LoginView(loginVm) { Owner = this };
 
                 if (loginView.ShowDialog() != true)
-                {
                     Close();
-                }
             };
         }
     }

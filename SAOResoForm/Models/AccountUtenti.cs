@@ -9,7 +9,7 @@ namespace SAOResoForm.Models
 {
     public partial class AccountUtenti
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Utente { get; set; }
         public string Password { get; set; }
         public string Cognome { get; set; }

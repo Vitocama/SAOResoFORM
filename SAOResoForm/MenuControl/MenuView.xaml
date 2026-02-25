@@ -6,9 +6,7 @@
              mc:Ignorable="d" 
              Width="155"
              Height="560"
-             Margin="8,0,0,0"
-             >
-
+             Margin="8,0,0,0">
     <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Height="550">
         <Grid>
             <Grid.RowDefinitions>
@@ -18,39 +16,36 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-
             <!-- HOME -->
             <Border Grid.Row="0" Style="{StaticResource BorderMenu}">
-                <Button Content="HOME" Style="{StaticResource MenuButton}"  Command="{Binding OpenHomeCommand}"/>
+                <Button Content="HOME" Style="{StaticResource MenuButton}" Command="{Binding OpenHomeCommand}"/>
             </Border>
-
             <!-- PERSONALE -->
             <Border Grid.Row="1" Style="{StaticResource BorderMenu}">
-                <Button Content="PERSONALE" Style="{StaticResource MenuButton}" 
-                        Command="{Binding OpenPersonaleCommand}" />
+                <Button Content="PERSONALE" Style="{StaticResource MenuButton}" Command="{Binding OpenPersonaleCommand}"/>
             </Border>
-
             <!-- ATTESTATI -->
             <Border Grid.Row="2" Style="{StaticResource BorderMenu}">
                 <Button Content="ATTESTATI" Style="{StaticResource MenuButton}" Command="{Binding OpenAttestatiCommand}"/>
             </Border>
-
             <!-- REPORTISTICHE -->
             <Border Grid.Row="3" Style="{StaticResource BorderMenu}">
                 <Button Content="REPORTISTICHE" Style="{StaticResource MenuButton}" Command="{Binding OpenReportisticaCommand}"/>
             </Border>
-
             <!-- CREA ACCOUNT -->
             <Border Grid.Row="4" Style="{StaticResource BorderMenu}">
-                <Button Content="CREA ACCOUNT" Style="{StaticResource MenuButton}" />
+                <Button Content="CREA ACCOUNT" Style="{StaticResource MenuButton}"/>
             </Border>
-
-            <!-- CREA SCELTADB -->
-            <Border Grid.Row="5" Style="{StaticResource  BorderMenu}">
-                <Button Content="SCELTA DB" Style="{StaticResource MenuButton}" Command="{Binding  openSceltaDBCommand}" />
+            <!-- SCELTA DB -->
+            <Border Grid.Row="5" Style="{StaticResource BorderMenu}">
+                <Button Content="SCELTA DB" Style="{StaticResource MenuButton}" Command="{Binding openSceltaDBCommand}"/>
             </Border>
-
+            <!-- LOGOUT -->
+            <Border Grid.Row="6" Style="{StaticResource BorderMenu}">
+                <Button Content="LOGOUT" Style="{StaticResource MenuButton}" Command="{Binding logout}"/>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

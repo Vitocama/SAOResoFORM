@@ -130,19 +130,22 @@ namespace SAOResoForm.LoginControl
             ToggleCambiaPasswordCommand = new RelayCommand(() =>
             {
                 MostraCambiaPassword = !MostraCambiaPassword;
-                // Reset campi e messaggi quando si chiude la sezione
+
                 if (!MostraCambiaPassword)
                 {
                     NuovaPassword = string.Empty;
                     ConfermaPassword = string.Empty;
                     ErrorMessage = string.Empty;
                 }
+
+                // Forza rivalutazione canExecute quando il pannello appare/scompare
+                ((RelayCommand)CambiaPasswordCommand).RaiseCanExecuteChanged();
             });
 
+            // canExecute sempre true: la validazione avviene dentro EseguiCambiaPassword
             CambiaPasswordCommand = new RelayCommand(
                 execute: () => EseguiCambiaPassword(),
-                canExecute: () => !string.IsNullOrWhiteSpace(NuovaPassword)
-                                  && !string.IsNullOrWhiteSpace(ConfermaPassword)
+                canExecute: () => true
             );
         }
 
@@ -172,35 +175,36 @@ namespace SAOResoForm.LoginControl
         {
             ErrorMessage = string.Empty;
 
-            // Validazione username
             if (string.IsNullOrWhiteSpace(Username))
             {
                 ErrorMessage = "Inserire il nome utente.";
                 return;
             }
 
-            // Validazione password attuale
-            if (!VerificaCredenziali(Username, Password))
+            if (string.IsNullOrWhiteSpace(Password))
             {
-                ErrorMessage = "Credenziali attuali non valide.";
+                ErrorMessage = "Inserire la password attuale.";
                 return;
             }
 
-            // Validazione lunghezza
-            if (NuovaPassword.Length < 6)
+            if (string.IsNullOrWhiteSpace(NuovaPassword) || NuovaPassword.Length < 6)
             {
                 ErrorMessage = "La nuova password deve avere almeno 6 caratteri.";
                 return;
             }
 
-            // Validazione corrispondenza
             if (NuovaPassword != ConfermaPassword)
             {
                 ErrorMessage = "Le password non coincidono.";
                 return;
             }
 
-            // Chiamata al servizio
+            if (!VerificaCredenziali(Username, Password))
+            {
+                ErrorMessage = "Credenziali attuali non valide.";
+                return;
+            }
+
             bool aggiornata = _iidentity.CambiaPassword(Username, NuovaPassword);
 
             if (aggiornata)

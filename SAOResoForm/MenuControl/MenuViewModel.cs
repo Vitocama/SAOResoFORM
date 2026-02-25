@@ -4,15 +4,20 @@ using SAOResoForm.AttestatiControl.AttestazioniInserimentoControl;
 using SAOResoForm.DBScelta;
 using SAOResoForm.HomeControl;
 using SAOResoForm.informazioneControl;
+using SAOResoForm.LoginControl;
 using SAOResoForm.PersonaleControl;
 using SAOResoForm.Reportistica;
 using SAOResoForm.Service.App;
+using SAOResoForm.Service.IdentityService;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using RelayCommand = GalaSoft.MvvmLight.CommandWpf.RelayCommand;
+
+
 
 
 namespace SAOResoForm.MenuControl
@@ -21,6 +26,7 @@ namespace SAOResoForm.MenuControl
     {
         private readonly MainViewModel _mainVM;
         private readonly AppServices _services;
+        private readonly IIdentity _identity;
 
         // Riferimenti diretti per comodità (opzionale)
         private readonly IRepositoryService _repositoryService;
@@ -37,10 +43,13 @@ namespace SAOResoForm.MenuControl
 
         public ICommand openSceltaDBCommand { get; }
 
-        public MenuViewModel(MainViewModel mainVM, AppServices services)
+        public ICommand logout { get; }
+
+        public MenuViewModel(MainViewModel mainVM, AppServices services,IIdentity identity)
         {
             _mainVM = mainVM;
             _services = services;
+            _identity = identity;
 
             // Estrai i servizi da AppServices
             _repositoryService = services.RepositoryService;
@@ -58,6 +67,11 @@ namespace SAOResoForm.MenuControl
             OpenReportisticaCommand = new RelayCommand(OpenReportistica);
 
             openSceltaDBCommand=new RelayCommand(OpenSceltaDB);
+
+            logout = new RelayCommand(() =>
+            {
+                _identity.logout();
+            });
 
 
         }

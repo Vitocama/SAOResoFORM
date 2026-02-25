@@ -1,47 +1,118 @@
 ﻿using BCrypt.Net;
+using SAOResoForm.LoginControl;
 using SAOResoForm.Models;
+using System;
 using System.Linq;
+using System.Windows;
 
 namespace SAOResoForm.Service.IdentityService
 {
     public class Identity : IIdentity
     {
+        private const int WorkFactor = 11;
+
         public bool Autenticato(string utente, string password)
         {
+            if (string.IsNullOrWhiteSpace(utente) || string.IsNullOrWhiteSpace(password))
+                return false;
+
             using (var db = new tblContext())
             {
-                var account = db.AccountUtenti.FirstOrDefault(a => a.Utente == utente);
+                var account = db.AccountUtenti
+                    .FirstOrDefault(a => a.Utente == utente);
+
                 if (account == null)
                     return false;
 
-                // Password in chiaro → verifica diretta e migra all'hash
-                if (!account.Password.StartsWith("$2"))
+                if (string.IsNullOrEmpty(account.Password))
+                    return false;
+
+                bool passwordCorretta = false;
+
+                if (IsBCryptHash(account.Password))
                 {
-                    if (account.Password != password)
-                        return false;
-
-                    account.Password = BCrypt.Net.BCrypt.HashPassword(password);
-                    db.SaveChanges();
-                    return true;
+                    passwordCorretta = BCrypt.Net.BCrypt.Verify(password, account.Password);
                 }
+                else
+                {
+                    if (account.Password == password)
+                    {
+                        passwordCorretta = true;
 
-                // Password già hashata → verifica BCrypt
-                return BCrypt.Net.BCrypt.Verify(password, account.Password);
+                        account.Password = BCrypt.Net.BCrypt.HashPassword(password, WorkFactor);
+                        db.SaveChanges();
+                    }
+                }
+                SessionManager.CurrentUser = utente;
+                SessionManager.Ruolo = account.Ruolo; // campo della tabella AccountUtenti
+
+                return passwordCorretta;
             }
         }
 
         public bool CambiaPassword(string utente, string nuovaPassword)
         {
+            if (string.IsNullOrWhiteSpace(utente) || string.IsNullOrWhiteSpace(nuovaPassword))
+                return false;
+
             using (var db = new tblContext())
             {
-                var account = db.AccountUtenti.FirstOrDefault(a => a.Utente == utente);
+                var account = db.AccountUtenti
+                    .FirstOrDefault(a => a.Utente == utente);
+
                 if (account == null)
                     return false;
 
-                account.Password = BCrypt.Net.BCrypt.HashPassword(nuovaPassword);
+                account.Password = BCrypt.Net.BCrypt.HashPassword(nuovaPassword, WorkFactor);
                 db.SaveChanges();
+
                 return true;
             }
         }
+
+        public bool CreaUtente(string utente, string password)
+        {
+            if (string.IsNullOrWhiteSpace(utente) || string.IsNullOrWhiteSpace(password))
+                return false;
+
+            using (var db = new tblContext())
+            {
+                if (db.AccountUtenti.Any(a => a.Utente == utente))
+                    return false;
+
+                var nuovoUtente = new AccountUtenti
+                {
+                    Utente = utente,
+                    Password = BCrypt.Net.BCrypt.HashPassword(password, WorkFactor)
+                };
+
+                db.AccountUtenti.Add(nuovoUtente);
+                db.SaveChanges();
+
+                return true;
+            }
+        }
+
+        private bool IsBCryptHash(string value)
+        {
+            return value.StartsWith("$2a$") ||
+                   value.StartsWith("$2b$") ||
+                   value.StartsWith("$2y$");
+        }
+
+        public void logout()
+        {
+            SessionManager.CurrentUser = null;
+
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
+
+        public static class SessionManager
+        {
+            public static string CurrentUser { get; set; }
+            public static string Ruolo { get; set; }
+        }
+
     }
 }
