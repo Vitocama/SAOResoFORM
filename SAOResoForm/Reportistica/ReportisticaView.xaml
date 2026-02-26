@@ -16,6 +16,7 @@
         <converters:DataScadenzaToColorConverter      x:Key="DataScadenzaToColorConverter"/>
         <converters:DataScadenzaToForegroundConverter x:Key="DataScadenzaToForegroundConverter"/>
         <converters:DataScadenzaToNoteConverter        x:Key="DataScadenzaToNoteConverter"/>
+        <BooleanToVisibilityConverter                  x:Key="BooleanToVisibilityConverter"/>
 
         <!-- ======== PULSANTE PILL ======== -->
         <Style x:Key="PillButton" TargetType="Button">
@@ -91,7 +92,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
 
     <Grid>
@@ -149,22 +149,26 @@
                 <TextBlock Text="Filtro Stato:"
                            FontSize="14" FontWeight="Bold"
                            VerticalAlignment="Center"
-                           Margin="0,0,10,0"/>
+                           Margin="0,0,10,0"
+                           Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <Button Content="TUTTI"
                         Command="{Binding MostraTuttiCommand}"
                         Style="{StaticResource PillOutline}"
-                        Width="100" Margin="5,0"/>
+                        Width="100" Margin="5,0"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <Button Content="SOLO NON VISIBILI"
                         Command="{Binding MostraAttiviCommand}"
                         Style="{StaticResource PillOutline}"
-                        Width="151" Margin="5,0"/>
+                        Width="151" Margin="5,0"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <Button Content="SOLO VISIBILI"
                         Command="{Binding MostraNonAttiviCommand}"
                         Style="{StaticResource PillOutline}"
-                        Width="140" Margin="5,0"/>
+                        Width="140" Margin="5,0"
+                        Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3" Grid.Row="1"
@@ -186,7 +190,7 @@
             </StackPanel>
         </Grid>
 
-        <!-- DATAGRID — invariato -->
+        <!-- DATAGRID -->
         <DataGrid x:Name="dgAttestati"
                   Grid.Row="2"
                   Margin="10"
@@ -222,14 +226,18 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"                  Width="50"   Binding="{Binding Id}"                              IsReadOnly="True"/>
                 <DataGridTextColumn Header="Dipendente"          Width="180"  Binding="{Binding Dipendente}"                      IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Header="Attivo"          Width="80"   Binding="{Binding Attivo, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False">
-                    <DataGridCheckBoxColumn.ElementStyle>
-                        <Style TargetType="CheckBox">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment"   Value="Center"/>
-                        </Style>
-                    </DataGridCheckBoxColumn.ElementStyle>
-                </DataGridCheckBoxColumn>
+                <DataGridTemplateColumn Header="Attivo" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Attivo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Visibility="{Binding DataContext.IsAdmin, 
+                                   RelativeSource={RelativeSource AncestorType=DataGrid},
+                                   Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Note Scadenza"       Width="Auto" IsReadOnly="True">
                     <DataGridTextColumn.Binding>
                         <Binding Path="DataScadenzaCorso" Converter="{StaticResource DataScadenzaToNoteConverter}"/>
@@ -274,28 +282,24 @@
                            Foreground="#2C3E50"
                            VerticalAlignment="Center"
                            Margin="0,0,10,0"/>
-
                 <Border Background="#C0392B" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="Scaduto"
                            FontSize="12" Foreground="#2C3E50"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
-
                 <Border Background="#E67E22" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="In scadenza"
                            FontSize="12" Foreground="#2C3E50"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
-
                 <Border Background="#27AE60" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="Valido"
                            FontSize="12" Foreground="#2C3E50"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
-
                 <Border Background="White" BorderBrush="#BDC3C7"
                         BorderThickness="1" CornerRadius="3"
                         Width="14" Height="14"
@@ -308,17 +312,16 @@
             <!-- Pulsanti azione -->
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Button Content="SALVA MODIFICHE"
-                        Command="{Binding SalvaCommand}"
-                        Style="{StaticResource PillButton}"
-                        Width="180" Height="40"
-                        FontSize="14" Margin="5"/>
-
+        Command="{Binding SalvaCommand}"
+        Style="{StaticResource PillButton}"
+        Width="180" Height="40"
+        FontSize="14" Margin="5"
+        Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <Button Content="RESET FILTRO"
                         Command="{Binding ResetFiltroCommand}"
                         Style="{StaticResource PillButtonGray}"
                         Width="150" Height="40"
                         FontSize="14" Margin="5"/>
-
                 <Button Content="ESPORTA"
                         Command="{Binding EsportaCommand}"
                         Style="{StaticResource PillButtonGreen}"

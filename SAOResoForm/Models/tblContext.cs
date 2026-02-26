@@ -120,6 +120,7 @@ namespace SAOResoForm.Models
                 entity.Property(e => e.TitoloCorso).HasColumnName("TITOLO_CORSO");
 
                 entity.Property(e => e.ValiditaAnni).HasColumnName("VALIDITA_ANNI");
+                entity.Property(e => e.CodUfficio).HasColumnName("COD_UFFICIO");
 
             });
 

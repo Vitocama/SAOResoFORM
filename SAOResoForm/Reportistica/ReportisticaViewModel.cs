@@ -1,23 +1,24 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using Microsoft.Win32;
+using Microsoft.EntityFrameworkCore.Internal;
 using SAOResoForm.Models;
 using SAOResoForm.Repositories;
+using SAOResoForm.Service.IdentityService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using static SAOResoForm.Service.IdentityService.Identity;
 
 namespace SAOResoForm.Reportistica
 {
     public class ReportisticaViewModel : ViewModelBase
     {
         private readonly ITool _tool;
+
         #region Fields
 
         private readonly IRepositoryAttestato _repositoryAttestato;
@@ -51,22 +52,18 @@ namespace SAOResoForm.Reportistica
             set => Set(ref _filtroRicerca, value);
         }
 
+        public bool IsAdmin => SessionManager.Ruolo?.ToLower() == "admin";
+
         #endregion
 
         #region Commands
 
-        // ✅ AggiornaCommand è l'UNICO che ricarica dal DB
         public ICommand AggiornaCommand => new RelayCommand(CaricaDati);
-
-        // ✅ Questi lavorano SOLO sulla collection in memoria
         public ICommand ApplicaFiltroCommand => new RelayCommand(ApplicaFiltro);
         public ICommand ResetFiltroCommand => new RelayCommand(ResetFiltro);
-
-        // ✅ CORRETTI: chiamano ImpostaFiltroAttivo, NON il repository
         public ICommand MostraTuttiCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.Tutti));
         public ICommand MostraAttiviCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.SoloAttivi));
         public ICommand MostraNonAttiviCommand => new RelayCommand(() => ImpostaFiltroAttivo(FiltroAttivoEnum.SoloNonAttivi));
-
         public ICommand EsportaCommand => new RelayCommand(EsportaInCsv);
         public ICommand SalvaCommand => new RelayCommand(SalvaModifiche, () => _attestatiModificati?.Count > 0);
         public ICommand ApriDocumentoCommand => new RelayCommand<Attestati>(ApriDocumento);
@@ -75,7 +72,7 @@ namespace SAOResoForm.Reportistica
 
         #region Constructor
 
-        public ReportisticaViewModel(IRepositoryAttestato repository,ITool tool)
+        public ReportisticaViewModel(IRepositoryAttestato repository, ITool tool)
         {
             _tool = tool ?? throw new ArgumentNullException(nameof(tool));
             _repositoryAttestato = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -91,7 +88,6 @@ namespace SAOResoForm.Reportistica
 
         #region Methods
 
-        // ✅ Unico metodo che accede al DB
         private void CaricaDati()
         {
             try
@@ -110,7 +106,6 @@ namespace SAOResoForm.Reportistica
                     BDAttestati.Add(attestato);
                 }
 
-                // ✅ All'avvio mostra solo i flaggati (Attivo = true)
                 _filtroAttivoCorrente = FiltroAttivoEnum.SoloNonAttivi;
                 FiltroRicerca = string.Empty;
                 ApplicaFiltro();
@@ -179,19 +174,20 @@ namespace SAOResoForm.Reportistica
             ApplicaFiltro();
         }
 
-        // ✅ Imposta il filtro e applica SENZA ricaricare dal DB
         private void ImpostaFiltroAttivo(FiltroAttivoEnum filtro)
         {
             _filtroAttivoCorrente = filtro;
             ApplicaFiltro();
         }
 
-        // ✅ Lavora SOLO sulla collection in memoria BDAttestati
         private void ApplicaFiltro()
         {
             FilteredBDAttestati.Clear();
 
             IEnumerable<Attestati> risultati = BDAttestati;
+
+            // Filtro RUOLO
+            risultati = risultati.Where(a => FiltroRuolo(a));
 
             // Filtro testuale
             if (!string.IsNullOrWhiteSpace(FiltroRicerca))
@@ -216,7 +212,7 @@ namespace SAOResoForm.Reportistica
                 );
             }
 
-            // ✅ Filtro Attivo
+            // Filtro Attivo
             switch (_filtroAttivoCorrente)
             {
                 case FiltroAttivoEnum.SoloAttivi:
@@ -234,13 +230,38 @@ namespace SAOResoForm.Reportistica
                 FilteredBDAttestati.Add(attestato);
         }
 
+        private bool FiltroRuolo(Attestati a)
+        {
+            // Admin vede tutto
+            if (IsAdmin)
+                return true;
+
+            var ruolo = SessionManager.Ruolo;
+            if (string.IsNullOrWhiteSpace(ruolo))
+                return true;
+
+            var codice = a.CodUfficio?.ToString();
+            if (string.IsNullOrWhiteSpace(codice))
+                return false;
+
+            var codici = ruolo.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var u in codici)
+            {
+                var prefisso = u.Trim().TrimEnd('0');
+                if (string.IsNullOrEmpty(prefisso))
+                    return true;
+                if (codice.StartsWith(prefisso))
+                    return true;
+            }
+
+            return false;
+        }
+
         private void ApriDocumento(Attestati attestato)
         {
             _tool.ApriDocumento(attestato);
         }
 
-        //**
-        // ✅ Passa i dati filtrati (o tutti se non c'è filtro)
         private void EsportaInCsv()
         {
             var dati = FilteredBDAttestati?.Any() == true
@@ -248,17 +269,6 @@ namespace SAOResoForm.Reportistica
                 : BDAttestati;
 
             _tool.EsportaInCsv(dati);
-        }
-
-        private string EscapaCsv(string valore)
-        {
-            if (string.IsNullOrEmpty(valore)) return "";
-            if (valore.Contains(";") || valore.Contains(",") || valore.Contains("\"") || valore.Contains("\n"))
-            {
-                valore = valore.Replace("\"", "\"\"");
-                return $"\"{valore}\"";
-            }
-            return valore;
         }
 
         public override void Cleanup()

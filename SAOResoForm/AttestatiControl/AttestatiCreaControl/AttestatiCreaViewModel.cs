@@ -1,4 +1,5 @@
 ﻿using RESOFORM.Dati;
+using SAOResoForm.DBScelta;
 using SAOResoForm.Models;
 using SAOResoForm.Repositories;
 using SAOResoForm.Service.Repository.tool;
@@ -192,8 +193,8 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                     return;
                 }
 
-                string cartellaBaseSAO = @"C:\SAO";
-                Directory.CreateDirectory(cartellaBaseSAO);
+                string cartellaBase = SceltaDBViewModel.CaricaCartellaAttestati();
+                Directory.CreateDirectory(cartellaBase);
 
                 var db = new tblContext();
 
@@ -206,7 +207,7 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                 foreach (var personale in PersonaleSelezionato)
                 {
                     string nomeCartellaPersonale = $"{personale.Cognome}_{personale.Nome}_{personale.Matricola}";
-                    string percorsoCartellaPersonale = Path.Combine(cartellaBaseSAO, nomeCartellaPersonale);
+                    string percorsoCartellaPersonale = Path.Combine(cartellaBase, nomeCartellaPersonale);
                     Directory.CreateDirectory(percorsoCartellaPersonale);
 
                     // ============ USA IL NUMERO RANDOM COMUNE ============

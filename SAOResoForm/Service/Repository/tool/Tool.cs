@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SAOResoForm.DBScelta;
 using SAOResoForm.Models;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace SAOResoForm.Service.Repository.tool
                 if (item == null)
                     throw new ArgumentNullException(nameof(item));
 
-                string cartellaBase = @"C:\SAO";
+                string cartellaBase = SceltaDBViewModel.CaricaCartellaAttestati();
                 string nomeCartella = $"{item.Cognome}_{item.Nome}_{item.Matricola}";
                 string percorsoCompleto = Path.Combine(cartellaBase, nomeCartella);
 

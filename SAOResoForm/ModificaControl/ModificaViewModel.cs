@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using SAOResoForm.Dati;
+using SAOResoForm.DBScelta;
 using SAOResoForm.Models;
 using SAOResoForm.ResourcesDictionary.Dati;
 using SAOResoForm.Service.Repository;
@@ -474,7 +475,7 @@ namespace SAOResoForm.ModificaControl
                         string vecchiaCartella = $"{vecchioCognome.ToUpper()}_{vecchioNome.ToUpper()}_{matricola}";
                         string nuovaCartella = $"{nuovoCognome.ToUpper()}_{nuovoNome.ToUpper()}_{matricola}";
 
-                        string percorsoBase = @"C:\SAO";
+                        string percorsoBase = SceltaDBViewModel.CaricaCartellaAttestati();
                         string vecchioPercorsoCartella = Path.Combine(percorsoBase, vecchiaCartella);
                         string nuovoPercorsoCartella = Path.Combine(percorsoBase, nuovaCartella);
 
@@ -531,7 +532,7 @@ namespace SAOResoForm.ModificaControl
         {
             try
             {
-                string cartellaBase = @"C:\SAO\";
+                string cartellaBase =SceltaDBViewModel.CaricaCartellaAttestati();
 
                 string vecchioNomeCartella = $"{vecchioCognome.ToUpper()}_{vecchioNome.ToUpper()}_{vecchiaMatricola}";
                 string nuovoNomeCartella = $"{_personaleOriginale.Cognome.ToUpper()}_{_personaleOriginale.Nome.ToUpper()}_{_personaleOriginale.Matricola}";

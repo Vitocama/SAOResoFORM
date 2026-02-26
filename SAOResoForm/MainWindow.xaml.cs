@@ -3,7 +3,6 @@ using SAOResoForm.Service.App;
 using SAOResoForm.Service.IdentityService;
 using SAOResoForm.Service.Repository;
 using SAOResoForm.Service.Repository.tool;
-using System.Security.Principal;
 using System.Windows;
 
 namespace SAOResoForm
@@ -16,7 +15,8 @@ namespace SAOResoForm
             var repositoryService = new RepositoryService();
             var tool = new Tool();
             var appServices = new AppServices(repositoryService, tool);
-            DataContext = new MainViewModel(appServices);
+            var mainViewModel = new MainViewModel(appServices);
+            DataContext = mainViewModel;
 
             Loaded += (s, e) =>
             {
@@ -25,7 +25,14 @@ namespace SAOResoForm
                 var loginView = new LoginView(loginVm) { Owner = this };
 
                 if (loginView.ShowDialog() != true)
+                {
                     Close();
+                }
+                else
+                {
+                    // Login riuscito: aggiorna i permessi del menu
+                    mainViewModel.MenuVM.AggiornaPemessi();
+                }
             };
         }
     }

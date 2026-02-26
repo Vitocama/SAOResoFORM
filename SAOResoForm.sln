@@ -5,11 +5,6 @@ VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAOResoForm", "SAOResoForm\SAOResoForm.csproj", "{01A4EC52-9707-48E7-8A7F-0CD4F6060DAF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementi di soluzione", "Elementi di soluzione", "{9DF70304-0A22-CE1E-AA12-D5904EE55694}"
-	ProjectSection(SolutionItems) = preProject
-		InverseBoolToVisibilityConverter..cs = InverseBoolToVisibilityConverter..cs
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

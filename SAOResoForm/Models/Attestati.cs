@@ -23,6 +23,7 @@ namespace SAOResoForm.Models
         private string _dataScadenzaCorso;
         private string _linkAttestato;
         private string _note;
+        private string _codUfficio;
 
         #endregion
 
@@ -127,6 +128,14 @@ namespace SAOResoForm.Models
             set => SetProperty(ref _linkAttestato, value);
         }
 
+
+        public string CodUfficio
+        {
+            get => _codUfficio;
+            set => SetProperty(ref _codUfficio, value);
+        }
+    
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -147,6 +156,9 @@ namespace SAOResoForm.Models
             OnPropertyChanged(propertyName);
             return true;
         }
+
+
+
 
         #endregion
     }
