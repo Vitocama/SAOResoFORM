@@ -7,8 +7,7 @@
         xmlns:converters="clr-namespace:SAOResoForm.Converter"
         mc:Ignorable="d"
         Title="Visualizza Database"
-        Height="650"
-        Width="1450"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Background="#F0F2F5">
 
@@ -262,7 +261,6 @@
                                   ShadowDepth="2"
                                   Direction="270"/>
             </Border.Effect>
-
             <DataGrid Style="{StaticResource ModernDataGridStyle}"
                       ItemsSource="{Binding FilteredPersonaleList}"
                       SelectedItem="{Binding PersonaleSelezionato}"

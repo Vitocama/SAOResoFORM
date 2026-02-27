@@ -592,3 +592,5 @@ C:\Users\Hirad\Desktop\SAOResoFORM\SAOResoForm\obj\Debug\LoginControl\LoginView.
 C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\obj\Debug\LoginControl\LoginView.baml
 C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\obj\Debug\ResourcesDictionary\Resources\WindowDictionary.baml
 C:\Users\Hirad\Desktop\SAOResoForm\SAOResoForm\bin\Debug\BCrypt.Net-Next.dll
+C:\Users\Hirad\Desktop\SAOResoFORM\SAOResoForm\obj\Debug\CreaAccountControl\CreaAccountView.g.cs
+C:\Users\Hirad\Desktop\SAOResoFORM\SAOResoForm\obj\Debug\CreaAccountControl\CreaAccountView.baml

@@ -8,9 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Reportistica Database Attestati"
-        Height="700"
-        Width="1600"
-        WindowStartupLocation="CenterScreen">
+       WindowState="Maximized">
 
     <Window.Resources>
         <converters:DataScadenzaToColorConverter      x:Key="DataScadenzaToColorConverter"/>
@@ -297,14 +295,14 @@
                 <Border Background="#27AE60" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="Valido"
+                <TextBlock Text="Sempre Valido"
                            FontSize="12" Foreground="#2C3E50"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
-                <Border Background="White" BorderBrush="#BDC3C7"
+                <Border Background="blue" BorderBrush="#BDC3C7"
                         BorderThickness="1" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="Nessuna scadenza"
+                <TextBlock Text="scadenza programmata"
                            FontSize="12" Foreground="#2C3E50"
                            VerticalAlignment="Center"/>
             </StackPanel>

@@ -54,6 +54,7 @@
             <Border Grid.Row="4" Style="{StaticResource BorderMenu}">
                 <Button Content="CREA ACCOUNT"
                         Style="{StaticResource MenuButton}"
+                        Command="{Binding creaAccount }"
                         IsEnabled="{Binding IsMaster}"/>
             </Border>
 

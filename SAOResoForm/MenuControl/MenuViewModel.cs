@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
+using SAOResoForm.CreaAccountControl;
 using SAOResoForm.DBScelta;
 using SAOResoForm.HomeControl;
 using SAOResoForm.informazioneControl;
@@ -27,6 +28,7 @@ namespace SAOResoForm.MenuControl
         private InformazioneView _informazioneView;
         private ReportisticaView _reportisticaView;
         private SceltaDBView _dbSceltaView;
+        private CreaAccountView _creaAccountView; // ← corretto con underscore
 
         // ── INotifyPropertyChanged ────────────────────────────────
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,6 +50,7 @@ namespace SAOResoForm.MenuControl
         public ICommand OpenReportisticaCommand { get; }
         public ICommand openSceltaDBCommand { get; }
         public ICommand logout { get; }
+        public ICommand creaAccount { get; }
 
         // ── Costruttore ───────────────────────────────────────────
         public MenuViewModel(MainViewModel mainVM, AppServices services, IIdentity identity)
@@ -58,7 +61,7 @@ namespace SAOResoForm.MenuControl
             _repositoryService = services.RepositoryService;
             _tool = services.Tool;
 
-            IsMaster = false; // default: nessun permesso finché non si fa login
+            IsMaster = false;
 
             OpenHomeCommand = new RelayCommand(() => _mainVM.CurrentViewModel = new HomeViewModel());
             OpenPersonaleCommand = new RelayCommand(OpenPersonaleCommandExecute);
@@ -66,6 +69,7 @@ namespace SAOResoForm.MenuControl
             OpenReportisticaCommand = new RelayCommand(OpenReportistica);
             openSceltaDBCommand = new RelayCommand(OpenSceltaDB);
             logout = new RelayCommand(() => _identity.logout());
+            creaAccount = new RelayCommand(OpenCreaAccount);
         }
 
         // ── Aggiorna permessi dopo il login ───────────────────────
@@ -75,6 +79,23 @@ namespace SAOResoForm.MenuControl
         }
 
         // ── Metodi privati ────────────────────────────────────────
+        private void OpenCreaAccount()
+        {
+            if (_creaAccountView == null || !_creaAccountView.IsVisible)
+            {
+                _creaAccountView = new CreaAccountView();
+                _creaAccountView.Closed += (s, e) => _creaAccountView = null;
+                _creaAccountView.Show();
+            }
+            else
+            {
+                if (_creaAccountView.WindowState == WindowState.Minimized)
+                    _creaAccountView.WindowState = WindowState.Normal;
+                _creaAccountView.Activate();
+                _creaAccountView.Focus();
+            }
+        }
+
         private void OpenReportistica()
         {
             if (_reportisticaView == null || !_reportisticaView.IsVisible)

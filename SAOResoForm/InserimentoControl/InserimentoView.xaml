@@ -63,11 +63,17 @@
             <TextBlock Text="MATRICOLA:"
                        Style="{StaticResource WhiteBoldText}"
                        Margin="0,0,0,5"/>
-            <TextBox Text="{Binding Matricola, UpdateSourceTrigger=PropertyChanged}"
-                     Width="180"
+            <TextBox Width="180"
                      Height="30"
                      FontSize="14"
-                     Padding="5"/>
+                     Text="{Binding Matricola, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
+                     Padding="5,0">
+                <TextBox.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"
+                                  Command="{Binding GeneraMatricolaCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
 
         </StackPanel>
 

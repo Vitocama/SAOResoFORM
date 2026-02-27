@@ -1,7 +1,9 @@
 ﻿<Window x:Class="SAOResoForm.informazioneControl.InformazioneView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="INSERIMENTO DEGLI ATTESTATI" Height="600" Width="1400">
+        Title="INSERIMENTO DEGLI ATTESTATI" 
+        WindowState="Maximized"
+        >
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">

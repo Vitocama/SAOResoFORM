@@ -1,10 +1,10 @@
-﻿using SAOResoForm.Models;
-using System;
-using System.Collections.Generic;
+﻿using SAOResoForm.Dati;
 using SAOResoForm.Models;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using SAOResoForm.Dati;
+using System.Windows;
 
 namespace SAOResoForm.Service.Repository
 {
@@ -154,5 +154,25 @@ namespace SAOResoForm.Service.Repository
         {
             throw new NotImplementedException();
         }
+
+        public string SaveAccount(AccountUtenti item)
+        {
+            try
+            {
+                using (var db = new tblContext())
+                {
+                    if (db.AccountUtenti.Any(a => a.Utente == item.Utente))
+                        return $"L'utente '{item.Utente}' esiste già!";
+
+                    db.AccountUtenti.Add(item);
+                    db.SaveChanges();
+                    return $"Account '{item.Utente}' creato con successo!";
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Errore nel salvataggio: {ex.Message}";
+            }
+        }
     }
-}
+    }

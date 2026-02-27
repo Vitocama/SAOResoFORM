@@ -12,6 +12,7 @@ namespace SAOResoForm.LoginControl
         public event EventHandler LoginSucceeded;
         public event EventHandler RichiestaChiusura;
 
+        private const string PASSWORD_DEFAULT = "Aquilone.000";
         private readonly IIdentity _iidentity;
 
         // ── USERNAME ──────────────────────────────────────────────
@@ -130,19 +131,15 @@ namespace SAOResoForm.LoginControl
             ToggleCambiaPasswordCommand = new RelayCommand(() =>
             {
                 MostraCambiaPassword = !MostraCambiaPassword;
-
                 if (!MostraCambiaPassword)
                 {
                     NuovaPassword = string.Empty;
                     ConfermaPassword = string.Empty;
                     ErrorMessage = string.Empty;
                 }
-
-                // Forza rivalutazione canExecute quando il pannello appare/scompare
                 ((RelayCommand)CambiaPasswordCommand).RaiseCanExecuteChanged();
             });
 
-            // canExecute sempre true: la validazione avviene dentro EseguiCambiaPassword
             CambiaPasswordCommand = new RelayCommand(
                 execute: () => EseguiCambiaPassword(),
                 canExecute: () => true
@@ -154,12 +151,25 @@ namespace SAOResoForm.LoginControl
         {
             IsBusy = true;
             ErrorMessage = string.Empty;
+
             try
             {
                 if (VerificaCredenziali(Username, Password))
+                {
+                    if (Password == PASSWORD_DEFAULT)
+                    {
+                        ErrorMessage = "Password temporanea. Devi impostare una nuova password prima di accedere.";
+                        MostraCambiaPassword = true;
+                        ((RelayCommand)CambiaPasswordCommand).RaiseCanExecuteChanged();
+                        return;
+                    }
+
                     LoginSucceeded?.Invoke(this, EventArgs.Empty);
+                }
                 else
+                {
                     ErrorMessage = "Credenziali non valide. Riprovare.";
+                }
             }
             finally
             {
@@ -176,34 +186,22 @@ namespace SAOResoForm.LoginControl
             ErrorMessage = string.Empty;
 
             if (string.IsNullOrWhiteSpace(Username))
-            {
-                ErrorMessage = "Inserire il nome utente.";
-                return;
-            }
+            { ErrorMessage = "Inserire il nome utente."; return; }
 
             if (string.IsNullOrWhiteSpace(Password))
-            {
-                ErrorMessage = "Inserire la password attuale.";
-                return;
-            }
+            { ErrorMessage = "Inserire la password attuale."; return; }
 
             if (string.IsNullOrWhiteSpace(NuovaPassword) || NuovaPassword.Length < 6)
-            {
-                ErrorMessage = "La nuova password deve avere almeno 6 caratteri.";
-                return;
-            }
+            { ErrorMessage = "La nuova password deve avere almeno 6 caratteri."; return; }
+
+            if (NuovaPassword == PASSWORD_DEFAULT)
+            { ErrorMessage = "La nuova password non può essere uguale a quella temporanea."; return; }
 
             if (NuovaPassword != ConfermaPassword)
-            {
-                ErrorMessage = "Le password non coincidono.";
-                return;
-            }
+            { ErrorMessage = "Le password non coincidono."; return; }
 
             if (!VerificaCredenziali(Username, Password))
-            {
-                ErrorMessage = "Credenziali attuali non valide.";
-                return;
-            }
+            { ErrorMessage = "Credenziali attuali non valide."; return; }
 
             bool aggiornata = _iidentity.CambiaPassword(Username, NuovaPassword);
 
@@ -215,7 +213,7 @@ namespace SAOResoForm.LoginControl
                 ErrorMessage = string.Empty;
 
                 MessageBox.Show(
-                    "Password aggiornata con successo.",
+                    "Password aggiornata con successo. Ora puoi effettuare il login.",
                     "Successo",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);

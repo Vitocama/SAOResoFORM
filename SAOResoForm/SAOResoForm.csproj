@@ -77,6 +77,10 @@
     <Compile Include="Converter\DataScadenzaToForegroundConverter.cs" />
     <Compile Include="Converter\InverseBoolConverter.cs" />
     <Compile Include="Converter\InverseBoolToVisibilityConverter..cs" />
+    <Compile Include="CreaAccountControl\CreaAccountView.xaml.cs">
+      <DependentUpon>CreaAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CreaAccountControl\CreaAccountViewModel.cs" />
     <Compile Include="DBScelta\SceltaDBView.xaml.cs">
       <DependentUpon>SceltaDBView.xaml</DependentUpon>
     </Compile>
@@ -148,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AttestazioniInserimentoControl\AttestatiInserimentoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreaAccountControl\CreaAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

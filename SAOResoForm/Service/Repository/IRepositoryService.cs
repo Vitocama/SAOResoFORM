@@ -23,6 +23,8 @@ namespace SAOResoForm.Service.Repository
         // Cerca personale per criteri (opzionale)
         List<Personale> Search(string searchTerm);
 
-         void SalvaModifiche();
+        void SalvaModifiche();
+
+        string SaveAccount(AccountUtenti item);
     }
 }
