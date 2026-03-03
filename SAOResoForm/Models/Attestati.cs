@@ -24,6 +24,9 @@ namespace SAOResoForm.Models
         private string _linkAttestato;
         private string _note;
         private string _codUfficio;
+        private string _reparto;
+        private string _sezione;
+        private string _nucleo;
 
         #endregion
 
@@ -134,7 +137,31 @@ namespace SAOResoForm.Models
             get => _codUfficio;
             set => SetProperty(ref _codUfficio, value);
         }
-    
+
+
+        public string Reparto
+        {
+            get => _reparto;
+            set => SetProperty(ref _reparto, value);
+        }
+
+        public string Nucleo
+        {
+            get => _nucleo;
+            set => SetProperty(ref _nucleo, value);
+        }
+
+
+        public string Sezione
+        {
+            get => _sezione;
+            set => SetProperty(ref _sezione, value);
+        }
+
+
+
+
+
 
         #endregion
 

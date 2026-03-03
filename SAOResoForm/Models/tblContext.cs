@@ -121,7 +121,12 @@ namespace SAOResoForm.Models
 
                 entity.Property(e => e.ValiditaAnni).HasColumnName("VALIDITA_ANNI");
                 entity.Property(e => e.CodUfficio).HasColumnName("COD_UFFICIO");
+               
+               
 
+                entity.Property(e => e.Reparto).HasColumnName("REPARTO");
+                entity.Property(e => e.Sezione).HasColumnName("SEZIONE");
+                entity.Property(e => e.Nucleo).HasColumnName("NUCLEO");
             });
 
 

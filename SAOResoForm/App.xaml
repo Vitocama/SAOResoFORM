@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="/ResourcesDictionary/Resources/ListBoxDictionary.xaml"/>
                 <ResourceDictionary Source="/ResourcesDictionary/Resources/TextBlockDictionary.xaml"/>
                 <ResourceDictionary Source="/ResourcesDictionary/Resources/DatagridDictionary.xaml"/>
+                <ResourceDictionary Source="/ResourcesDictionary/Resources/DockPanelDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

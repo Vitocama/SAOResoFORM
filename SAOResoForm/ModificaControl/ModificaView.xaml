@@ -5,399 +5,238 @@
         Width="1050"
         Height="750"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Background="#1A1F2E">
+        ResizeMode="NoResize">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-
-        <!-- ======== COLORI ======== -->
-        <SolidColorBrush x:Key="BgDark"       Color="#1A1F2E"/>
-        <SolidColorBrush x:Key="BgCard"       Color="#242938"/>
-        <SolidColorBrush x:Key="BgInput"      Color="#2E3447"/>
-        <SolidColorBrush x:Key="BorderColor"  Color="#3D4561"/>
-        <SolidColorBrush x:Key="AccentBlue"   Color="#3B82F6"/>
-        <SolidColorBrush x:Key="AccentHover"  Color="#2563EB"/>
-        <SolidColorBrush x:Key="AccentAmber"  Color="#F59E0B"/>
-        <SolidColorBrush x:Key="TextWhite"    Color="#F1F5F9"/>
-        <SolidColorBrush x:Key="TextMuted"    Color="#94A3B8"/>
-
-        <!-- ======== LABEL CAMPO ======== -->
-        <Style x:Key="FieldLabel" TargetType="TextBlock">
-            <Setter Property="Foreground"  Value="{StaticResource TextMuted}"/>
-            <Setter Property="FontSize"    Value="11"/>
-            <Setter Property="FontWeight"  Value="SemiBold"/>
-            <Setter Property="Margin"      Value="0,10,0,4"/>
-        </Style>
-
-        <!-- ======== SECTION HEADER ======== -->
-        <Style x:Key="SectionHeader" TargetType="TextBlock">
-            <Setter Property="Foreground"          Value="{StaticResource  TextWhite}"/>
-            <Setter Property="FontSize"            Value="11"/>
-            <Setter Property="FontWeight"          Value="Bold"/>
-            <Setter Property="Margin"              Value="0,0,0,8"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-
-        <!-- ======== TEXTBOX ======== -->
-        <Style x:Key="FlatTextBox" TargetType="TextBox">
-            <Setter Property="Background"      Value="{StaticResource BgInput}"/>
-            <Setter Property="Foreground"      Value="{StaticResource TextWhite}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource BorderColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize"        Value="15"/>
-            <Setter Property="Padding"         Value="0"/>
-            <Setter Property="Height"          Value="34"/>
-            <Setter Property="CaretBrush"      Value="{StaticResource TextWhite}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="{StaticResource AccentBlue}"/>
-                            </Trigger>
-                            <Trigger Property="IsReadOnly" Value="True">
-                                <Setter Property="Background" Value="#1E2535"/>
-                                <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ======== TEXTBOX MULTILINE ======== -->
-        <Style x:Key="FlatTextBoxMulti" TargetType="TextBox" BasedOn="{StaticResource FlatTextBox}">
-            <Setter Property="Height"                          Value="64"/>
-            <Setter Property="TextWrapping"                    Value="Wrap"/>
-            <Setter Property="AcceptsReturn"                   Value="True"/>
-            <Setter Property="VerticalScrollBarVisibility"     Value="Auto"/>
-            <Setter Property="VerticalContentAlignment"        Value="Top"/>
-        </Style>
-
-        <!-- ======== COMBOBOX ======== -->
-        <Style x:Key="FlatComboBox" TargetType="ComboBox">
-            <Setter Property="Background"      Value="{StaticResource BgInput}"/>
-            <Setter Property="Foreground"      Value="{StaticResource BgDark}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource BorderColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize"        Value="13"/>
-            <Setter Property="Height"          Value="34"/>
-            <Setter Property="Padding"         Value="8,0"/>
-        </Style>
-
-        <!-- ======== LISTBOX ======== -->
-        <Style x:Key="FlatListBox" TargetType="ListBox">
-            <Setter Property="Background"      Value="{StaticResource BgInput}"/>
-            <Setter Property="Foreground"      Value="{StaticResource TextWhite}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource BorderColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize"        Value="13"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBox">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6">
-                            <ScrollViewer Focusable="False" Padding="2">
-                                <ItemsPresenter/>
-                            </ScrollViewer>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Foreground" Value="{StaticResource TextWhite}"/>
-                        <Setter Property="Padding"    Value="10,6"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                    <Border x:Name="Bd"
-                                            Background="Transparent"
-                                            CornerRadius="4"
-                                            Margin="2,1"
-                                            Padding="{TemplateBinding Padding}">
-                                        <ContentPresenter/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Bd" Property="Background" Value="#334155"/>
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentBlue}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ======== CARD ======== -->
-        <Style x:Key="CardBorder" TargetType="Border">
-            <Setter Property="Background"      Value="{StaticResource BgCard}"/>
-            <Setter Property="BorderBrush"     Value="{StaticResource BorderColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius"    Value="10"/>
-            <Setter Property="Padding"         Value="16,14"/>
-            <Setter Property="Margin"          Value="6,0"/>
-        </Style>
-
-        <!-- ======== PULSANTE AGGIORNA (AMBER) ======== -->
-        <Style x:Key="UpdateButton" TargetType="Button">
-            <Setter Property="Background"      Value="{StaticResource AccentAmber}"/>
-            <Setter Property="Foreground"      Value="#1A1F2E"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize"        Value="14"/>
-            <Setter Property="FontWeight"      Value="Bold"/>
-            <Setter Property="Width"           Value="200"/>
-            <Setter Property="Height"          Value="44"/>
-            <Setter Property="Cursor"          Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#D97706"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.85"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ======== CHECKBOX TOGGLE ======== -->
-        <Style x:Key="ToggleCheckBox" TargetType="CheckBox">
-            <Setter Property="Foreground"  Value="{StaticResource TextWhite}"/>
-            <Setter Property="FontSize"    Value="12"/>
-            <Setter Property="FontWeight"  Value="SemiBold"/>
-            <Setter Property="Cursor"      Value="Hand"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-
     </Window.Resources>
 
-    <!-- ========================= -->
-    <!-- LAYOUT PRINCIPALE -->
-    <!-- ========================= -->
-    <Border Background="{StaticResource BgDark}">
-        <Grid Margin="16,12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+    <DockPanel Margin="20" Style="{StaticResource TotaleSfondoDock}" >
 
-            <!-- ========================= -->
-            <!-- TITOLO -->
-            <!-- ========================= -->
-            <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                <TextBlock Text="MODIFICA DATI PERSONALE"
-                           FontSize="20"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource TextWhite}"
-                           HorizontalAlignment="Center"/>
-                <Rectangle Height="2" Width="260"
-                           Fill="{StaticResource AccentAmber}"
-                           HorizontalAlignment="Center"
-                           Margin="0,6,0,0"
-                           RadiusX="1" RadiusY="1"/>
+        <!-- ========================= -->
+        <!-- TITOLO -->
+        <!-- ========================= -->
+        <StackPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+            <TextBlock Text="MODIFICA DATI PERSONALE"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                        Style="{StaticResource WhiteBoldText}"
+                       />
+            <Separator Margin="200,6"/>
+        </StackPanel>
+
+        <!-- ========================= -->
+        <!-- TOGGLE REPARTO/SEZIONE/NUCLEO -->
+        <!-- ========================= -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,16">
+            <TextBlock Text="🔃 Mostra modifica Reparto / Sezione / Nucleo"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"
+                       Style="{StaticResource WhiteBoldText}"
+                       FontSize="20"
+                       />
+            <CheckBox IsChecked="{Binding ModificaRepartoSezioneNucleo}"
+                      VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- ========================= -->
+        <!-- FOOTER: PULSANTE AGGIORNA -->
+        <!-- ========================= -->
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="LightGray"
+                BorderThickness="0,1,0,0"
+                Padding="0,12,0,0"
+                Margin="0,12,0,0">
+            <Button Content="✏  AGGIORNA DATI"
+                    Command="{Binding UpdateCommand}"
+                    HorizontalAlignment="Center"
+                    Padding="30,8"
+                    FontSize="13"
+                    FontWeight="SemiBold"/>
+        </Border>
+
+        <!-- ========================= -->
+        <!-- COLONNE PRINCIPALI -->
+        <!-- ========================= -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="1.6*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ===== COL 0: ANAGRAFICA ===== -->
+            <StackPanel Grid.Column="0">
+
+                <!-- Reparto — visibile solo se toggle attivo -->
+                <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}"
+                            Margin="0,0,0,12">
+                    <TextBlock Text="REPARTO"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,4"
+                                Style="{StaticResource WhiteBoldText}"/>
+                    <ListBox ItemsSource="{Binding Reparti}"
+                             SelectedItem="{Binding RepartoSelezionato}"
+                             Height="180"
+                             Style="{DynamicResource ListBox1}"
+                             />
+                </StackPanel>
+
+                <TextBlock Text="NOME"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"/>
+                <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="6,4"
+                         Height="32"
+                         Margin="0,0,0,10"/>
+
+                <TextBlock Text="COGNOME"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <TextBox Text="{Binding Cognome, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="6,4"
+                         Height="32"
+                         Margin="0,0,0,10"/>
+
+                <TextBlock Text="MATRICOLA"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <TextBox Text="{Binding Matricola}"
+                         IsReadOnly="True"
+                         Padding="6,4"
+                         Height="32"
+                         Foreground="Gray"/>
+
             </StackPanel>
 
-            <!-- ========================= -->
-            <!-- TOGGLE REPARTO/SEZIONE/NUCLEO -->
-            <!-- ========================= -->
-            <Border Grid.Row="1"
-                    Background="#1E2535"
-                    BorderBrush="{StaticResource BorderColor}"
-                    BorderThickness="1"
-                    CornerRadius="8"
-                    Padding="14,10"
-                    Margin="6,0,6,12"
-                    HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="⚙"
-                               FontSize="14"
-                               Foreground="{StaticResource AccentAmber}"
-                               VerticalAlignment="Center"
-                               Margin="0,0,8,0"/>
-                    <TextBlock Text="Mostra modifica Reparto / Sezione / Nucleo"
-                               Foreground="{StaticResource TextMuted}"
-                               FontSize="12"
-                               VerticalAlignment="Center"
-                               Margin="0,0,12,0"/>
-                    <CheckBox IsChecked="{Binding ModificaRepartoSezioneNucleo}"
-                              Style="{StaticResource ToggleCheckBox}"
-                              Width="20" Height="20"/>
+            <!-- Separatore verticale -->
+            <Separator Grid.Column="1"
+                       Width="1"
+                       HorizontalAlignment="Center"/>
+
+            <!-- ===== COL 2: DATI PROFESSIONALI ===== -->
+            <StackPanel Grid.Column="2">
+
+                <!-- Sezione — visibile solo se toggle attivo -->
+                <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}"
+                            Margin="0,0,0,12">
+                    <TextBlock Text="SEZIONE"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,4"
+                                Style="{StaticResource WhiteBoldText}"
+                               />
+                    <ListBox ItemsSource="{Binding Sezioni}"
+                             SelectedItem="{Binding SezioneSelezionata}"
+                             Height="180"
+                              Style="{DynamicResource ListBox2}"
+                             />
                 </StackPanel>
-            </Border>
 
-            <!-- ========================= -->
-            <!-- COLONNE -->
-            <!-- ========================= -->
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1.7*"/>
-                </Grid.ColumnDefinitions>
+                <TextBlock Text="INCARICO"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <ComboBox ItemsSource="{Binding Incarichi}"
+                          SelectedItem="{Binding IncaricoSelezionato}"
+                          Padding="6,4"
+                          Height="32"
+                          Margin="0,0,0,10"/>
 
-                <!-- ===== COL 0: REPARTO + ANAGRAFICA ===== -->
-                <Border Grid.Column="0" Style="{StaticResource CardBorder}">
-                    <StackPanel>
+                <TextBlock Text="STATO DI SERVIZIO"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <ComboBox ItemsSource="{Binding Servizio}"
+                          SelectedItem="{Binding ServizioSelezionato}"
+                          Padding="6,4"
+                          Height="32"
+                          Margin="0,0,0,10"/>
 
-                        <!-- Reparto (visibile solo se toggle attivo) -->
-                        <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
-                                <Rectangle Width="3" Height="16" Fill="{StaticResource AccentAmber}" RadiusX="2" RadiusY="2" Margin="0,0,8,0"/>
-                                <TextBlock Text="REPARTO" Style="{StaticResource SectionHeader}" Margin="0"/>
-                            </StackPanel>
-                            <ListBox ItemsSource="{Binding Reparti}"
-                                     SelectedItem="{Binding RepartoSelezionato}"
-                                     Style="{StaticResource FlatListBox}"
-                                     Height="200"
-                                     Margin="0,0,0,14"/>
-                        </StackPanel>
+                <TextBlock Text="ANNOTAZIONI"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <TextBox Text="{Binding Annotazioni, UpdateSourceTrigger=PropertyChanged}"
+                         AcceptsReturn="True"
+                         Height="100"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"
+                         Padding="6,4"/>
 
-                        <TextBlock Text="NOME" Style="{StaticResource FieldLabel}"/>
-                        <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FlatTextBox}"/>
+            </StackPanel>
 
-                        <TextBlock Text="COGNOME" Style="{StaticResource FieldLabel}"/>
-                        <TextBox Text="{Binding Cognome, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FlatTextBox}"/>
+            <!-- Separatore verticale -->
+            <Separator Grid.Column="3"
+                       Width="1"
+                       HorizontalAlignment="Center"/>
 
-                        <TextBlock Text="MATRICOLA" Style="{StaticResource FieldLabel}"/>
-                        <!-- Badge matricola read-only -->
-                        <Border Background="#1E2535"
-                                BorderBrush="{StaticResource BorderColor}"
-                                BorderThickness="1"
-                                CornerRadius="5"
-                                Height="34"
-                                Padding="10,0">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="🔒"
-                                           FontSize="11"
-                                           Foreground="{StaticResource TextMuted}"
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,6,0"/>
-                                <TextBox Text="{Binding Matricola}"
-                                         IsReadOnly="True"
-                                         Background="Transparent"
-                                         BorderThickness="0"
-                                         Foreground="{StaticResource TextMuted}"
-                                         FontSize="13"
-                                         VerticalAlignment="Center"
-                                         CaretBrush="Transparent"/>
-                            </StackPanel>
-                        </Border>
+            <!-- ===== COL 4: CLASSIFICAZIONE ===== -->
+            <StackPanel Grid.Column="4">
 
-                    </StackPanel>
-                </Border>
+                <!-- Nucleo — visibile solo se toggle attivo -->
+                <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}"
+                            Margin="0,0,0,12">
+                    <TextBlock Text="NUCLEO"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,4"
+                                Style="{StaticResource WhiteBoldText}"
+                               />
+                    <ListBox ItemsSource="{Binding Nuclei}"
+                             SelectedItem="{Binding NucleoSelezionato}"
+                             Height="180"
+                              Style="{DynamicResource ListBox3}"
+                             />
+                </StackPanel>
 
-                <!-- ===== COL 1: SEZIONE + DATI PROFESSIONALI ===== -->
-                <Border Grid.Column="1" Style="{StaticResource CardBorder}">
-                    <StackPanel>
+                <TextBlock Text="MIL / CIV"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <ComboBox ItemsSource="{Binding Militari}"
+                          SelectedItem="{Binding MilitariSelezionato}"
+                          Padding="6,4"
+                          Height="32"
+                          Margin="0,0,0,10"/>
 
-                        <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
-                                <Rectangle Width="3" Height="16" Fill="{StaticResource AccentAmber}" RadiusX="2" RadiusY="2" Margin="0,0,8,0"/>
-                                <TextBlock Text="SEZIONE" Style="{StaticResource SectionHeader}" Margin="0"/>
-                            </StackPanel>
-                            <ListBox ItemsSource="{Binding Sezioni}"
-                                     SelectedItem="{Binding SezioneSelezionata}"
-                                     Style="{StaticResource FlatListBox}"
-                                     Height="200"
-                                     Margin="0,0,0,14"/>
-                        </StackPanel>
+                <TextBlock Text="RUOLO / CATEGORIA"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <TextBox Text="{Binding CategoriaProfilo, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="6,4"
+                         Height="32"
+                         Margin="0,0,0,10"/>
 
-                        <TextBlock Text="INCARICO" Style="{StaticResource FieldLabel}"/>
-                        <ComboBox ItemsSource="{Binding Incarichi}"
-                                  SelectedItem="{Binding IncaricoSelezionato}"
-                                  Style="{StaticResource FlatComboBox}"/>
+                <TextBlock Text="GRADO / QUALIFICA"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,3"
+                            Style="{StaticResource WhiteBoldText}"
+                           />
+                <TextBox Text="{Binding GradoQualifica, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="6,4"
+                         Height="32"
+                         Margin="0,0,0,10"/>
 
-                        <TextBlock Text="STATO DI SERVIZIO" Style="{StaticResource FieldLabel}"/>
-                        <ComboBox ItemsSource="{Binding Servizio}"
-                                  SelectedItem="{Binding ServizioSelezionato}"
-                                  Style="{StaticResource FlatComboBox}"/>
-
-                        <TextBlock Text="ANNOTAZIONI" Style="{StaticResource FieldLabel}"/>
-                        <TextBox Text="{Binding Annotazioni, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FlatTextBoxMulti}"/>
-
-                    </StackPanel>
-                </Border>
-
-                <!-- ===== COL 2: NUCLEO + CLASSIFICAZIONE ===== -->
-                <Border Grid.Column="2" Style="{StaticResource CardBorder}">
-                    <StackPanel>
-
-                        <StackPanel Visibility="{Binding ModificaRepartoSezioneNucleo, Converter={StaticResource BoolToVis}}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
-                                <Rectangle Width="3" Height="16" Fill="{StaticResource AccentAmber}" RadiusX="2" RadiusY="2" Margin="0,0,8,0"/>
-                                <TextBlock Text="NUCLEO" Style="{StaticResource SectionHeader}" Margin="0"/>
-                            </StackPanel>
-                            <ListBox ItemsSource="{Binding Nuclei}"
-                                     SelectedItem="{Binding NucleoSelezionato}"
-                                     Style="{StaticResource FlatListBox}"
-                                     Height="200"
-                                     Margin="0,0,0,14"/>
-                        </StackPanel>
-
-                        <TextBlock Text="MIL / CIV" Style="{StaticResource FieldLabel}"/>
-                        <ComboBox ItemsSource="{Binding Militari}"
-                                  SelectedItem="{Binding MilitariSelezionato}"
-                                  Style="{StaticResource FlatComboBox}"/>
-
-                        <TextBlock Text="RUOLO / CATEGORIA" Style="{StaticResource FieldLabel}"/>
-                        <TextBox Text="{Binding CategoriaProfilo, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FlatTextBox}"/>
-
-                        <TextBlock Text="GRADO / QUALIFICA" Style="{StaticResource FieldLabel}"/>
-                        <TextBox Text="{Binding GradoQualifica, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource FlatTextBox}"/>
-
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <!-- ========================= -->
-            <!-- FOOTER: PULSANTE AGGIORNA -->
-            <!-- ========================= -->
-            <Border Grid.Row="3"
-                    BorderBrush="{StaticResource BorderColor}"
-                    BorderThickness="0,1,0,0"
-                    Margin="0,12,0,0"
-                    Padding="0,12,0,0">
-                <Button Content="✏  AGGIORNA DATI"
-                        Command="{Binding UpdateCommand}"
-                        Style="{StaticResource UpdateButton}"
-                        HorizontalAlignment="Center"/>
-            </Border>
-
+            </StackPanel>
         </Grid>
-    </Border>
+    </DockPanel>
 </Window>

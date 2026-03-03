@@ -12,9 +12,7 @@
         Background="#F0F2F5">
 
     <Window.Resources>
-        <converters:CodUfficioToRepartoConverter x:Key="RepartoConverter"/>
-        <converters:CodUfficioToSezioneConverter x:Key="SezioneConverter"/>
-        <converters:CodUfficioToNucleoConverter x:Key="NucleoConverter"/>
+        
 
         <!-- ======== COLORI ======== -->
         <Color x:Key="PrimaryColor">#2563EB</Color>
@@ -278,9 +276,9 @@
                     <DataGridTextColumn Header="Matricola"      Width="100" Binding="{Binding Matricola}"/>
                     <DataGridTextColumn Header="Grado/Qualifica"    Width="130" Binding="{Binding GradoQualifica}"/>
                     <DataGridTextColumn Header="Categoria/Profilo"  Width="130" Binding="{Binding CategoriaProfilo}"/>
-                    <DataGridTextColumn Header="Reparto"        Width="155" Binding="{Binding CodUfficio, Converter={StaticResource RepartoConverter}}"/>
-                    <DataGridTextColumn Header="Sezione"        Width="155" Binding="{Binding CodUfficio, Converter={StaticResource SezioneConverter}}"/>
-                    <DataGridTextColumn Header="Nucleo"         Width="155" Binding="{Binding CodUfficio, Converter={StaticResource NucleoConverter}}"/>
+                    <DataGridTextColumn Header="Reparto"        Width="155" Binding="{Binding CodReparto}"/>
+                    <DataGridTextColumn Header="Sezione"        Width="155" Binding="{Binding CodSezione}"/>
+                    <DataGridTextColumn Header="Nucleo"         Width="155" Binding="{Binding CodNucleo}"/>
                     <DataGridTextColumn Header="Cod. Ufficio"   Width="100" Binding="{Binding CodUfficio}"/>
                     <DataGridTextColumn Header="Incarico"       Width="155" Binding="{Binding Incarico}"/>
                     <DataGridTextColumn Header="Stato Servizio" Width="120" Binding="{Binding StatoServizio}"/>
