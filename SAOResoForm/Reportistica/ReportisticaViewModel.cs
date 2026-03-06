@@ -208,7 +208,11 @@ namespace SAOResoForm.Reportistica
                     (!string.IsNullOrEmpty(a.AnnoCorso) && a.AnnoCorso.Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.ValiditaAnni) && a.ValiditaAnni.Contains(filtro)) ||
                     (!string.IsNullOrEmpty(a.DataScadenzaCorso) && a.DataScadenzaCorso.Contains(filtro)) ||
-                    (!string.IsNullOrEmpty(a.LinkAttestato) && a.LinkAttestato.ToLower().Contains(filtro))
+                    (!string.IsNullOrEmpty(a.LinkAttestato) && a.LinkAttestato.ToLower().Contains(filtro))||
+                    (!string.IsNullOrEmpty(a.Reparto) && a.Reparto.ToLower().Contains(filtro))||
+                    (!string.IsNullOrEmpty(a.Sezione) && a.Sezione.ToLower().Contains(filtro))||
+                    (!string.IsNullOrEmpty(a.Nucleo) && a.Nucleo.ToLower().Contains(filtro))
+
                 );
             }
 

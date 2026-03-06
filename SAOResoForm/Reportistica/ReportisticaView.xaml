@@ -15,84 +15,9 @@
         <converters:DataScadenzaToForegroundConverter x:Key="DataScadenzaToForegroundConverter"/>
         <converters:DataScadenzaToNoteConverter        x:Key="DataScadenzaToNoteConverter"/>
         <BooleanToVisibilityConverter                  x:Key="BooleanToVisibilityConverter"/>
-
-        <!-- ======== PULSANTE PILL ======== -->
-        <Style x:Key="PillButton" TargetType="Button">
-            <Setter Property="Background"      Value="#2980B9"/>
-            <Setter Property="Foreground"      Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize"        Value="12"/>
-            <Setter Property="FontWeight"      Value="Bold"/>
-            <Setter Property="Height"          Value="30"/>
-            <Setter Property="Cursor"          Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Bd"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="15"
-                                Padding="16,0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#1A6A9A"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.8"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ======== PULSANTE PILL VERDE ======== -->
-        <Style x:Key="PillButtonGreen" TargetType="Button" BasedOn="{StaticResource PillButton}">
-            <Setter Property="Background" Value="#27AE60"/>
-        </Style>
-
-        <!-- ======== PULSANTE PILL GRIGIO ======== -->
-        <Style x:Key="PillButtonGray" TargetType="Button" BasedOn="{StaticResource PillButton}">
-            <Setter Property="Background" Value="#7F8C8D"/>
-        </Style>
-
-        <!-- ======== PULSANTE PILL OUTLINE (filtri stato) ======== -->
-        <Style x:Key="PillOutline" TargetType="Button">
-            <Setter Property="Background"      Value="Transparent"/>
-            <Setter Property="Foreground"      Value="#2C3E50"/>
-            <Setter Property="BorderBrush"     Value="#BDC3C7"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize"        Value="12"/>
-            <Setter Property="FontWeight"      Value="Bold"/>
-            <Setter Property="Height"          Value="30"/>
-            <Setter Property="Cursor"          Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Bd"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="15"
-                                Padding="16,0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#ECF0F1"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.75"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Style="{StaticResource  TotaleSfondo}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -121,10 +46,12 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="Cerca:"
+                       Text="FILTRO:"
                        VerticalAlignment="Center"
                        FontSize="14"
-                       Margin="0,0,10,0"/>
+                       Margin="0,0,10,0 "
+                       Foreground="White"
+                       />
 
             <TextBox Grid.Column="1" Grid.Row="0"
                      Width="285" Height="30"
@@ -144,11 +71,13 @@
                         HorizontalAlignment="Left"
                         Margin="0,10,0,0">
 
-                <TextBlock Text="Filtro Stato:"
+                <TextBlock Text="FILTRO DI STATO:"
                            FontSize="14" FontWeight="Bold"
                            VerticalAlignment="Center"
                            Margin="0,0,10,0"
-                           Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                           Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Foreground="White"
+                           />
 
                 <Button Content="TUTTI"
                         Command="{Binding MostraTuttiCommand}"
@@ -223,7 +152,8 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"                  Width="50"   Binding="{Binding Id}"                              IsReadOnly="True"/>
-                <DataGridTextColumn Header="Dipendente"          Width="180"  Binding="{Binding Dipendente}"                      IsReadOnly="True"/>
+                <DataGridTextColumn Header="Dipendente"          Width="180"  Binding="{Binding Dipendente}"                      IsReadOnly="True"/> 
+                <DataGridTextColumn Header="Matricola"           Width="100"  Binding="{Binding MatricolaDipendente}"             IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Attivo" Width="80">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -241,7 +171,10 @@
                         <Binding Path="DataScadenzaCorso" Converter="{StaticResource DataScadenzaToNoteConverter}"/>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Matricola"           Width="100"  Binding="{Binding MatricolaDipendente}"             IsReadOnly="True"/>
+                <DataGridTextColumn Header="Dipendente" Width="180" Binding="{Binding Dipendente}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Reparto"    Width="Auto" Binding="{Binding Reparto}"   IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nucleo"     Width="Auto" Binding="{Binding Nucleo}"    IsReadOnly="True"/>
+              
                 <DataGridTextColumn Header="Titolo Corso"        Width="Auto" Binding="{Binding TitoloCorso}"                    IsReadOnly="True"/>
                 <DataGridTextColumn Header="Attività Formativa"  Width="Auto" Binding="{Binding CodiceAttivitaFormativa}"        IsReadOnly="True"/>
                 <DataGridTextColumn Header="Cod. Materia Corso"  Width="Auto" Binding="{Binding CodiceMateriaCorso}"             IsReadOnly="True"/>
@@ -277,33 +210,33 @@
                         Margin="4,0,0,0">
                 <TextBlock Text="Legenda:"
                            FontSize="12" FontWeight="Bold"
-                           Foreground="#2C3E50"
+                           Foreground="White"
                            VerticalAlignment="Center"
                            Margin="0,0,10,0"/>
                 <Border Background="#C0392B" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="Scaduto"
-                           FontSize="12" Foreground="#2C3E50"
+                           FontSize="12" Foreground="White"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
                 <Border Background="#E67E22" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="In scadenza"
-                           FontSize="12" Foreground="#2C3E50"
+                           FontSize="12" Foreground="White"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
                 <Border Background="#27AE60" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
                 <TextBlock Text="Sempre Valido"
-                           FontSize="12" Foreground="#2C3E50"
+                           FontSize="12" Foreground="White"
                            VerticalAlignment="Center" Margin="0,0,14,0"/>
                 <Border Background="blue" BorderBrush="#BDC3C7"
                         BorderThickness="1" CornerRadius="3"
                         Width="14" Height="14"
                         VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <TextBlock Text="scadenza programmata"
-                           FontSize="12" Foreground="#2C3E50"
+                <TextBlock Text="Scadenza programmata"
+                           FontSize="12" Foreground="White"
                            VerticalAlignment="Center"/>
             </StackPanel>
 

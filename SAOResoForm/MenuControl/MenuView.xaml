@@ -7,9 +7,10 @@
              Width="155"
              Height="560"
              Margin="8,0,0,0">
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Height="550">
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="8,10,10,10" Height="550">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -66,8 +67,15 @@
                         IsEnabled="{Binding IsMaster}"/>
             </Border>
 
-            <!-- LOGOUT: sempre abilitato -->
+            <!-- BackOut: sempre abilitato -->
             <Border Grid.Row="6" Style="{StaticResource BorderMenu}">
+                <Button Content="BACKUP"
+              Style="{StaticResource MenuButton}"
+              Command="{Binding backup}"/>
+            </Border>
+
+            <!-- LOGOUT: sempre abilitato -->
+            <Border Grid.Row="7" Style="{StaticResource BorderMenu}">
                 <Button Content="LOGOUT"
                         Style="{StaticResource MenuButton}"
                         Command="{Binding logout}"/>
