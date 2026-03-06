@@ -19,7 +19,7 @@ namespace SAOResoForm.Dati
             { "DA - URP", 130 },
             { "DA - UCS", 160 },
             { "DA - SPP AMBIENTE", 121 },
-            { "DA -SEGRETERIA DA", 110 },
+            { "DA - SEGRETERIA DA", 110 },
             { "VDA", 200 },
             { "VDA - SAG", 250 },
             { "VDA - SAG PROTOCOLLO E ARCHIVIO", 252 },

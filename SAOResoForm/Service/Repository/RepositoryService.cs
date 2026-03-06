@@ -1,4 +1,5 @@
-﻿using SAOResoForm.Dati;
+﻿using SAOResoForm.Converter;
+using SAOResoForm.Dati;
 using SAOResoForm.Models;
 using System;
 using System.Collections.Generic;
@@ -29,28 +30,49 @@ namespace SAOResoForm.Service.Repository
 
 
         public string Update(Personale item)
+
+
         {
-            string coduff = item.CodReparto + item.CodSezione + item.CodNucleo;
+            Cod_UUOO cod_UUOO1 = new Cod_UUOO();
+
+            int num_cod =0;
+
+            string coduff = item.CodReparto +" - "+ item.CodSezione +" - "+ item.CodNucleo;
 
             string valoreCodUfficio = "";
 
+            string reparto="";
+            string sezione = "";
+            string nucleo = "";
+
             try
             {
-                coduff = int.Parse(coduff).ToString();
-                Cod_UUOO cod_UUOO = new Cod_UUOO();
-                string reparti = cod_UUOO.reparti.FirstOrDefault(x => x.Value.ToString() == coduff).Key;
+               
 
-                string[] codice = reparti?.Split('-') ?? new string[3];
+                while (coduff.EndsWith("-"))
+                {
+                    coduff = coduff.Substring(0, coduff.Length - 1);
+                }
+                coduff = coduff.TrimEnd(' ', '-');
+                 num_cod = cod_UUOO1.reparti[coduff];
 
-                item.CodReparto = codice.Length > 0 ? codice[0].Trim() : "";
-                item.CodSezione = codice.Length > 1 ? codice[1].Trim() : "";
-                item.CodNucleo = codice.Length > 2 ? codice[2].Trim() : "";
+                String[] posizione = coduff.Split('-').ToArray();
+
+                 reparto = posizione[0].Trim();
+                 sezione = posizione.Length > 1 ? posizione[1].Trim() : "";
+                 nucleo = posizione.Length > 2 ? posizione[2].Trim() : "";
+
+
+
+
+
+
             }
             catch {
                 coduff = item.CodReparto + " - " + item.CodSezione + " - " + item.CodNucleo;
             }
 
-            coduff = coduff.TrimEnd(' ', '-');
+           
 
            
 
@@ -68,10 +90,10 @@ namespace SAOResoForm.Service.Repository
                         esistente.GradoQualifica = item.GradoQualifica;
                         esistente.CategoriaProfilo = item.CategoriaProfilo;
                         esistente.MilCiv = item.MilCiv;
-                        esistente.CodReparto = item.CodReparto.ToUpper();
-                        esistente.CodSezione = item.CodSezione.ToUpper();
-                        esistente.CodNucleo = item.CodNucleo.ToUpper();
-                        esistente.CodUfficio = long.TryParse(coduff, out long val) ? val : 0; // ← AGGIUNTO CALCOLO COD_UFFICIO
+                        esistente.CodReparto = reparto.ToUpper();
+                        esistente.CodSezione = sezione.ToUpper();
+                        esistente.CodNucleo = nucleo.ToUpper();
+                        esistente.CodUfficio = num_cod;
                         esistente.Incarico = item.Incarico;
                         esistente.StatoServizio = item.StatoServizio;
                         esistente.Annotazioni = item.Annotazioni;
