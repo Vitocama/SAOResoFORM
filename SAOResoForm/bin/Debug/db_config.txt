@@ -1,1 +1,1 @@
-C:\Users\Hirad\Desktop\tbl.sqlite
+C:\Users\Hirad\Desktop\tbl\tbl.sqlite
