@@ -171,8 +171,8 @@
                         <Binding Path="DataScadenzaCorso" Converter="{StaticResource DataScadenzaToNoteConverter}"/>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Dipendente" Width="180" Binding="{Binding Dipendente}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Reparto"    Width="Auto" Binding="{Binding Reparto}"   IsReadOnly="True"/>
+                <DataGridTextColumn Header="Reparto" Width="180" Binding="{Binding Reparto}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Sezione"    Width="Auto" Binding="{Binding Sezione}"   IsReadOnly="True"/>
                 <DataGridTextColumn Header="Nucleo"     Width="Auto" Binding="{Binding Nucleo}"    IsReadOnly="True"/>
               
                 <DataGridTextColumn Header="Titolo Corso"        Width="Auto" Binding="{Binding TitoloCorso}"                    IsReadOnly="True"/>

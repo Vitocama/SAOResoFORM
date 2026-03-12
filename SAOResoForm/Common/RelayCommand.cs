@@ -29,5 +29,10 @@ namespace SAOResoForm.informazioneControl
         {
             _execute(parameter);
         }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }

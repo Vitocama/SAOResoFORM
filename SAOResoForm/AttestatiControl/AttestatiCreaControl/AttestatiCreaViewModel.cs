@@ -3,6 +3,7 @@ using SAOResoForm.DBScelta;
 using SAOResoForm.Models;
 using SAOResoForm.Repositories;
 using SAOResoForm.Service.Repository.tool;
+using SAOResoForm.informazioneControl;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -206,18 +207,23 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
 
                 foreach (var personale in PersonaleSelezionato)
                 {
-                    string nomeCartellaPersonale = $"{personale.Cognome}_{personale.Nome}_{personale.Matricola}";
+                    var matricola = personale.Matricola.Split('/').ToArray();
+                    string nomeCartellaPersonale = $"{personale.Cognome.Trim()}_{personale.Nome.Trim()}_{matricola[0].Trim()}";
                     string percorsoCartellaPersonale = Path.Combine(cartellaBase, nomeCartellaPersonale);
                     Directory.CreateDirectory(percorsoCartellaPersonale);
 
                     // ============ USA IL NUMERO RANDOM COMUNE ============
                     string percorsoNuovoFile = _tool.RinominaFile(
-       personale,
-       DataFine ?? DateTime.Now,
-       PercorsoFile,
-       percorsoCartellaPersonale,
-       numeroRandomComune  // ← Passa il numero random comune
-   );
+                        personale,
+                        DataFine ?? DateTime.Now,
+                        PercorsoFile,
+                        percorsoCartellaPersonale,
+                        numeroRandomComune
+                    );
+
+                    var reparto = db.Personale.Where(x => x.Matricola == personale.Matricola).ToList().FirstOrDefault()?.CodReparto ?? "REPARTO_NON_DEFINITO";
+                    var sezione = db.Personale.Where(x => x.Matricola == personale.Matricola).ToList().FirstOrDefault()?.CodSezione ?? "SEZIONE_NON_DEFINITO";
+                    var nucleo = db.Personale.Where(x => x.Matricola == personale.Matricola).ToList().FirstOrDefault()?.CodNucleo ?? "NUCLEO_NON_DEFINITO";
 
                     var attestato = new Attestati
                     {
@@ -238,11 +244,28 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
                                 ? "01-01-3000"
                                 : null,
                         AnnoCorso = DataFine?.Year.ToString(),
-                        LinkAttestato = percorsoNuovoFile
+                        LinkAttestato = percorsoNuovoFile,
+                        Reparto = reparto,
+                        Sezione = sezione,
+                        Nucleo = nucleo
                     };
 
                     db.Attestati.Add(attestato);
                     nuovoId++;
+
+                    // ============ GESTIONE CONTATORE BACKUP ============
+                    int salvataggi = int.Parse(File.ReadAllText("count.txt"));
+                    if (salvataggi >= 20)
+                    {
+                        EseguiBackup();
+                        salvataggi = 0;
+                        File.WriteAllText("count.txt", salvataggi.ToString());
+                    }
+                    else
+                    {
+                        salvataggi = salvataggi + 1;
+                        File.WriteAllText("count.txt", salvataggi.ToString());
+                    }
                 }
 
                 await db.SaveChangesAsync();
@@ -255,6 +278,65 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
             catch (Exception ex)
             {
                 MessaggioValidazione = $"Errore durante il salvataggio: {ex.Message}";
+            }
+        }
+
+        // ============ BACKUP ============
+        private void EseguiBackup()
+        {
+            string dest = @"C:\SAO";
+            string fileDest = File.ReadAllText("db_config.txt").Trim();
+            string attestati = File.ReadAllText("attestati.txt").Trim();
+            string attestatiBackup = Path.Combine(dest, "SAO");
+            string dbFileName = Path.GetFileName(fileDest);
+            string dbDest = Path.Combine(dest, dbFileName);
+
+            try
+            {
+                if (!Directory.Exists(dest))
+                    Directory.CreateDirectory(dest);
+
+                File.Copy(fileDest, dbDest, overwrite: true);
+                CopiaCartella(attestati, attestatiBackup);
+
+                MessageBox.Show(
+                    $"Backup eseguito con successo!\nDB salvato in: {dbDest}\nAttestati salvati in: {attestatiBackup}",
+                    "Backup Riuscito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Permessi insufficienti per accedere alla cartella di backup.",
+                    "Backup Fallito", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show($"File sorgente non trovato:\n{fileDest}",
+                    "Backup Fallito", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Errore durante il backup: {ex.Message}",
+                    "Backup Fallito", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CopiaCartella(string sorgente, string destinazione)
+        {
+            if (!Directory.Exists(destinazione))
+                Directory.CreateDirectory(destinazione);
+
+            foreach (string file in Directory.GetFiles(sorgente))
+            {
+                string nomeFile = Path.GetFileName(file);
+                string destFile = Path.Combine(destinazione, nomeFile);
+                File.Copy(file, destFile, overwrite: true);
+            }
+
+            foreach (string sottocartella in Directory.GetDirectories(sorgente))
+            {
+                string nomeSottocartella = Path.GetFileName(sottocartella);
+                string destSottocartella = Path.Combine(destinazione, nomeSottocartella);
+                CopiaCartella(sottocartella, destSottocartella);
             }
         }
 
@@ -310,28 +392,5 @@ namespace SAOResoForm.AttestatiControl.AttestatiCreaControl
 
             return ValidationResult.ValidResult;
         }
-    }
-
-    // =======================
-    // RELAYCOMMAND
-    // =======================
-    public class RelayCommand : ICommand
-    {
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
-
-        public event EventHandler CanExecuteChanged;
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object parameter) => _canExecute?.Invoke(parameter) ?? true;
-
-        public void Execute(object parameter) => _execute(parameter);
-
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

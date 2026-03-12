@@ -164,7 +164,7 @@
                       Margin="0,0,0,10"/>
 
             <!-- RUOLO/CATEGORIA -->
-            <TextBlock Text="RUOLO/CATEGORIA:"
+            <TextBlock Text="PROFILO/CATEGORIA:"
                        Style="{StaticResource WhiteBoldText}"
                        Margin="0,0,0,5"/>
             <TextBox Text="{Binding CategoriaProfilo, UpdateSourceTrigger=PropertyChanged}"
@@ -175,7 +175,7 @@
                      Margin="0,0,0,10"/>
 
             <!-- PROFILO -->
-            <TextBlock Text="PROFILO:"
+            <TextBlock Text="GRADO/QUALIFICA:"
                        Style="{StaticResource WhiteBoldText}"
                        Margin="0,0,0,5"/>
             <TextBox Text="{Binding GradoQualifica, UpdateSourceTrigger=PropertyChanged}"

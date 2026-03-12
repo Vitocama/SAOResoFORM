@@ -80,25 +80,24 @@ namespace SAOResoForm.MenuControl
 
         private void backUp()
         {
-            string percorsoBackup = @"C:\SAOResoForm_Backup";
-            string fileOrigine = @"C:\Users\Hirad\Desktop\tbl\tbl.sqlite";
-            string fileDest = Path.Combine(percorsoBackup, $"tblBackup.sqlite");
-            string attestati = @"C:\Users\Hirad\Desktop\SAO";
-            string attestatiBackup = Path.Combine(percorsoBackup, "SAO");
+            string dest = @"C:\SAO";
+            string fileDest = File.ReadAllText("db_config.txt").Trim();
+            string attestati = File.ReadAllText("attestati.txt").Trim();
+            string attestatiBackup = Path.Combine(dest, "SAO");
+
+            string dbFileName = Path.GetFileName(fileDest);
+            string dbDest = Path.Combine(dest, dbFileName);
 
             try
             {
-                // Backup cartella di backup principale
-                if (!Directory.Exists(percorsoBackup))
-                    Directory.CreateDirectory(percorsoBackup);
+                if (!Directory.Exists(dest))
+                    Directory.CreateDirectory(dest);
 
-                // Backup del database
-                File.Copy(fileOrigine, fileDest, overwrite: true);
+                File.Copy(fileDest, dbDest, overwrite: true);
 
-                // Backup cartella attestati (ricorsivo)
                 CopiaCartella(attestati, attestatiBackup);
 
-                MessageBox.Show($"Backup eseguito con successo!\nDB salvato in: {fileDest}\nAttestati salvati in: {attestatiBackup}",
+                MessageBox.Show($"Backup eseguito con successo!\nDB salvato in: {dbDest}\nAttestati salvati in: {attestatiBackup}",
                                 "Backup Riuscito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (UnauthorizedAccessException)
@@ -108,7 +107,7 @@ namespace SAOResoForm.MenuControl
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show($"File sorgente non trovato:\n{fileOrigine}",
+                MessageBox.Show($"File sorgente non trovato:\n{fileDest}",
                                 "Backup Fallito", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)

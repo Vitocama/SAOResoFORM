@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 
 namespace SAOResoForm.Service.Repository.tool
 {
@@ -61,7 +62,8 @@ namespace SAOResoForm.Service.Repository.tool
                     throw new ArgumentNullException(nameof(item));
 
                 string cartellaBase = SceltaDBViewModel.CaricaCartellaAttestati();
-                string nomeCartella = $"{item.Cognome}_{item.Nome}_{item.Matricola}";
+                var matricola = item.Matricola.Split('/').ToArray();
+                string nomeCartella = $"{item.Cognome}_{item.Nome}_{matricola[0]}";
                 string percorsoCompleto = Path.Combine(cartellaBase, nomeCartella);
 
                 if (!Directory.Exists(percorsoCompleto))
@@ -96,8 +98,8 @@ namespace SAOResoForm.Service.Repository.tool
 
                 Random random = new Random();
                 int numeroRandom = random.Next(10000);
-
-                string nuovoNomeFile = $"{item.Cognome}_{item.Nome}_{item.Matricola}_{dataFine:dd-MM-yyyy}_{numeroRandom}{estensione}";
+                var matricola = item.Matricola.Split('/').ToArray();
+                string nuovoNomeFile = $"{item.Cognome}_{item.Nome}_{matricola[0]}_{dataFine:dd-MM-yyyy}_{numeroRandom}{estensione}";
                 string percorsoDestinazione = Path.Combine(cartellaDestinazione, nuovoNomeFile);
 
                 File.Copy(percorsoFileOriginale, percorsoDestinazione, overwrite: true);
@@ -128,7 +130,8 @@ namespace SAOResoForm.Service.Repository.tool
                 }
 
                 string estensione = Path.GetExtension(percorsoFileOriginale);
-                string nuovoNomeFile = $"{item.Matricola}_{dataFine:dd-MM-yyyy}_{numeroRandom}{estensione}";
+                var matricola = item.Matricola.Split('/').ToArray();
+                string nuovoNomeFile = $"{matricola[0]}_{dataFine:dd-MM-yyyy}_{numeroRandom}{estensione}";
                 string percorsoDestinazione = Path.Combine(cartellaDestinazione, nuovoNomeFile);
 
                 File.Copy(percorsoFileOriginale, percorsoDestinazione, overwrite: true);
